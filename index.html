@@ -207,59 +207,78 @@ body{
 @media print {
   @page { margin: 15mm; size: A4 portrait; }
   html, body { width: 100% !important; margin: 0 !important; padding: 0 !important; background: #fff !important; color: #000 !important; font-size: 12px; }
-  .app { max-width: 100% !important; width: 100% !important; padding: 0 !important; margin: 0 !important; }
-  
-  /* Hide everything by default */
-  body * { visibility: hidden; }
-  
-  /* Show only the specific containers */
-  .print-header, .print-header *, 
-  .print-footer, .print-footer *,
-  .print-inputs-section, .print-inputs-section *,
-  .printable-card, .printable-card * { visibility: visible; }
-  
-  .printable-card { position: absolute; left: 0; top: 0; width: 100%; border: none !important; box-shadow: none !important; margin: 0 !important; padding: 0 !important; page-break-inside: avoid;}
-  
-  .print-header { display: block !important; margin-bottom: 25px; position: absolute; top: 0; left: 0; width: 100%;}
-  .print-inputs-section { display: block !important; margin-bottom: 30px; position: absolute; top: 140px; left: 0; width: 100%;}
-  .printable-card { margin-top: 280px !important; display: block !important;}
-  .print-footer { display: block !important; margin-top: 40px; text-align: center; font-size: 10px; color: #666; border-top: 1px solid #ccc; padding-top: 10px; position: absolute; bottom: 0; left: 0; width: 100%;}
+  .app { max-width: 100% !important; width: 100% !important; padding: 0 !important; margin: 0 !important; display: block !important; }
 
-  .p-header-top { text-align: center; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 15px;}
-  .p-company { font-size: 22px; font-weight: 800; text-transform: uppercase; color: #000 !important; }
-  .p-dept { font-size: 13px; font-weight: 600; margin-top: 4px; color: #333 !important;}
-  .p-title { font-size: 15px; font-weight: 700; margin-top: 10px; color: #000 !important; text-transform: uppercase;}
-  .p-meta { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 20px; color: #000 !important; border-bottom: 1px solid #ddd; padding-bottom: 10px;}
-  
-  .p-signatures { display: flex; justify-content: space-between; margin-top: 60px; margin-bottom: 20px; font-size: 12px; font-weight: 600; color: #000 !important;}
+  /* Hide UI Elements */
+  .topbar, .tabs-wrapper, .qc-tabs-wrapper, .input-group, .search-panel, .result-bar, .btn-print, .admin-panel, .user-profile, .profile-dropdown, .no-print, .bottom-nav, .dashboard-hero, .stats-grid, .module-grid, .k-feed, .tip-banner, .modal-overlay, .section-title { display: none !important; }
+
+  /* Show Print Containers */
+  .print-header, .print-inputs-section, .print-footer { display: block !important; }
+
+  /* Hide all views and cards by default */
+  .view-section { display: none !important; }
+  .card, .qc-card { display: none !important; border: none !important; box-shadow: none !important; }
+
+  /* Show only the active view and printable cards */
+  .view-section.active { display: block !important; }
+  .printable-card, .qc-card.active { display: block !important; width: 100% !important; margin: 0 !important; padding: 0 !important; border: none !important; }
+
+  /* Header Formatting */
+  .p-header-top { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 10px;}
+  .p-company { font-size: 20px; font-weight: 800; text-transform: uppercase; color: #000 !important; }
+  .p-dept { font-size: 12px; font-weight: 600; margin-top: 2px; color: #333 !important;}
+  .p-title { font-size: 14px; font-weight: 700; margin-top: 8px; color: #000 !important; text-transform: uppercase;}
+  .p-meta { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 15px; color: #000 !important; border-bottom: 1px solid #ccc; padding-bottom: 8px;}
+  .p-meta div { margin-bottom: 4px; }
+  .p-meta span { font-weight: 700; }
+
+  /* Input Table */
+  .print-inputs-section { margin-bottom: 25px; }
+  .print-inputs-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; table-layout: fixed; }
+  .print-inputs-table th, .print-inputs-table td { border: 1px solid #000; padding: 8px 10px; font-size: 12px; text-align: left; word-wrap: break-word; }
+  .print-inputs-table th { background: #f3f4f6 !important; font-weight: 700; color: #000; }
+
+  /* Card Styling */
+  .card-head { border-bottom: 1px solid #000 !important; background: #fff !important; padding: 10px 0 !important; margin-bottom: 10px !important;}
+  .card-head h3 { color: #000 !important; font-size: 16px !important; margin: 0 !important;}
+  .op-tag { border: 1px solid #000 !important; color: #000 !important; background: #fff !important; padding: 4px 8px !important;}
+  .specs { border: 1px solid #000 !important; }
+  .spec { border-bottom: 1px solid #000 !important; display: grid !important; grid-template-columns: 150px 1fr !important;}
+  .spec:last-child { border-bottom: none !important; }
+  .spec .k { background: #fff !important; color: #000 !important; border-right: 1px solid #000 !important; padding: 8px !important; font-weight: bold !important;}
+  .spec .v { color: #000 !important; padding: 8px !important; }
+  .chip-val { border: none !important; background: #fff !important; color: #000 !important; padding: 0 !important; font-weight: 700 !important;}
+  .card-foot { border: 1px solid #000 !important; border-top: none !important; padding: 10px !important; color: #000 !important; background: #fff !important; }
+
+  /* BOM Table */
+  .bom-table { border: 1px solid #000 !important; }
+  .bom-table-head { border-bottom: 1px solid #000 !important; background: #fff !important; display: grid !important; grid-template-columns: 100px 1fr 80px !important; }
+  .bom-table-head > div { color: #000 !important; padding: 8px !important; border-right: 1px solid #000 !important; }
+  .bom-table-head > div:last-child { border-right: none !important; }
+  .bom-group-header { background: #fff !important; color: #000 !important; border: none !important; border-bottom: 1px solid #000 !important; border-top: 1px solid #000 !important; padding: 8px !important; font-weight: bold !important; display: block !important; margin: 0 !important;}
+  .bom-row { border-bottom: 1px solid #000 !important; display: grid !important; grid-template-columns: 100px 1fr 80px !important; }
+  .bom-row > div { color: #000 !important; border-right: 1px solid #000 !important; padding: 8px !important;}
+  .bom-row > div:last-child { background: #fff !important; color: #000 !important; border-right: none !important; text-align: right !important; font-weight: 700 !important;}
+  .plan-input { border: none !important; font-size: 14px !important; text-align: left !important; padding: 0 !important; font-weight: 700 !important; }
+  .result-section { border: none !important; padding: 0 !important; margin-bottom: 15px !important;}
+  .result-card { border: 1px solid #000 !important; background: #fff !important; color: #000 !important; margin-bottom: 10px !important; border-radius: 0 !important; padding: 10px !important;}
+  .result-card * { color: #000 !important; }
+  .result-title-bar { border: none !important; border-bottom: 1px solid #000 !important; color: #000 !important; padding-bottom: 5px !important; margin-bottom: 5px !important;}
+
+  /* Footer */
+  .print-footer {
+    display: block !important;
+    margin-top: 50px;
+    text-align: center;
+    font-size: 10px;
+    color: #666;
+    page-break-inside: avoid;
+  }
+  .p-signatures { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 12px; font-weight: 600; color: #000 !important; border-top: 1px solid #ccc; padding-top: 20px;}
   .p-sig-block { display: flex; flex-direction: column; align-items: center; width: 45%;}
   .p-sig-name { font-size: 14px; font-weight: 800; margin-bottom: 5px; color: #000 !important;}
   .p-sig-line { width: 100%; border-bottom: 1px solid #000; height: 20px; margin-bottom: 5px; display: block;}
   .p-sig-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #333 !important;}
-
-  .print-inputs-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; table-layout: fixed; }
-  .print-inputs-table th, .print-inputs-table td { border: 1px solid #000; padding: 10px 12px; font-size: 12px; text-align: left; word-wrap: break-word; }
-  .print-inputs-table th { background: #f3f4f6 !important; font-weight: 700; color: #000; }
-  
-  .card-head { border-bottom: 1px solid #000; background: #fff !important; padding: 10px 0;}
-  .card-head h3 { color: #000; font-size: 18px; }
-  .card-foot { border-top: 1px solid #000; background: #fff; padding: 10px 0; color: #000;}
-  .spec { border-bottom: 1px solid #ccc; }
-  .spec .k { background: #fff; color: #000; border-right: 1px solid #ccc;}
-  .spec .v { color: #000; }
-  .bom-table { border: 1px solid #000; }
-  .bom-table-head { border-bottom: 1px solid #000; background: #fff;}
-  .bom-table-head > div { color: #000; }
-  .bom-group-header { background: #fff; color: #000; border: none; border-bottom: 1px solid #000;}
-  .bom-row { border-bottom: 1px solid #ccc; }
-  .bom-row > div { color: #000; border-right: 1px solid #ccc;}
-  .bom-row > div:last-child { background: #fff; color: #000; }
-  .result-section { border: none; padding: 0; }
-  .result-card { border: 1px solid #000; background: #fff; color: #000; margin-bottom: 10px;}
-  .result-card * { color: #000 !important; }
-  .plan-input { border: none; text-align: left; font-size: 14px; }
-  .op-tag { border: 1px solid #000; color: #000; background: #fff; }
-  .chip-val { border: 1px solid #000; background: #fff; color: #000; }
 }
 </style>
 </head>
@@ -311,7 +330,7 @@ body{
     <div class="p-header-top">
       <div class="p-company" id="pCompany">THERMOCABLES LTD.</div>
       <div class="p-dept" id="pDept">QC DEPARTMENT</div>
-      <div class="p-title">TEST REPORT</div>
+      <div class="p-title" id="pDocTitle">TEST REPORT</div>
     </div>
     <div class="p-meta">
       <div>Date: <span id="pDate"></span></div>
@@ -1187,10 +1206,12 @@ window.triggerPrint = function(e, type) {
   document.getElementById('pDate').textContent = now.toLocaleDateString('en-GB');
   document.getElementById('pTime').textContent = now.toLocaleTimeString('en-US');
   
+  const docTitle = document.getElementById('pDocTitle');
   const printInputs = document.getElementById('printInputs');
   printInputs.innerHTML = '';
 
   if (type === 'qc') {
+    docTitle.textContent = 'QC TEST REPORT';
     const activeTab = document.querySelector('.qc-tab-btn.active').innerText;
     const tabMap = {'CR Calc':'CR Test Report','IR Calc':'IR Test Report','Capacitance':'Capacitance Test Report','HV Fail':'HV Fail Report','Thickness':'Thickness Report','Braid':'Braid Report','Tensile':'Tensile Report','Hot Set':'Hot Set Report'};
     document.getElementById('pTestType').textContent = tabMap[activeTab] || 'QC Report';
@@ -1206,12 +1227,14 @@ window.triggerPrint = function(e, type) {
     else if(activeTab === 'Hot Set'){ const shp = document.getElementById('hotSetShape').value; if(shp==='tubular'){ add('Core Dia','hCoreDia','mm'); add('Cond Dia','hCondDia','mm'); } else { add('Thickness','hThick','mm'); add('Width','hWidth','mm'); } add('Init Length','hInit','mm'); add('Elong Length','hElong','mm'); add('Cool Length','hCool','mm'); }
     printInputs.innerHTML = html + `</table>`;
   } else if (type === 'job') {
+    docTitle.textContent = 'JOB CARD DETAILS';
     document.getElementById('pTestType').textContent = 'Job Card';
     let html = `<table class="print-inputs-table"><tr><th>Search Parameter</th><th>Value</th></tr>`;
     html += `<tr><td>Job Number</td><td>${esc(jobInput.value)}</td></tr>`;
     html += `<tr><td>Operation</td><td>${esc(opSelect.value)}</td></tr></table>`;
     printInputs.innerHTML = html;
   } else if (type === 'bom') {
+    docTitle.textContent = 'BOM DETAILS';
     document.getElementById('pTestType').textContent = 'BOM Report';
     let html = `<table class="print-inputs-table"><tr><th>Search Parameter</th><th>Value</th></tr>`;
     html += `<tr><td>SO-ITEM</td><td>${esc(bomInput.value)}</td></tr>`;
