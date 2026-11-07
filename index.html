@@ -30,7 +30,7 @@ body{
   padding-bottom: 80px;
 }
 
-/* LOGIN & HEADER (Same as before) */
+/* LOGIN & HEADER */
 #loginScreen {position: fixed; top: 0; left: 0; width: 100%; height: 100%;background: #f1f5f9;display: flex; align-items: center; justify-content: center;z-index: 9999; padding: 20px;}
 .login-card {background: #ffffff; border: 1px solid #e2e8f0;border-radius: 24px; padding: 40px 30px; width: 100%; max-width: 380px;text-align: center; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);}
 .login-card h2 { color: #0f172a; font-size: 1.5rem; font-weight: 800; margin-bottom: 8px;}
@@ -48,7 +48,7 @@ body{
 .dropdown-header b { color: #0f172a; display: block; font-size: 0.9rem;}
 .dropdown-btn {width: 100%; padding: 8px; border-radius: 8px; border: none;background: #fef2f2; color: #ef4444; font-weight: 700; font-size: 0.8rem; cursor: pointer;}
 .topbar{position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;padding: 24px 20px; background: rgba(255, 255, 255, 0.85);backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.9);border-radius: 24px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);margin-bottom: 20px; overflow: hidden;}
-.brand{position: relative; z-index: 1; display:flex; flex-direction:column; align-items: center; gap: 4px; margin-top: 10px;}
+.brand{position: relative; z-index: 1; display:flex; flex-direction:column; align-items:center; gap: 4px; margin-top: 10px;}
 .brand-company{font-size:.7rem; font-weight:700; color:#64748b; letter-spacing:.15em; text-transform:uppercase; text-align: center;}
 .brand-title-row span{font-weight:800; font-size:1.4rem; letter-spacing:-.02em; color: #0f172a; text-align: center;}
 
@@ -84,15 +84,9 @@ body{
 .card-bom .card-icon { background: #10b981; color: #fff; }
 .card-qc { background: linear-gradient(135deg, #f5f3ff, #ede9fe); border: 1px solid #c4b5fd; color: #4c1d95;}
 .card-qc .card-icon { background: #8b5cf6; color: #fff; }
-
-/* KNOWLEDGE HUB */
 .section-title { font-size: 0.9rem; font-weight: 800; color: #334155; margin: 24px 0 12px 4px; text-transform: uppercase; letter-spacing: 0.05em;}
 .k-feed { display: flex; flex-direction: column; gap: 12px; }
-.k-card {
-  background: #fff; border-radius: 16px; padding: 16px;
-  border-left: 6px solid #3b82f6; box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-  display: flex; gap: 16px; align-items: center; cursor: pointer; transition: transform 0.2s;
-}
+.k-card {background: #fff; border-radius: 16px; padding: 16px;border-left: 6px solid #3b82f6; box-shadow: 0 2px 10px rgba(0,0,0,0.03);display: flex; gap: 16px; align-items: center; cursor: pointer; transition: transform 0.2s;}
 .k-card:active { transform: scale(0.98); }
 .k-card.k-lean { border-left-color: #f59e0b; }
 .k-card.k-std { border-left-color: #10b981; }
@@ -105,23 +99,11 @@ body{
 .k-arrow { color: #cbd5e1; font-size: 1.2rem; }
 
 /* MODAL */
-.modal-overlay {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
-  z-index: 2000; display: none; align-items: flex-end; justify-content: center;
-}
+.modal-overlay {position: fixed; top: 0; left: 0; width: 100%; height: 100%;background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);z-index: 2000; display: none; align-items: flex-end; justify-content: center;}
 .modal-overlay.open { display: flex; }
-.modal-content {
-  background: #fff; width: 100%; max-width: 600px; max-height: 85vh;
-  border-radius: 24px 24px 0 0; padding: 24px; overflow-y: auto;
-  animation: slideUp 0.3s ease; position: relative;
-}
+.modal-content {background: #fff; width: 100%; max-width: 600px; max-height: 85vh;border-radius: 24px 24px 0 0; padding: 24px; overflow-y: auto;animation: slideUp 0.3s ease; position: relative;}
 @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-.modal-close {
-  position: absolute; top: 16px; right: 16px; width: 32px; height: 32px;
-  background: #f1f5f9; border-radius: 50%; border: none; font-size: 1.2rem;
-  display: flex; align-items: center; justify-content: center; cursor: pointer; color: #64748b;
-}
+.modal-close {position: absolute; top: 16px; right: 16px; width: 32px; height: 32px;background: #f1f5f9; border-radius: 50%; border: none; font-size: 1.2rem;display: flex; align-items: center; justify-content: center; cursor: pointer; color: #64748b;}
 .modal-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-right: 30px;}
 .modal-header h3 { font-size: 1.2rem; font-weight: 800; color: #0f172a; }
 .modal-body h5 { font-size: 0.95rem; font-weight: 800; color: #1e293b; margin-top: 16px; margin-bottom: 8px;}
@@ -157,13 +139,18 @@ body{
 .grid{display:grid;grid-template-columns:1fr; gap:16px;}
 .card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.04);border:1px solid #f1f5f9;}
 .card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px;border-bottom:1px solid #f1f5f9;background:#fafbfc;}
-.card-head h3{font-size:1rem;font-weight:800;color:#0f172a;}
+.card-head h3{font-size:1rem;font-weight:800;color:#0f172a; display: flex; align-items: center; gap: 8px;}
+.card-head h3 .bullet{width:8px;height:8px;border-radius:50%;background:#3b82f6;flex-shrink:0;}
 .op-tag{font-size:.65rem;font-weight:800;text-transform:uppercase;padding:6px 12px;border-radius:20px;background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe;}
 .specs{display:flex;flex-direction:column;}
 .spec{display:grid;grid-template-columns:120px 1fr;border-bottom:1px solid #f1f5f9;}
 .spec .k{padding:12px 16px;font-size:.65rem;font-weight:800;text-transform:uppercase;color:#64748b;background:#f8fafc;border-right:1px solid #f1f5f9;display:flex;align-items:center;}
 .spec .v{padding:12px 16px;font-size:.85rem;font-weight:500;color:#1e293b;display:flex;align-items:center;}
 .spec.accent .k{color:#2563eb;background:#eff6ff;}
+.chip-val{background:#eff6ff;color:#2563eb;font-weight:800;padding:2px 8px;border-radius:6px;font-size:.8rem;display:inline-block;}
+.card-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;background:#f8fafc;border-top:1px solid #f1f5f9;font-size:.75rem;font-weight:600;color:#64748b;flex-wrap:wrap;}
+.card-foot span{display:flex;align-items:center;gap:6px}
+.card-foot .drum{color:#475569;word-break:break-word;font-weight:600;}
 .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:60px 20px;text-align:center;background:#fff;border-radius:20px;border:2px dashed #e2e8f0;}
 .empty .icon{font-size:3rem;opacity:.5}
 .bom-table{display:flex;flex-direction:column;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;}
@@ -246,6 +233,7 @@ body{
   .bom-table-head, .bom-row, .bom-group-header { border-color: #000; }
   .bom-table-head > div, .bom-row > div { color: #000 !important; border-color: #000; }
   .bom-group-header { background: #fff !important; }
+  .card-foot { border: 1px solid #000 !important; border-top: none !important; padding: 10px 15px !important; color: #000 !important;}
 }
 </style>
 </head>
@@ -794,123 +782,28 @@ window.switchQcTab = function(tabName, event) {
 /* --- KNOWLEDGE MODAL LOGIC --- */
 window.openKnowledge = function(key) {
   const data = {
-    '5s': {
-      icon: '🏭',
-      title: 'The 5S Methodology',
-      content: `
-        <p>The 5S methodology is a systematic approach to workplace organization that improves efficiency, safety, and morale. It is the foundation of Lean Manufacturing.</p>
-        <h5>1. Seiri (Sort)</h5>
-        <p>Separate necessary items from unnecessary ones. Remove all tools, equipment, and materials that are not needed for current production.</p>
-        <h5>2. Seiton (Set in Order)</h5>
-        <p>Arrange necessary items in good order for easy use. "A place for everything, and everything in its place."</p>
-        <h5>3. Seiso (Shine)</h5>
-        <p>Clean your workplace completely. Cleaning also acts as an inspection to find leaks, cracks, or loose bolts.</p>
-        <h5>4. Seiketsu (Standardize)</h5>
-        <p>Maintain high standards of housekeeping. Create visual rules (like floor markings or color-coded tools).</p>
-        <h5>5. Shitsuke (Sustain)</h5>
-        <p>Make a habit of maintaining the standards. This requires discipline, training, and regular audits.</p>
-      `
-    },
-    'lean': {
-      icon: '⚙️',
-      title: 'Lean Manufacturing',
-      content: `
-        <p>Lean manufacturing is a production method aimed primarily at reducing times within the production system as well as response times from suppliers and to customers. It is derived from the Toyota Production System (TPS).</p>
-        <h5>Key Principles:</h5>
-        <ul>
-          <li><b>Kaizen:</b> Continuous, incremental improvement involving everyone.</li>
-          <li><b>Poka-yoke:</b> Mistake-proofing. Designing processes so mistakes are impossible to make (e.g., a connector that only fits one way).</li>
-          <li><b>Just-In-Time (JIT):</b> Producing only what is needed, when it is needed, and in the amount needed to reduce inventory waste.</li>
-          <li><b>Gemba:</b> "The real place." Going to the factory floor to observe and solve problems where value is created.</li>
-        </ul>
-        <h5>The 7 Wastes (Muda):</h5>
-        <ul>
-          <li>Transportation, Inventory, Motion, Waiting, Overproduction, Overprocessing, Defects.</li>
-        </ul>
-      `
-    },
-    'standards': {
-      icon: '📜',
-      title: 'IEC Cable Standards',
-      content: `
-        <p>International Electrotechnical Commission (IEC) standards are globally recognized benchmarks for cable manufacturing and testing.</p>
-        <table>
-          <tr><th>Standard</th><th>Description</th></tr>
-          <tr><td><b>IEC 60228</b></td><td>Conductors of insulated cables. Defines Class 1 (solid), Class 2 (stranded), Class 5 (flexible), and Class 6 (extra flexible).</td></tr>
-          <tr><td><b>IEC 60502</b></td><td>Power cables with extruded insulation (PVC, XLPE, EPR) for rated voltages from 1kV to 30kV.</td></tr>
-          <tr><td><b>IEC 60332</b></td><td>Tests on electric and optical fibre cables under fire conditions. (Flame propagation).</td></tr>
-          <tr><td><b>IEC 60754</b></td><td>Test on gases evolved during combustion of materials from cables (Halogen acid gas).</td></tr>
-          <tr><td><b>IEC 61034</b></td><td>Measurement of smoke density of cables burning under defined conditions.</td></tr>
-        </table>
-      `
-    },
-    'formulas': {
-      icon: '📐',
-      title: 'Engineering Formulas',
-      content: `
-        <p>Essential formulas used in cable design and quality control:</p>
-        <h5>1. Conductor Resistance</h5>
-        <p>The DC resistance of a conductor is calculated using:</p>
-        <div class="formula-box">R = (ρ × L) / A</div>
-        <ul>
-          <li><b>R</b> = Resistance (Ω)</li>
-          <li><b>ρ</b> = Resistivity (Copper ≈ 0.01724 Ω·mm²/m at 20°C)</li>
-          <li><b>L</b> = Length (m)</li>
-          <li><b>A</b> = Cross-sectional Area (mm²)</li>
-        </ul>
-        <h5>2. Voltage Drop</h5>
-        <p>For a single-phase circuit:</p>
-        <div class="formula-box">Vd = (2 × I × L × R) / 1000</div>
-        <ul>
-          <li><b>I</b> = Current (A)</li>
-          <li><b>L</b> = Cable Length (m)</li>
-          <li><b>R</b> = Resistance (Ω/km)</li>
-        </ul>
-        <h5>3. Capacitance</h5>
-        <p>Capacitance per unit length (pF/m) is crucial for communication cables and high-voltage cables.</p>
-        <div class="formula-box">C = (2 × π × ε) / ln(D/d)</div>
-        <ul>
-          <li><b>ε</b> = Permittivity of insulation</li>
-          <li><b>D</b> = Diameter over insulation</li>
-          <li><b>d</b> = Conductor diameter</li>
-        </ul>
-      `
-    },
-    'construction': {
-      icon: '🔌',
-      title: 'Cable Construction Anatomy',
-      content: `
-        <p>A standard power or control cable consists of several protective layers to ensure safety and longevity.</p>
-        <h5>From Inside Out:</h5>
-        <ul>
-          <li><b>1. Conductor:</b> Annealed copper or aluminum. Carries the current. Stranded for flexibility.</li>
-          <li><b>2. Insulation:</b> XLPE, PVC, or Rubber. Prevents current leakage and protects against electric shock.</li>
-          <li><b>3. Bedding/Inner Sheath:</b> Extruded PVC or tape. Binds the cores together and prevents moisture ingress.</li>
-          <li><b>4. Armouring:</b> Steel wire (SWA) or steel tape (STA). Provides mechanical protection against crushing and rodents.</li>
-          <li><b>5. Outer Sheath:</b> Extruded PVC, PE, or LSZH (Low Smoke Zero Halogen). Protects against UV, chemicals, and fire.</li>
-        </ul>
-        <p style="margin-top:12px;"><b>Did you know?</b> The "Skin Effect" at high frequencies means AC current flows mostly on the surface of the conductor. This is why high-frequency cables use finely stranded wire (Litz wire) to increase surface area.</p>
-      `
-    }
+    '5s': { icon: '🏭', title: 'The 5S Methodology', content: `<p>The 5S methodology is a systematic approach to workplace organization that improves efficiency, safety, and morale. It is the foundation of Lean Manufacturing.</p><h5>1. Seiri (Sort)</h5><p>Separate necessary items from unnecessary ones. Remove all tools, equipment, and materials that are not needed for current production.</p><h5>2. Seiton (Set in Order)</h5><p>Arrange necessary items in good order for easy use. "A place for everything, and everything in its place."</p><h5>3. Seiso (Shine)</h5><p>Clean your workplace completely. Cleaning also acts as an inspection to find leaks, cracks, or loose bolts.</p><h5>4. Seiketsu (Standardize)</h5><p>Maintain high standards of housekeeping. Create visual rules (like floor markings or color-coded tools).</p><h5>5. Shitsuke (Sustain)</h5><p>Make a habit of maintaining the standards. This requires discipline, training, and regular audits.</p>` },
+    'lean': { icon: '⚙️', title: 'Lean Manufacturing', content: `<p>Lean manufacturing is a production method aimed primarily at reducing times within the production system as well as response times from suppliers and to customers. It is derived from the Toyota Production System (TPS).</p><h5>Key Principles:</h5><ul><li><b>Kaizen:</b> Continuous, incremental improvement involving everyone.</li><li><b>Poka-yoke:</b> Mistake-proofing. Designing processes so mistakes are impossible to make.</li><li><b>Just-In-Time (JIT):</b> Producing only what is needed, when it is needed.</li><li><b>Gemba:</b> "The real place." Going to the factory floor to observe and solve problems.</li></ul><h5>The 7 Wastes (Muda):</h5><ul><li>Transportation, Inventory, Motion, Waiting, Overproduction, Overprocessing, Defects.</li></ul>` },
+    'standards': { icon: '📜', title: 'IEC Cable Standards', content: `<p>International Electrotechnical Commission (IEC) standards are globally recognized benchmarks for cable manufacturing and testing.</p><table><tr><th>Standard</th><th>Description</th></tr><tr><td><b>IEC 60228</b></td><td>Conductors of insulated cables. Defines Class 1 (solid), Class 2 (stranded), Class 5 (flexible), and Class 6 (extra flexible).</td></tr><tr><td><b>IEC 60502</b></td><td>Power cables with extruded insulation (PVC, XLPE, EPR) for rated voltages from 1kV to 30kV.</td></tr><tr><td><b>IEC 60332</b></td><td>Tests on electric and optical fibre cables under fire conditions. (Flame propagation).</td></tr><tr><td><b>IEC 60754</b></td><td>Test on gases evolved during combustion of materials from cables (Halogen acid gas).</td></tr><tr><td><b>IEC 61034</b></td><td>Measurement of smoke density of cables burning under defined conditions.</td></tr></table>` },
+    'formulas': { icon: '📐', title: 'Engineering Formulas', content: `<p>Essential formulas used in cable design and quality control:</p><h5>1. Conductor Resistance</h5><p>The DC resistance of a conductor is calculated using:</p><div class="formula-box">R = (ρ × L) / A</div><ul><li><b>R</b> = Resistance (Ω)</li><li><b>ρ</b> = Resistivity (Copper ≈ 0.01724 Ω·mm²/m at 20°C)</li><li><b>L</b> = Length (m)</li><li><b>A</b> = Cross-sectional Area (mm²)</li></ul><h5>2. Voltage Drop</h5><p>For a single-phase circuit:</p><div class="formula-box">Vd = (2 × I × L × R) / 1000</div><ul><li><b>I</b> = Current (A)</li><li><b>L</b> = Cable Length (m)</li><li><b>R</b> = Resistance (Ω/km)</li></ul><h5>3. Capacitance</h5><p>Capacitance per unit length (pF/m) is crucial for communication cables and high-voltage cables.</p><div class="formula-box">C = (2 × π × ε) / ln(D/d)</div><ul><li><b>ε</b> = Permittivity of insulation</li><li><b>D</b> = Diameter over insulation</li><li><b>d</b> = Conductor diameter</li></ul>` },
+    'construction': { icon: '🔌', title: 'Cable Construction Anatomy', content: `<p>A standard power or control cable consists of several protective layers to ensure safety and longevity.</p><h5>From Inside Out:</h5><ul><li><b>1. Conductor:</b> Annealed copper or aluminum. Carries the current. Stranded for flexibility.</li><li><b>2. Insulation:</b> XLPE, PVC, or Rubber. Prevents current leakage and protects against electric shock.</li><li><b>3. Bedding/Inner Sheath:</b> Extruded PVC or tape. Binds the cores together and prevents moisture ingress.</li><li><b>4. Armouring:</b> Steel wire (SWA) or steel tape (STA). Provides mechanical protection against crushing and rodents.</li><li><b>5. Outer Sheath:</b> Extruded PVC, PE, or LSZH (Low Smoke Zero Halogen). Protects against UV, chemicals, and fire.</li></ul><p style="margin-top:12px;"><b>Did you know?</b> The "Skin Effect" at high frequencies means AC current flows mostly on the surface of the conductor. This is why high-frequency cables use finely stranded wire (Litz wire) to increase surface area.</p>` }
   };
-
   const item = data[key];
   if(!item) return;
-
   document.getElementById('modalIcon').textContent = item.icon;
   document.getElementById('modalTitle').textContent = item.title;
   document.getElementById('modalBody').innerHTML = item.content;
   document.getElementById('knowledgeModal').classList.add('open');
 };
-
 window.closeKnowledge = function(event) {
-  if(event && event.target.classList.contains('modal-content')) return; // Don't close if clicking inside modal
+  if(event && event.target.classList.contains('modal-content')) return;
   document.getElementById('knowledgeModal').classList.remove('open');
 };
 
-/* --- CALCULATIONS & DATA LOGIC --- */
+/* --- JOB CARDS & BOM DATA LOGIC --- */
 function normalizeHeader(h){ return String(h||'').toLowerCase().replace(/[\s_\-\/\.]+/g,''); }
 function findHeader(headers, ...candidates){ for(const c of candidates){ const found = headers.find(h => normalizeHeader(h) === normalizeHeader(c)); if(found) return found; } return null; }
+
 async function loadJobDataFromCSV() {
   try {
     const response = await fetch('data.csv?v=' + new Date().getTime());
@@ -926,7 +819,34 @@ function processJobCSVData(rows) {
   rows.forEach((row, i) => {
     const soItem = String(row[soItemKey] || '').trim(), op = String(row[opKey] || '').trim();
     if (!soItem || !op) return;
-    JOB_DATA.push({ order: i, soItem, so: soItem.split('#')[0].trim(), operation: op, qty: row[findHeader(headers, 'QTY')] || '', customer: row[findHeader(headers, 'CUSTOMER')] || '', size: row[findHeader(headers, 'SIZE')] || '', details: [], drum: row[findHeader(headers, 'DRUM')] || '' });
+    
+    const details = [];
+    const hCols = headers.filter(h => h.trim().toUpperCase().endsWith('H'));
+    hCols.forEach(hCol => {
+      const base = hCol.trim().toUpperCase().slice(0, -1);
+      const dCol = headers.find(h => h.trim().toUpperCase() === base + 'D');
+      const label = String(row[hCol] || '').trim();
+      if (dCol) {
+        const val = String(row[dCol] || '').trim();
+        if (label !== '' || val !== '') details.push([label || hCol, val || '—']);
+      } else if (label !== '') {
+        details.push([label, '—']);
+      }
+    });
+
+    JOB_DATA.push({ 
+      order: i, 
+      soItem, 
+      so: soItem.split('#')[0].trim(), 
+      operation: op, 
+      qty: row[findHeader(headers, 'QTY', 'QUANTITY')] || '', 
+      customer: row[findHeader(headers, 'CUSTOMER')] || '', 
+      size: row[findHeader(headers, 'SIZE')] || '', 
+      currentOp: row[findHeader(headers, 'CURRENT OPERATION', 'CURRENTOP')] || '', 
+      nextOp: row[findHeader(headers, 'NEXT OPERATION', 'NEXTOP')] || '', 
+      details, 
+      drum: row[findHeader(headers, 'DRUM')] || '' 
+    });
   });
 }
 function jobNumberOf(row){ return row.soItem ? row.soItem.split('#')[0].trim() : ''; }
@@ -972,55 +892,212 @@ function renderJobResults(){
   document.getElementById('jobResultCount').textContent = `${matches.length} records`;
   let html = '';
   matches.forEach(row => {
-    let specs = `<div class="spec accent"><div class="k">JOB NO</div><div class="v">${esc(jobNumberOf(row))}</div></div><div class="spec"><div class="k">INDEX</div><div class="v">${esc(row.soItem)}</div></div><div class="spec"><div class="k">QTY</div><div class="v">${esc(row.qty)}</div></div><div class="spec"><div class="k">CUSTOMER</div><div class="v">${esc(row.customer)}</div></div>`;
-    html += `<div class="card"><div class="card-head"><h3>${esc(row.soItem)}</h3><span class="op-tag">${esc(row.operation)}</span></div><div class="specs">${specs}</div></div>`;
+    let specs = '';
+    specs += `<div class="spec accent"><div class="k">JOB NO</div><div class="v"><span class="chip-val">${esc(jobNumberOf(row))}</span></div></div>`;
+    specs += `<div class="spec"><div class="k">INDEX</div><div class="v">${esc(row.soItem)}</div></div>`;
+    specs += `<div class="spec"><div class="k">QTY</div><div class="v">${esc(row.qty||'—')}</div></div>`;
+    specs += `<div class="spec"><div class="k">CUSTOMER</div><div class="v">${esc(row.customer||'—')}</div></div>`;
+    specs += `<div class="spec"><div class="k">SIZE</div><div class="v">${esc(row.size||'—')}</div></div>`;
+    specs += `<div class="spec"><div class="k">CURR OP</div><div class="v">${esc(row.currentOp||'—')}</div></div>`;
+    specs += `<div class="spec"><div class="k">NEXT OP</div><div class="v">${esc(row.nextOp||'—')}</div></div>`;
+    (row.details||[]).forEach(([k,v])=>{ specs += `<div class="spec"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div></div>`; });
+    
+    html += `<div class="card">
+      <div class="card-head">
+        <h3><span class="bullet"></span>${esc(row.soItem)}</h3>
+        <span class="op-tag">${esc(row.operation)}</span>
+      </div>
+      <div class="specs">${specs}</div>
+      <div class="card-foot">
+        <span>🏷️ ${esc(row.so)}</span>
+        <span class="drum">🥁 ${esc(row.drum||'—')}</span>
+      </div>
+    </div>`;
   });
   jobGrid.innerHTML = html || `<div class="empty"><p>No records found</p></div>`;
 }
 document.getElementById('searchBtn').addEventListener('click', renderJobResults);
 document.getElementById('resetBtn').addEventListener('click', () => { jobInput.value=''; opSelect.disabled=true; jobGrid.innerHTML='<div class="empty"><p>Start typing a job number</p></div>'; });
 
+/* BOM LOGIC */
 async function loadBomDataFromCSV() {
   try {
     const response = await fetch('bom.csv?v=' + new Date().getTime());
     if (!response.ok) return;
     Papa.parse(await response.text(), { header: false, skipEmptyLines: false, complete: function(results) {
-      const allRows = results.data; if(!allRows || allRows.length < 2) return;
-      const headerRow = allRows[0].map(h => String(h||'').trim());
-      const rows = allRows.slice(1).filter(r => r.some(c => String(c||'').trim() !== '')).map(r => { const obj = {}; headerRow.forEach((h, i) => { obj[h] = r[i] || ''; }); return obj; });
+      const allRows = results.data; 
+      if(!allRows || allRows.length < 2) return;
+      
+      function rowHasHeader(row){
+        if(!row || !row.length) return false;
+        return row.some(cell => {
+          const n = normalizeHeader(cell);
+          return n === 'soitemno' || n === 'soitem';
+        });
+      }
+      
+      let headerRowIndex = 0;
+      if(!rowHasHeader(allRows[0]) && rowHasHeader(allRows[1])){
+        headerRowIndex = 1;
+      }
+      
+      const headerRow = allRows[headerRowIndex].map(h => String(h||'').trim());
+      const dataRows = allRows.slice(headerRowIndex + 1).filter(r => r.some(c => String(c||'').trim() !== ''));
+      
+      const rows = dataRows.map(r => {
+        const obj = {};
+        headerRow.forEach((h, i) => { obj[h] = r[i] !== undefined ? r[i] : ''; });
+        return obj;
+      }).filter(o => Object.values(o).some(v => String(v||'').trim() !== ''));
+
       processBomCSVData(rows);
     }});
   } catch (e) { console.warn('bom.csv not found'); }
 }
 function processBomCSVData(rows) {
+  if(!rows || !rows.length) return;
   const headers = Object.keys(rows[0] || {});
-  const sKey = findHeader(headers, 'SO/ITEM NO', 'SOITEMNO'), oKey = findHeader(headers, 'OPERATION JDM'), gKey = findHeader(headers, 'GROUP'), mcKey = findHeader(headers, 'MATERIAL CODE'), mdKey = findHeader(headers, 'MATERIAL DISC'), bKey = findHeader(headers, 'BOM/KM - JDM'), pKey = findHeader(headers, 'PLAN/PRD QTY');
+  
+  const soItemKey = findHeader(headers, 'SO/ITEM NO', 'SOITEMNO', 'SO ITEM NO', 'SO-ITEM', 'SOITEM');
+  const operationKey = findHeader(headers, 'OPERATION JDM', 'OPERATIONJDM', 'OPERATION');
+  const groupKey = findHeader(headers, 'GROUP');
+  const opnKey = findHeader(headers, 'OPN CODE', 'OPNCODE', 'OPN');
+  const materialCodeKey = findHeader(headers, 'MATERIAL CODE', 'MATERIALCODE');
+  const materialDiscKey = findHeader(headers, 'MATERIAL DISC', 'MATERIALDISC', 'MATERIAL');
+  const bomPerKmKey = findHeader(headers, 'BOM/KM - JDM', 'BOMKMJDM', 'BOM/KM', 'BOM/KM-JDM');
+  const customerKey = findHeader(headers, 'CUSTOMER JDM', 'CUSTOMERJDM');
+  const sizeKey = findHeader(headers, 'SIZE');
+  const colourKey = findHeader(headers, 'COLOUR', 'COLOR');
+  const planQtyKey = findHeader(headers, 'PLAN/PRD QTY', 'PLANPRDQTY');
+
+  if (!soItemKey) { console.warn('BOM CSV missing SO/ITEM NO header'); return; }
+
   const grouped = new Map();
+  
   rows.forEach(row => {
-    const so = String(row[sKey] || '').replace(/#/g, '').trim(); if(!so) return;
-    if(!grouped.has(so)) grouped.set(so, { soItem: so, defaultPlanQty: parseFloat(row[pKey]) || 0, lines: [], ops: new Set() });
-    const rec = grouped.get(so), op = String(row[oKey] || '').trim();
-    if(op) rec.ops.add(op);
-    if(row[mcKey] || row[mdKey]) rec.lines.push({ group: row[gKey] || 'OTHER', op, matCode: row[mcKey], matDisc: row[mdKey], bomPerKm: parseFloat(row[bKey]) || 0 });
+    const rawSoItem = String(row[soItemKey] || '').trim();
+    const soItemRaw = cleanSoItem(rawSoItem);
+    
+    if(!soItemRaw) return;
+    
+    if(!grouped.has(soItemRaw)){
+      grouped.set(soItemRaw, {
+        soItem: soItemRaw,
+        customer: String(row[customerKey] || '').trim(),
+        size: String(row[sizeKey] || '').trim(),
+        defaultPlanQty: parseFloat(row[planQtyKey]) || 0,
+        colour: String(row[colourKey] || '').trim(),
+        lines: [],
+        operationJDMToOpnCode: new Map()
+      });
+    }
+    
+    const rec = grouped.get(soItemRaw);
+    const matCode = String(row[materialCodeKey] || '').trim();
+    const matDisc = String(row[materialDiscKey] || '').trim();
+    const rowGroup = String(row[groupKey] || '').trim() || 'OTHER';
+    const opnCode = String(row[opnKey] || '').trim();
+    const opJDM = String(row[operationKey] || '').trim();
+    const bomPerKm = parseFloat(row[bomPerKmKey]) || 0;
+    
+    if(opJDM && opnCode && !rec.operationJDMToOpnCode.has(opJDM)){
+      rec.operationJDMToOpnCode.set(opJDM, opnCode);
+    }
+    
+    if(!matCode && !matDisc) return;
+    
+    rec.lines.push({
+      group: rowGroup,
+      opnCode,
+      operationJDM: opJDM,
+      matCode,
+      matDisc: matDisc || matCode,
+      bomPerKm
+    });
   });
+
   BOM_DATA = Array.from(grouped.values());
 }
-function renderBomResults(){
-  const so = document.getElementById('bomInput').value.trim(), op = document.getElementById('bomOpSelect').value;
-  const item = BOM_DATA.find(b => b.soItem === so);
-  if(!item){ document.getElementById('bomGrid').innerHTML = `<div class="empty"><p>No BOM found</p></div>`; return; }
-  let lines = op ? item.lines.filter(l => l.op === op) : item.lines;
-  const plan = USER_PLAN_QTY !== null ? USER_PLAN_QTY : item.defaultPlanQty;
-  let html = `<div class="card"><div class="card-head"><h3>${esc(so)}</h3></div><div class="qc-card-body"><div class="result-section"><div class="result-title-bar">Plan Qty</div><div class="result-card primary"><input type="number" id="planQtyInput" value="${plan}" style="border:none;background:transparent;font-size:1.3rem;font-weight:800;width:100px;text-align:right;" oninput="window.updateBomCalc()"></div></div><div class="bom-table"><div class="bom-table-head"><div>Mat Code</div><div>Mat Disc</div><div>Qty</div></div>`;
-  const groups = new Map(); lines.forEach(l => { if(!groups.has(l.group)) groups.set(l.group, []); groups.get(l.group).push(l); });
-  Array.from(groups.keys()).sort().forEach(g => { html += `<div class="bom-group-header">${g}</div>`; groups.get(g).forEach(l => { html += `<div class="bom-row"><div>${esc(l.matCode)}</div><div>${esc(l.matDisc)}</div><div>${((plan * l.bomPerKm)/1000).toFixed(2)}</div></div>`; }); });
-  document.getElementById('bomGrid').innerHTML = html + `</div></div></div>`;
-}
-window.updateBomCalc = function() { USER_PLAN_QTY = parseFloat(document.getElementById('planQtyInput').value) || 0; renderBomResults(); };
-document.getElementById('bomSearchBtn').addEventListener('click', renderBomResults);
 
+function cleanSoItem(str){ return String(str||'').replace(/#/g, '').trim(); }
+function getAllBomKeys(){ return BOM_DATA.map(b => b.soItem).sort(); }
+function filterBomKeys(term){ const q = cleanSoItem(term).toLowerCase(); return q ? getAllBomKeys().filter(k => k.toLowerCase().includes(q)) : getAllBomKeys(); }
+function bomOpsForItem(soItem){ if(!soItem) return []; const item = BOM_DATA.find(b => b.soItem === soItem); if(!item) return []; const list = []; item.operationJDMToOpnCode.forEach((code, name) => list.push({ name, code })); list.sort(); return list; }
+
+function refreshBomOpSelect(){
+  const soItem = document.getElementById('bomInput').value.trim(); const bomOpSelect = document.getElementById('bomOpSelect'); bomOpSelect.innerHTML = '';
+  if(!soItem){ bomOpSelect.innerHTML = '<option value="">— Select SO-ITEM First —</option>'; bomOpSelect.disabled = true; return; }
+  const ops = bomOpsForItem(soItem);
+  if(ops.length === 0){ bomOpSelect.innerHTML = '<option value="">— No Operations —</option>'; bomOpSelect.disabled = true; return; }
+  const ph = document.createElement('option'); ph.value = ''; ph.textContent = '— All Operations —'; bomOpSelect.appendChild(ph);
+  ops.forEach(o => { const opt = document.createElement('option'); opt.value = o.name; opt.textContent = o.name; bomOpSelect.appendChild(opt); });
+  bomOpSelect.disabled = false;
+}
+
+const bomInput = document.getElementById('bomInput');
+const bomSuggestBox = document.getElementById('bomSuggestBox');
+let BOM_SUGGEST_INDEX = -1, BOM_SUGGEST_ITEMS = [];
+
+function renderBomSuggestions(term){
+  const matches = filterBomKeys(term); BOM_SUGGEST_INDEX = -1;
+  if(matches.length === 0){ BOM_SUGGEST_ITEMS = []; bomSuggestBox.innerHTML = `<div class="suggest-empty">No items match <b>“${esc(term)}”</b></div>`; bomSuggestBox.classList.add('open'); return; }
+  BOM_SUGGEST_ITEMS = matches; let html = `<div class="suggest-hint">${matches.length} items found</div>`;
+  matches.slice(0, 50).forEach((k, i) => {
+    const item = BOM_DATA.find(b => b.soItem === k);
+    const lineCount = item ? item.lines.length : 0;
+    html += `<div class="suggest-item" data-bom="${esc(k)}" data-idx="${i}"><span>${esc(k)}</span><span class="meta">${lineCount} lines</span></div>`;
+  });
+  bomSuggestBox.innerHTML = html; bomSuggestBox.classList.add('open');
+}
+function closeBomSuggestions(){ bomSuggestBox.classList.remove('open'); BOM_SUGGEST_INDEX = -1; }
+function pickBomSuggestion(soItem){ bomInput.value = soItem; closeBomSuggestions(); refreshBomOpSelect(); USER_PLAN_QTY = null; renderBomResults(); }
+
+bomInput.addEventListener('input', () => { renderBomSuggestions(bomInput.value); refreshBomOpSelect(); });
+bomInput.addEventListener('focus', () => { if(!bomInput.value.trim()) renderBomSuggestions(''); else renderBomSuggestions(bomInput.value); });
+bomSuggestBox.addEventListener('mousedown', e => { const item = e.target.closest('.suggest-item'); if(item) pickBomSuggestion(item.dataset.bom); });
+document.addEventListener('click', e => { if(!document.getElementById('bomField').contains(e.target)) closeBomSuggestions(); });
+
+function renderBomResults(){
+  const soItem = bomInput.value.trim(), selectedOpName = document.getElementById('bomOpSelect').value;
+  const item = BOM_DATA.find(b => b.soItem === soItem);
+  if(!item){ document.getElementById('bomGrid').innerHTML = `<div class="empty"><p>No BOM found</p></div>`; return; }
+  
+  const effectivePlanQty = (USER_PLAN_QTY !== null && !isNaN(USER_PLAN_QTY)) ? USER_PLAN_QTY : item.defaultPlanQty;
+  let lines = item.lines;
+  if(selectedOpName) lines = lines.filter(l => l.operationJDM === selectedOpName);
+  
+  const groupMap = new Map();
+  lines.forEach(l => { const g = l.group || 'OTHER'; if(!groupMap.has(g)) groupMap.set(g, []); groupMap.get(g).push(l); });
+  
+  let html = `<div class="card"><div class="card-head"><h3>${esc(item.soItem)}</h3><span class="op-tag">BOM</span></div><div class="qc-card-body">
+    <div class="result-section"><div class="result-title-bar">PLAN/PRD QTY</div><div class="result-card primary"><input type="number" id="planQtyInput" value="${formatQty(effectivePlanQty)}" style="border:none;background:transparent;font-size:1.3rem;font-weight:800;width:100%;text-align:right;outline:none;" oninput="window.updateBomCalc()"></div></div>
+    <div class="bom-table"><div class="bom-table-head"><div>Mat Code</div><div>Mat Disc</div><div>Qty</div></div>`;
+    
+  const sortedGroups = Array.from(groupMap.keys()).sort();
+  sortedGroups.forEach(g => {
+    html += `<div class="bom-group-header">${esc(g)} <span style="margin-left:auto;font-size:0.6rem;background:#dbeafe;padding:2px 8px;border-radius:10px;">${groupMap.get(g).length}</span></div>`;
+    groupMap.get(g).forEach(l => {
+      const computed = (effectivePlanQty * l.bomPerKm) / 1000;
+      html += `<div class="bom-row"><div>${esc(l.matCode)}</div><div>${esc(l.matDisc)}</div><div>${formatQty(computed)}</div></div>`;
+    });
+  });
+  
+  html += `</div></div></div>`;
+  document.getElementById('bomGrid').innerHTML = html;
+}
+window.updateBomCalc = function() {
+  const val = parseFloat(document.getElementById('planQtyInput').value);
+  USER_PLAN_QTY = isNaN(val) ? 0 : val;
+  renderBomResults();
+};
+document.getElementById('bomSearchBtn').addEventListener('click', renderBomResults);
+document.getElementById('bomResetBtn').addEventListener('click', () => { bomInput.value=''; document.getElementById('bomOpSelect').disabled=true; document.getElementById('bomGrid').innerHTML='<div class="empty"><p>Start typing a SO-ITEM</p></div>'; });
+document.getElementById('bomOpSelect').addEventListener('change', renderBomResults);
+
+function formatQty(n) { if(n === null || n === undefined || isNaN(n)) return '—'; return Number(n).toFixed(4).replace(/\.?0+$/, '') || '0'; }
 function formatScientific(num) { if (num === 0) return '0'; const e = Math.floor(Math.log10(Math.abs(num))); const m = num / Math.pow(10, e); return `${m.toFixed(2)} × 10<sup>${e}</sup>`; }
 
+/* QC CALC LOGIC */
 function calculateCR() {
   const r = parseFloat(document.getElementById('crReading').value) || 0, l = parseFloat(document.getElementById('crLength').value) || 0, t = parseFloat(document.getElementById('crTemp').value) || 0, s = parseFloat(document.getElementById('crSpecified').value) || 0;
   let obs = (l !== 0 && (230 + t) !== 0) ? (250 / (230 + t)) * (r / l) * 1000 : 0;
