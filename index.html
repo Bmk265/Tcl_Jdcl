@@ -48,40 +48,30 @@ body{
 .dropdown-header b { color: #0f172a; display: block; font-size: 0.9rem;}
 .dropdown-btn {width: 100%; padding: 8px; border-radius: 8px; border: none;background: #fef2f2; color: #ef4444; font-weight: 700; font-size: 0.8rem; cursor: pointer;}
 .topbar{position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;padding: 24px 20px; background: rgba(255, 255, 255, 0.85);backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.9);border-radius: 24px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);margin-bottom: 20px; overflow: hidden;}
-.brand{position: relative; z-index: 1; display:flex; flex-direction:column; align-items:center; gap: 4px; margin-top: 10px;}
+.brand{position: relative; z-index: 1; display:flex; flex-direction:column; align-items: center; gap: 4px; margin-top: 10px;}
 .brand-company{font-size:.7rem; font-weight:700; color:#64748b; letter-spacing:.15em; text-transform:uppercase; text-align: center;}
 .brand-title-row span{font-weight:800; font-size:1.4rem; letter-spacing:-.02em; color: #0f172a; text-align: center;}
+
+/* ADMIN */
 .admin-panel {background: #fff; border: 1px solid #fcd34d; border-radius: 20px; padding: 20px;margin-bottom: 20px; display: none;}
 .admin-panel h3 { font-size: 1rem; font-weight: 800; color: #92400e; margin-bottom: 16px;}
 .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .admin-grid input { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 0.85rem; outline: none;}
 .admin-save-btn { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #f59e0b; color: #fff; font-weight: 700; margin-top: 12px; cursor: pointer;}
 
+/* VIEWS */
 .view-section { display: none; animation: fadeIn 0.3s ease; }
 .view-section.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* ========================================= */
-/* NEW HOME DASHBOARD & KNOWLEDGE HUB        */
-/* ========================================= */
-.dashboard-hero {
-  background: linear-gradient(135deg, #0f172a, #1e293b);
-  border-radius: 24px; padding: 24px; color: #fff; margin-bottom: 20px;
-  position: relative; overflow: hidden; box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.4);
-}
-.dashboard-hero::before {
-  content: ''; position: absolute; top: -50%; right: -20%; width: 300px; height: 300px;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 60%); pointer-events: none;
-}
+/* HOME DASHBOARD */
+.dashboard-hero {background: linear-gradient(135deg, #0f172a, #1e293b);border-radius: 24px; padding: 24px; color: #fff; margin-bottom: 20px;position: relative; overflow: hidden; box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.4);}
+.dashboard-hero::before {content: ''; position: absolute; top: -50%; right: -20%; width: 300px; height: 300px;background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 60%); pointer-events: none;}
 .dash-greeting { font-size: 0.8rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; margin-bottom: 4px;}
 .dash-name { font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; color: #ffffff;}
 .dash-date { font-size: 0.85rem; color: #cbd5e1; display: flex; align-items: center; gap: 6px;}
-
 .module-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;}
-.module-card {
-  display: flex; align-items: center; gap: 16px; padding: 16px 20px; border-radius: 20px;
-  text-decoration: none; color: inherit; transition: transform 0.2s; cursor: pointer; border: none; width: 100%; text-align: left;
-}
+.module-card {display: flex; align-items: center; gap: 16px; padding: 16px 20px; border-radius: 20px;text-decoration: none; color: inherit; transition: transform 0.2s; cursor: pointer; border: none; width: 100%; text-align: left;}
 .module-card:active { transform: scale(0.98); }
 .card-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;}
 .card-icon svg { width: 24px; height: 24px; }
@@ -95,34 +85,55 @@ body{
 .card-qc { background: linear-gradient(135deg, #f5f3ff, #ede9fe); border: 1px solid #c4b5fd; color: #4c1d95;}
 .card-qc .card-icon { background: #8b5cf6; color: #fff; }
 
-/* Knowledge Hub Feed */
+/* KNOWLEDGE HUB */
 .section-title { font-size: 0.9rem; font-weight: 800; color: #334155; margin: 24px 0 12px 4px; text-transform: uppercase; letter-spacing: 0.05em;}
-.k-feed { display: flex; flex-direction: column; gap: 16px; }
-
+.k-feed { display: flex; flex-direction: column; gap: 12px; }
 .k-card {
-  background: #fff; border-radius: 20px; padding: 20px;
-  border-left: 6px solid #3b82f6; box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-  display: flex; gap: 16px; align-items: flex-start;
+  background: #fff; border-radius: 16px; padding: 16px;
+  border-left: 6px solid #3b82f6; box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  display: flex; gap: 16px; align-items: center; cursor: pointer; transition: transform 0.2s;
 }
+.k-card:active { transform: scale(0.98); }
 .k-card.k-lean { border-left-color: #f59e0b; }
 .k-card.k-std { border-left-color: #10b981; }
 .k-card.k-formula { border-left-color: #8b5cf6; }
 .k-card.k-fact { border-left-color: #ef4444; }
+.k-icon {width: 40px; height: 40px; border-radius: 12px; background: #f8fafc;display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;}
+.k-content { flex: 1; }
+.k-content h4 { font-size: 0.95rem; font-weight: 800; color: #0f172a; margin-bottom: 2px; }
+.k-content p { font-size: 0.8rem; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+.k-arrow { color: #cbd5e1; font-size: 1.2rem; }
 
-.k-icon {
-  width: 40px; height: 40px; border-radius: 12px; background: #f8fafc;
-  display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;
+/* MODAL */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
+  z-index: 2000; display: none; align-items: flex-end; justify-content: center;
 }
-.k-content h4 { font-size: 1rem; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
-.k-content p { font-size: 0.85rem; color: #475569; line-height: 1.6; margin-bottom: 8px;}
-.k-content ul { padding-left: 16px; font-size: 0.85rem; color: #475569; margin-bottom: 8px;}
-.k-content li { margin-bottom: 4px; }
-.formula-box {
-  background: #f8fafc; border: 1px dashed #cbd5e1; padding: 10px;
-  border-radius: 8px; font-family: monospace; font-size: 0.9rem; font-weight: 700; color: #1e293b; text-align: center; margin-top: 8px;
+.modal-overlay.open { display: flex; }
+.modal-content {
+  background: #fff; width: 100%; max-width: 600px; max-height: 85vh;
+  border-radius: 24px 24px 0 0; padding: 24px; overflow-y: auto;
+  animation: slideUp 0.3s ease; position: relative;
 }
-/* ========================================= */
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+.modal-close {
+  position: absolute; top: 16px; right: 16px; width: 32px; height: 32px;
+  background: #f1f5f9; border-radius: 50%; border: none; font-size: 1.2rem;
+  display: flex; align-items: center; justify-content: center; cursor: pointer; color: #64748b;
+}
+.modal-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-right: 30px;}
+.modal-header h3 { font-size: 1.2rem; font-weight: 800; color: #0f172a; }
+.modal-body h5 { font-size: 0.95rem; font-weight: 800; color: #1e293b; margin-top: 16px; margin-bottom: 8px;}
+.modal-body p { font-size: 0.9rem; color: #475569; margin-bottom: 12px; line-height: 1.6;}
+.modal-body ul { padding-left: 20px; margin-bottom: 16px;}
+.modal-body li { font-size: 0.9rem; color: #475569; margin-bottom: 6px; line-height: 1.5;}
+.modal-body .formula-box {background: #f8fafc; border: 1px dashed #cbd5e1; padding: 12px;border-radius: 8px; font-family: monospace; font-size: 1rem; font-weight: 700; color: #1e293b; text-align: center; margin: 12px 0;}
+.modal-body table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 0.85rem;}
+.modal-body th, .modal-body td { border: 1px solid #e2e8f0; padding: 8px 12px; text-align: left; }
+.modal-body th { background: #f8fafc; font-weight: 700; color: #334155; }
 
+/* JOB CARDS & BOM */
 .search-panel{display:grid;grid-template-columns:1fr;gap:12px;background: rgba(255, 255, 255, 0.9);border-radius: 20px;padding:16px;margin-bottom: 16px;position:relative;z-index:20;border: 1px solid #fff;}
 .field{display:flex;flex-direction:column;gap:6px;min-width:0;position:relative}
 .field label{font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;font-weight:800;color:#64748b;}
@@ -162,6 +173,8 @@ body{
 .bom-row{display:grid;grid-template-columns:110px 1fr 100px;border-bottom:1px solid #f1f5f9;}
 .bom-row > div{padding:10px 12px;font-size:.75rem;color:#334155;display:flex;align-items:center;border-right:1px solid #f1f5f9;}
 .bom-row > div:last-child{border-right:none;justify-content:flex-end;font-weight:800;color:#2563eb;background:#fafbfc;}
+
+/* QC CALCULATOR */
 .qc-tabs-wrapper { background: #ffffff; border-radius: 16px; padding: 6px; margin-bottom: 20px; border: 1px solid #e2e8f0;}
 .qc-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
 .qc-tab-btn { padding: 12px 4px; border-radius: 10px; border: none; background: transparent; color: #64748b; font-weight: 700; font-size: 0.75rem; cursor: pointer; text-align: center;}
@@ -191,16 +204,20 @@ body{
 .status-low{background: #f0fdf4; border: 1px solid #86efac; color: #166534;}
 .status-neutral{background: #f1f5f9; border: 1px solid #e2e8f0; color: #475569;}
 .btn-print { background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; border: none; padding: 16px; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 16px;}
+
+/* BOTTOM NAV */
 .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-top: 1px solid #e2e8f0; display: flex; justify-content: space-around; padding-bottom: env(safe-area-inset-bottom); z-index: 1000;}
 .nav-item { flex: 1; padding: 12px 0 10px; display: flex; flex-direction: column; align-items: center; gap: 4px; color: #94a3b8; font-size: 0.65rem; font-weight: 700; cursor: pointer; transition: 0.2s;}
 .nav-item.active { color: #3b82f6; }
 .nav-item svg { width: 22px; height: 22px; fill: currentColor; }
+
+/* PRINT */
 .print-header, .print-footer, .print-inputs-section { display: none; }
 @media print {
   @page { margin: 15mm; size: A4 portrait; }
   html, body { width: 100% !important; margin: 0 !important; padding: 0 !important; background: #fff !important; color: #000 !important; font-size: 12px; }
   .app { max-width: 100% !important; width: 100% !important; padding: 0 !important; margin: 0 !important; }
-  .topbar, .tabs-wrapper, .qc-tabs-wrapper, .input-group, .qc-card-head, .card-head, .btn-print, .admin-panel, .user-profile, .profile-dropdown, .no-print, .bottom-nav, .dashboard-hero, .stats-grid, .module-grid, .k-feed, .tip-banner, .search-panel, .result-bar { display: none !important; }
+  .topbar, .tabs-wrapper, .qc-tabs-wrapper, .input-group, .qc-card-head, .card-head, .btn-print, .admin-panel, .user-profile, .profile-dropdown, .no-print, .bottom-nav, .dashboard-hero, .stats-grid, .module-grid, .k-feed, .tip-banner, .search-panel, .result-bar, .modal-overlay { display: none !important; }
   .print-header { display: block !important; margin-bottom: 25px; }
   .print-footer { display: block !important; margin-top: 40px; text-align: center; font-size: 10px; color: #666; border-top: 1px solid #ccc; padding-top: 10px;}
   .p-header-top { text-align: center; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 15px;}
@@ -313,89 +330,53 @@ body{
     <div class="k-feed">
       
       <!-- 5S Card -->
-      <div class="k-card k-lean">
+      <div class="k-card k-lean" onclick="openKnowledge('5s')">
         <div class="k-icon">🏭</div>
         <div class="k-content">
           <h4>The 5S Methodology</h4>
-          <p>A systematic approach to workplace organization that improves efficiency, safety, and morale.</p>
-          <ul>
-            <li><b>Seiri (Sort):</b> Remove unnecessary items.</li>
-            <li><b>Seiton (Set):</b> Arrange tools in order.</li>
-            <li><b>Seiso (Shine):</b> Clean the workspace.</li>
-            <li><b>Seiketsu (Standardize):</b> Create visual rules.</li>
-            <li><b>Shitsuke (Sustain):</b> Maintain discipline.</li>
-          </ul>
+          <p>Workplace organization for efficiency & safety</p>
         </div>
+        <div class="k-arrow">›</div>
       </div>
 
       <!-- Lean Card -->
-      <div class="k-card k-lean">
+      <div class="k-card k-lean" onclick="openKnowledge('lean')">
         <div class="k-icon">⚙️</div>
         <div class="k-content">
-          <h4>Lean Manufacturing Principles</h4>
-          <p>Maximize value while minimizing waste (Muda).</p>
-          <ul>
-            <li><b>Kaizen:</b> Continuous, incremental improvement.</li>
-            <li><b>Poka-yoke:</b> Mistake-proofing (e.g., ensuring connectors fit only one way).</li>
-            <li><b>Just-In-Time (JIT):</b> Produce only what is needed, when it is needed.</li>
-            <li><b>Gemba:</b> Go and see the actual place where work happens.</li>
-          </ul>
+          <h4>Lean Manufacturing</h4>
+          <p>Maximize value & minimize waste (Kaizen, JIT)</p>
         </div>
+        <div class="k-arrow">›</div>
       </div>
 
       <!-- Standards Card -->
-      <div class="k-card k-std">
+      <div class="k-card k-std" onclick="openKnowledge('standards')">
         <div class="k-icon">📜</div>
         <div class="k-content">
-          <h4>Key Cable Standards</h4>
-          <p>Essential IEC standards for cable manufacturing:</p>
-          <ul>
-            <li><b>IEC 60228:</b> International standard for conductors (Class 1 solid, Class 2 stranded, Class 5 flexible, Class 6 extra flexible).</li>
-            <li><b>IEC 60502:</b> Power cables with extruded insulation (PVC, XLPE, EPR) for voltages up to 30kV.</li>
-            <li><b>IEC 60332:</b> Flame retardant testing (e.g., Cat A, B, C for bunched cables).</li>
-          </ul>
+          <h4>IEC Cable Standards</h4>
+          <p>Essential global standards for testing & construction</p>
         </div>
+        <div class="k-arrow">›</div>
       </div>
 
       <!-- Formulas Card -->
-      <div class="k-card k-formula">
+      <div class="k-card k-formula" onclick="openKnowledge('formulas')">
         <div class="k-icon">📐</div>
         <div class="k-content">
           <h4>Engineering Formulas</h4>
-          <p><b>1. Conductor Resistance (R)</b></p>
-          <div class="formula-box">R = (ρ × L) / A</div>
-          <p style="margin-top:8px; font-size: 0.8rem;">Where ρ (rho) is resistivity (Copper = 0.01724 Ω·mm²/m), L is length in meters, and A is cross-sectional area in mm².</p>
-          
-          <p style="margin-top:16px;"><b>2. Voltage Drop (Single Phase)</b></p>
-          <div class="formula-box">Vd = (2 × I × L × R) / 1000</div>
-          <p style="margin-top:8px; font-size: 0.8rem;">Where I is current (Amps), L is length (m), R is resistance (Ω/km).</p>
+          <p>Calculate resistance, voltage drop & capacitance</p>
         </div>
+        <div class="k-arrow">›</div>
       </div>
 
-      <!-- Fact Card -->
-      <div class="k-card k-fact">
-        <div class="k-icon">💡</div>
-        <div class="k-content">
-          <h4>Did You Know? (Skin Effect)</h4>
-          <p>At high frequencies (like in data cables or high-voltage AC), alternating current tends to flow mostly on the <b>surface</b> of the conductor, not the center. This is called the <b>Skin Effect</b>.</p>
-          <p style="margin-top:8px;">To counteract this, manufacturers use <b>stranded conductors</b> or <b>Litz wire</b> to increase the surface area and reduce AC resistance.</p>
-        </div>
-      </div>
-      
-      <!-- Cable Construction Fact -->
-      <div class="k-card">
+      <!-- Construction Fact -->
+      <div class="k-card" onclick="openKnowledge('construction')">
         <div class="k-icon">🔌</div>
         <div class="k-content">
-          <h4>Cable Construction Anatomy</h4>
-          <p>A standard power cable consists of:</p>
-          <ul>
-            <li><b>Conductor:</b> Carries current (Usually Annealed Copper or Aluminum).</li>
-            <li><b>Insulation:</b> Prevents leakage (XLPE, PVC, Silicone).</li>
-            <li><b>Bedding/Screen:</b> Protects from mechanical damage and provides earthing.</li>
-            <li><b>Armouring:</b> Steel wires for physical protection.</li>
-            <li><b>Outer Sheath:</b> UV and fire-resistant jacket.</li>
-          </ul>
+          <h4>Cable Construction</h4>
+          <p>Anatomy of a standard power cable</p>
         </div>
+        <div class="k-arrow">›</div>
       </div>
 
     </div>
@@ -637,6 +618,7 @@ body{
 
 </div>
 
+<!-- BOTTOM NAVIGATION -->
 <div class="bottom-nav" id="bottomNav">
   <div class="nav-item" onclick="switchMainView('home')">
     <svg viewBox="0 0 24 24"><path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" /></svg>
@@ -653,6 +635,20 @@ body{
   <div class="nav-item" id="nav-qc" onclick="switchMainView('qccalc')">
     <svg viewBox="0 0 24 24"><path d="M16,4H8C6.89,4 6,4.89 6,6V18A2,2 0 0,0 8,20H16A2,2 0 0,0 18,18V6C18,4.89 17.11,4 16,4M16,18H8V6H16V18M13,8H11V12H13V8M13,14H11V16H13V14Z" /></svg>
     QC Calc
+  </div>
+</div>
+
+<!-- KNOWLEDGE MODAL -->
+<div class="modal-overlay" id="knowledgeModal" onclick="closeKnowledge(event)">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeKnowledge(event)">✕</button>
+    <div class="modal-header">
+      <div class="k-icon" id="modalIcon" style="font-size: 1.5rem; width: 48px; height: 48px;">📚</div>
+      <h3 id="modalTitle">Title</h3>
+    </div>
+    <div class="modal-body" id="modalBody">
+      <!-- Content injected dynamically -->
+    </div>
   </div>
 </div>
 
@@ -726,12 +722,10 @@ function completeLogin(u) {
   document.getElementById('welcomeName').textContent = CURRENT_ROLE;
   document.getElementById('headerCompany').textContent = localStorage.getItem('tc_company') || 'THERMOCABLES LTD.';
   
-  // Set date
   const now = new Date();
   const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   document.getElementById('dashDate').textContent = now.toLocaleDateString('en-US', options);
   
-  // Set Greeting
   const hr = now.getHours();
   let greeting = 'Good Evening';
   if(hr < 12) greeting = 'Good Morning';
@@ -797,7 +791,124 @@ window.switchQcTab = function(tabName, event) {
   document.getElementById(`qc-card-${tabName}`).classList.add('active');
 };
 
-/* --- CALCULATIONS & DATA LOGIC (SAME AS PREVIOUS) --- */
+/* --- KNOWLEDGE MODAL LOGIC --- */
+window.openKnowledge = function(key) {
+  const data = {
+    '5s': {
+      icon: '🏭',
+      title: 'The 5S Methodology',
+      content: `
+        <p>The 5S methodology is a systematic approach to workplace organization that improves efficiency, safety, and morale. It is the foundation of Lean Manufacturing.</p>
+        <h5>1. Seiri (Sort)</h5>
+        <p>Separate necessary items from unnecessary ones. Remove all tools, equipment, and materials that are not needed for current production.</p>
+        <h5>2. Seiton (Set in Order)</h5>
+        <p>Arrange necessary items in good order for easy use. "A place for everything, and everything in its place."</p>
+        <h5>3. Seiso (Shine)</h5>
+        <p>Clean your workplace completely. Cleaning also acts as an inspection to find leaks, cracks, or loose bolts.</p>
+        <h5>4. Seiketsu (Standardize)</h5>
+        <p>Maintain high standards of housekeeping. Create visual rules (like floor markings or color-coded tools).</p>
+        <h5>5. Shitsuke (Sustain)</h5>
+        <p>Make a habit of maintaining the standards. This requires discipline, training, and regular audits.</p>
+      `
+    },
+    'lean': {
+      icon: '⚙️',
+      title: 'Lean Manufacturing',
+      content: `
+        <p>Lean manufacturing is a production method aimed primarily at reducing times within the production system as well as response times from suppliers and to customers. It is derived from the Toyota Production System (TPS).</p>
+        <h5>Key Principles:</h5>
+        <ul>
+          <li><b>Kaizen:</b> Continuous, incremental improvement involving everyone.</li>
+          <li><b>Poka-yoke:</b> Mistake-proofing. Designing processes so mistakes are impossible to make (e.g., a connector that only fits one way).</li>
+          <li><b>Just-In-Time (JIT):</b> Producing only what is needed, when it is needed, and in the amount needed to reduce inventory waste.</li>
+          <li><b>Gemba:</b> "The real place." Going to the factory floor to observe and solve problems where value is created.</li>
+        </ul>
+        <h5>The 7 Wastes (Muda):</h5>
+        <ul>
+          <li>Transportation, Inventory, Motion, Waiting, Overproduction, Overprocessing, Defects.</li>
+        </ul>
+      `
+    },
+    'standards': {
+      icon: '📜',
+      title: 'IEC Cable Standards',
+      content: `
+        <p>International Electrotechnical Commission (IEC) standards are globally recognized benchmarks for cable manufacturing and testing.</p>
+        <table>
+          <tr><th>Standard</th><th>Description</th></tr>
+          <tr><td><b>IEC 60228</b></td><td>Conductors of insulated cables. Defines Class 1 (solid), Class 2 (stranded), Class 5 (flexible), and Class 6 (extra flexible).</td></tr>
+          <tr><td><b>IEC 60502</b></td><td>Power cables with extruded insulation (PVC, XLPE, EPR) for rated voltages from 1kV to 30kV.</td></tr>
+          <tr><td><b>IEC 60332</b></td><td>Tests on electric and optical fibre cables under fire conditions. (Flame propagation).</td></tr>
+          <tr><td><b>IEC 60754</b></td><td>Test on gases evolved during combustion of materials from cables (Halogen acid gas).</td></tr>
+          <tr><td><b>IEC 61034</b></td><td>Measurement of smoke density of cables burning under defined conditions.</td></tr>
+        </table>
+      `
+    },
+    'formulas': {
+      icon: '📐',
+      title: 'Engineering Formulas',
+      content: `
+        <p>Essential formulas used in cable design and quality control:</p>
+        <h5>1. Conductor Resistance</h5>
+        <p>The DC resistance of a conductor is calculated using:</p>
+        <div class="formula-box">R = (ρ × L) / A</div>
+        <ul>
+          <li><b>R</b> = Resistance (Ω)</li>
+          <li><b>ρ</b> = Resistivity (Copper ≈ 0.01724 Ω·mm²/m at 20°C)</li>
+          <li><b>L</b> = Length (m)</li>
+          <li><b>A</b> = Cross-sectional Area (mm²)</li>
+        </ul>
+        <h5>2. Voltage Drop</h5>
+        <p>For a single-phase circuit:</p>
+        <div class="formula-box">Vd = (2 × I × L × R) / 1000</div>
+        <ul>
+          <li><b>I</b> = Current (A)</li>
+          <li><b>L</b> = Cable Length (m)</li>
+          <li><b>R</b> = Resistance (Ω/km)</li>
+        </ul>
+        <h5>3. Capacitance</h5>
+        <p>Capacitance per unit length (pF/m) is crucial for communication cables and high-voltage cables.</p>
+        <div class="formula-box">C = (2 × π × ε) / ln(D/d)</div>
+        <ul>
+          <li><b>ε</b> = Permittivity of insulation</li>
+          <li><b>D</b> = Diameter over insulation</li>
+          <li><b>d</b> = Conductor diameter</li>
+        </ul>
+      `
+    },
+    'construction': {
+      icon: '🔌',
+      title: 'Cable Construction Anatomy',
+      content: `
+        <p>A standard power or control cable consists of several protective layers to ensure safety and longevity.</p>
+        <h5>From Inside Out:</h5>
+        <ul>
+          <li><b>1. Conductor:</b> Annealed copper or aluminum. Carries the current. Stranded for flexibility.</li>
+          <li><b>2. Insulation:</b> XLPE, PVC, or Rubber. Prevents current leakage and protects against electric shock.</li>
+          <li><b>3. Bedding/Inner Sheath:</b> Extruded PVC or tape. Binds the cores together and prevents moisture ingress.</li>
+          <li><b>4. Armouring:</b> Steel wire (SWA) or steel tape (STA). Provides mechanical protection against crushing and rodents.</li>
+          <li><b>5. Outer Sheath:</b> Extruded PVC, PE, or LSZH (Low Smoke Zero Halogen). Protects against UV, chemicals, and fire.</li>
+        </ul>
+        <p style="margin-top:12px;"><b>Did you know?</b> The "Skin Effect" at high frequencies means AC current flows mostly on the surface of the conductor. This is why high-frequency cables use finely stranded wire (Litz wire) to increase surface area.</p>
+      `
+    }
+  };
+
+  const item = data[key];
+  if(!item) return;
+
+  document.getElementById('modalIcon').textContent = item.icon;
+  document.getElementById('modalTitle').textContent = item.title;
+  document.getElementById('modalBody').innerHTML = item.content;
+  document.getElementById('knowledgeModal').classList.add('open');
+};
+
+window.closeKnowledge = function(event) {
+  if(event && event.target.classList.contains('modal-content')) return; // Don't close if clicking inside modal
+  document.getElementById('knowledgeModal').classList.remove('open');
+};
+
+/* --- CALCULATIONS & DATA LOGIC --- */
 function normalizeHeader(h){ return String(h||'').toLowerCase().replace(/[\s_\-\/\.]+/g,''); }
 function findHeader(headers, ...candidates){ for(const c of candidates){ const found = headers.find(h => normalizeHeader(h) === normalizeHeader(c)); if(found) return found; } return null; }
 async function loadJobDataFromCSV() {
