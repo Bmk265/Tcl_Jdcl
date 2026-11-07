@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f1f5f9">
+<title>Thermocables Portal</title>
+
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMGIyMDQ2Ii8+PHBhdGggZD0iTTMwIDY1VjM1aDh2MjJoMjB2OEgzMHptMjgtMzBoMTJ2MzBINTgvMzV6IiBmaWxsPSJ3aGl0ZSIvPjxjaXJjbGUgY3g9IjQ2IiBjeT0iNDIiIHI9IjYiIGZpbGw9IiMzYjgyZjYiLz48L3N2Zz4=">
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
+
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background: #f1f5f9;
+  background-image: radial-gradient(at 0% 0%, hsla(253,16%,7%,0.05) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(225,39%,30%,0.05) 0, transparent 50%);
+  color: #1e293b;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.5;
+  padding-bottom: 80px;
+}
+
+/* LOGIN & HEADER (Same as before) */
+#loginScreen {position: fixed; top: 0; left: 0; width: 100%; height: 100%;background: #f1f5f9;display: flex; align-items: center; justify-content: center;z-index: 9999; padding: 20px;}
+.login-card {background: #ffffff; border: 1px solid #e2e8f0;border-radius: 24px; padding: 40px 30px; width: 100%; max-width: 380px;text-align: center; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);}
+.login-card h2 { color: #0f172a; font-size: 1.5rem; font-weight: 800; margin-bottom: 8px;}
+.login-card p { color: #64748b; font-size: 0.85rem; margin-bottom: 24px; }
+.login-input {width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid #e2e8f0;background: #f8fafc; color: #0f172a; font-size: 0.95rem; margin-bottom: 12px; outline: none;}
+.login-input:focus { border-color: #3b82f6; background: #ffffff; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15); }
+.login-btn {width: 100%; padding: 14px; border-radius: 12px; border: none; margin-top: 8px;background: linear-gradient(135deg, #3b82f6, #2563eb); color: #fff;font-size: 1rem; font-weight: 700; cursor: pointer;}
+.login-error { color: #ef4444; font-size: 0.8rem; font-weight: 600; margin-top: 12px; display: none; }
+.app{max-width:600px;margin:0 auto;padding:16px; display: none; position: relative;}
+.user-profile {position: absolute; top: 30px; right: 32px; z-index: 50;width: 36px; height: 36px; border-radius: 50%;background: #f1f5f9; border: 1px solid #cbd5e1;display: flex; align-items: center; justify-content: center;cursor: pointer;}
+.user-profile svg { width: 20px; height: 20px; fill: #475569; }
+.profile-dropdown {position: absolute; top: 75px; right: 32px; z-index: 100;background: #ffffff; border-radius: 12px; padding: 12px;box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: none; min-width: 160px;border: 1px solid #e2e8f0;}
+.profile-dropdown.show { display: block; }
+.dropdown-header { font-size: 0.75rem; color: #64748b; margin-bottom: 8px; text-align: center;}
+.dropdown-header b { color: #0f172a; display: block; font-size: 0.9rem;}
+.dropdown-btn {width: 100%; padding: 8px; border-radius: 8px; border: none;background: #fef2f2; color: #ef4444; font-weight: 700; font-size: 0.8rem; cursor: pointer;}
+.topbar{position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;padding: 24px 20px; background: rgba(255, 255, 255, 0.85);backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.9);border-radius: 24px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);margin-bottom: 20px; overflow: hidden;}
+.brand{position: relative; z-index: 1; display:flex; flex-direction:column; align-items:center; gap: 4px; margin-top: 10px;}
+.brand-company{font-size:.7rem; font-weight:700; color:#64748b; letter-spacing:.15em; text-transform:uppercase; text-align: center;}
+.brand-title-row span{font-weight:800; font-size:1.4rem; letter-spacing:-.02em; color: #0f172a; text-align: center;}
+.admin-panel {background: #fff; border: 1px solid #fcd34d; border-radius: 20px; padding: 20px;margin-bottom: 20px; display: none;}
+.admin-panel h3 { font-size: 1rem; font-weight: 800; color: #92400e; margin-bottom: 16px;}
+.admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.admin-grid input { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 0.85rem; outline: none;}
+.admin-save-btn { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #f59e0b; color: #fff; font-weight: 700; margin-top: 12px; cursor: pointer;}
+
+.view-section { display: none; animation: fadeIn 0.3s ease; }
+.view-section.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ========================================= */
+/* NEW HOME DASHBOARD & KNOWLEDGE HUB        */
+/* ========================================= */
+.dashboard-hero {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  border-radius: 24px; padding: 24px; color: #fff; margin-bottom: 20px;
+  position: relative; overflow: hidden; box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.4);
+}
+.dashboard-hero::before {
+  content: ''; position: absolute; top: -50%; right: -20%; width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 60%); pointer-events: none;
+}
+.dash-greeting { font-size: 0.8rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; margin-bottom: 4px;}
+.dash-name { font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; color: #ffffff;}
+.dash-date { font-size: 0.85rem; color: #cbd5e1; display: flex; align-items: center; gap: 6px;}
+
+.module-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;}
+.module-card {
+  display: flex; align-items: center; gap: 16px; padding: 16px 20px; border-radius: 20px;
+  text-decoration: none; color: inherit; transition: transform 0.2s; cursor: pointer; border: none; width: 100%; text-align: left;
+}
+.module-card:active { transform: scale(0.98); }
+.card-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;}
+.card-icon svg { width: 24px; height: 24px; }
+.card-content { flex: 1; }
+.card-title { font-size: 1.05rem; font-weight: 800; margin-bottom: 2px;}
+.card-desc { font-size: 0.75rem; font-weight: 500; opacity: 0.7;}
+.card-job { background: linear-gradient(135deg, #eff6ff, #dbeafe); border: 1px solid #bfdbfe; color: #1e3a8a;}
+.card-job .card-icon { background: #3b82f6; color: #fff; }
+.card-bom { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border: 1px solid #6ee7b7; color: #064e3b;}
+.card-bom .card-icon { background: #10b981; color: #fff; }
+.card-qc { background: linear-gradient(135deg, #f5f3ff, #ede9fe); border: 1px solid #c4b5fd; color: #4c1d95;}
+.card-qc .card-icon { background: #8b5cf6; color: #fff; }
+
+/* Knowledge Hub Feed */
+.section-title { font-size: 0.9rem; font-weight: 800; color: #334155; margin: 24px 0 12px 4px; text-transform: uppercase; letter-spacing: 0.05em;}
+.k-feed { display: flex; flex-direction: column; gap: 16px; }
+
+.k-card {
+  background: #fff; border-radius: 20px; padding: 20px;
+  border-left: 6px solid #3b82f6; box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  display: flex; gap: 16px; align-items: flex-start;
+}
+.k-card.k-lean { border-left-color: #f59e0b; }
+.k-card.k-std { border-left-color: #10b981; }
+.k-card.k-formula { border-left-color: #8b5cf6; }
+.k-card.k-fact { border-left-color: #ef4444; }
+
+.k-icon {
+  width: 40px; height: 40px; border-radius: 12px; background: #f8fafc;
+  display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;
+}
+.k-content h4 { font-size: 1rem; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+.k-content p { font-size: 0.85rem; color: #475569; line-height: 1.6; margin-bottom: 8px;}
+.k-content ul { padding-left: 16px; font-size: 0.85rem; color: #475569; margin-bottom: 8px;}
+.k-content li { margin-bottom: 4px; }
+.formula-box {
+  background: #f8fafc; border: 1px dashed #cbd5e1; padding: 10px;
+  border-radius: 8px; font-family: monospace; font-size: 0.9rem; font-weight: 700; color: #1e293b; text-align: center; margin-top: 8px;
+}
+/* ========================================= */
+
+.search-panel{display:grid;grid-template-columns:1fr;gap:12px;background: rgba(255, 255, 255, 0.9);border-radius: 20px;padding:16px;margin-bottom: 16px;position:relative;z-index:20;border: 1px solid #fff;}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0;position:relative}
+.field label{font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;font-weight:800;color:#64748b;}
+.field input,.field select{width:100%;padding:12px 16px;border-radius:12px;border:1px solid #e2e8f0;background:#fff;color:#1e293b;font-size:.9rem;outline:none;}
+.field input:focus,.field select:focus{border-color:#3b82f6;box-shadow: 0 0 0 4px rgba(59,130,246,.15);}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2364748b' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px;cursor:pointer;}
+.search-buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.btn-search,.btn-reset{height:44px;border-radius:12px;border:none;cursor:pointer;font-size:.85rem;font-weight:700;display:flex;align-items:center;justify-content:center;}
+.btn-search{color:#fff; background:linear-gradient(135deg,#3b82f6,#2563eb);}
+.btn-reset{background:#f1f5f9;color:#475569;border:1px solid #e2e8f0;}
+.suggest{position:absolute;top:calc(100% + 8px);left:0;right:0;background:#fff;border:1px solid #e2e8f0;border-radius:16px;box-shadow:0 20px 40px -8px rgba(0,0,0,.15);max-height:250px;overflow-y:auto;z-index:100;display:none;padding:8px;}
+.suggest.open{display:block}
+.suggest-item{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:10px;cursor:pointer;font-size:.9rem;font-weight:600;color:#334155;}
+.suggest-item:hover{background:#eff6ff;}
+.suggest-item .meta{font-size:.65rem;color:#2563eb;background:#dbeafe;padding:2px 8px;border-radius:20px;}
+.suggest-empty{padding:20px;text-align:center;font-size:.9rem;color:#94a3b8;}
+.suggest-hint{padding:8px 14px;font-size:.65rem;font-weight:800;text-transform:uppercase;color:#94a3b8;border-bottom:1px solid #f1f5f9;margin-bottom:8px;}
+.result-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 4px 12px;flex-wrap:wrap;}
+.result-title{font-size:.95rem;font-weight:700;color:#334155}
+.counter{font-size:.75rem;font-weight:800;padding:4px 14px;border-radius:20px;background:#e0e7ff;color:#4338ca;}
+.grid{display:grid;grid-template-columns:1fr; gap:16px;}
+.card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.04);border:1px solid #f1f5f9;}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px;border-bottom:1px solid #f1f5f9;background:#fafbfc;}
+.card-head h3{font-size:1rem;font-weight:800;color:#0f172a;}
+.op-tag{font-size:.65rem;font-weight:800;text-transform:uppercase;padding:6px 12px;border-radius:20px;background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe;}
+.specs{display:flex;flex-direction:column;}
+.spec{display:grid;grid-template-columns:120px 1fr;border-bottom:1px solid #f1f5f9;}
+.spec .k{padding:12px 16px;font-size:.65rem;font-weight:800;text-transform:uppercase;color:#64748b;background:#f8fafc;border-right:1px solid #f1f5f9;display:flex;align-items:center;}
+.spec .v{padding:12px 16px;font-size:.85rem;font-weight:500;color:#1e293b;display:flex;align-items:center;}
+.spec.accent .k{color:#2563eb;background:#eff6ff;}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:60px 20px;text-align:center;background:#fff;border-radius:20px;border:2px dashed #e2e8f0;}
+.empty .icon{font-size:3rem;opacity:.5}
+.bom-table{display:flex;flex-direction:column;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;}
+.bom-table-head{display:grid;grid-template-columns:110px 1fr 100px;background:#e2e8f0;border-bottom:2px solid #cbd5e1;}
+.bom-table-head > div{padding:10px 12px;font-size:.6rem;font-weight:800;text-transform:uppercase;color:#475569;}
+.bom-group-header{background:#eff6ff;border-top:1px solid #bfdbfe;border-bottom:1px solid #bfdbfe;padding:8px 12px;font-size:.7rem;font-weight:800;color:#1e40af;text-transform:uppercase;}
+.bom-row{display:grid;grid-template-columns:110px 1fr 100px;border-bottom:1px solid #f1f5f9;}
+.bom-row > div{padding:10px 12px;font-size:.75rem;color:#334155;display:flex;align-items:center;border-right:1px solid #f1f5f9;}
+.bom-row > div:last-child{border-right:none;justify-content:flex-end;font-weight:800;color:#2563eb;background:#fafbfc;}
+.qc-tabs-wrapper { background: #ffffff; border-radius: 16px; padding: 6px; margin-bottom: 20px; border: 1px solid #e2e8f0;}
+.qc-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+.qc-tab-btn { padding: 12px 4px; border-radius: 10px; border: none; background: transparent; color: #64748b; font-weight: 700; font-size: 0.75rem; cursor: pointer; text-align: center;}
+.qc-tab-btn.active { background: linear-gradient(135deg, #3b82f6, #2563eb); color: #ffffff;}
+@media (max-width: 400px) { .qc-tabs { grid-template-columns: repeat(2, 1fr); } }
+.qc-card { background:#fff; border-radius:20px; overflow:hidden; border:1px solid #f1f5f9; margin-bottom: 20px; display: none;}
+.qc-card.active { display: block; }
+.qc-card-body { padding:20px; display:flex; flex-direction:column; gap:16px; }
+.input-group{display:flex;flex-direction:column;gap:6px;}
+.input-group label{font-size:.75rem;font-weight:700;color:#475569;text-transform:uppercase;display:flex; justify-content:space-between;}
+.input-group label span.unit-hint { color: #94a3b8; font-size: 0.7rem; }
+.input-group input, .input-group select{width:100%;padding:14px 16px;border-radius:12px;border:1px solid #e2e8f0;font-size:1rem;font-weight:600;background:#f8fafc;outline:none;}
+.input-group input:focus{border-color:#3b82f6;background:#fff;}
+.result-section { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 16px; margin-top: 12px; display: flex; flex-direction: column; gap: 12px;}
+.result-title-bar { font-size: 0.7rem; font-weight: 800; color: #64748b; text-transform: uppercase; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
+.result-card { display: flex; justify-content: space-between; align-items: center; padding: 16px; border-radius: 12px; border: 1px solid #e2e8f0; background: #f8fafc;}
+.result-card.primary { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-color: #bfdbfe;}
+.result-card.success { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-color: #6ee7b7;}
+.result-card.purple { background: linear-gradient(135deg, #f5f3ff, #ede9fe); border-color: #c4b5fd;}
+.result-card.warning { background: linear-gradient(135deg, #fffbeb, #fef3c7); border-color: #fcd34d;}
+.result-card .label { font-size: 0.8rem; font-weight: 700; color: #475569; text-transform: uppercase;}
+.result-card .value { font-size: 1.3rem; font-weight: 800; color: #0f172a;}
+.result-card .unit { font-size: 0.75rem; font-weight: 700; color: #64748b;}
+.status-box{ padding: 20px 16px; border-radius: 12px; text-align: center; margin-top: 8px; display: flex; flex-direction: column; align-items: center; gap: 8px;}
+.status-box .status-icon{font-size: 2rem;} .status-box .status-text{font-size: 1.3rem; font-weight: 800;}
+.status-high{background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b;}
+.status-low{background: #f0fdf4; border: 1px solid #86efac; color: #166534;}
+.status-neutral{background: #f1f5f9; border: 1px solid #e2e8f0; color: #475569;}
+.btn-print { background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; border: none; padding: 16px; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 16px;}
+.bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-top: 1px solid #e2e8f0; display: flex; justify-content: space-around; padding-bottom: env(safe-area-inset-bottom); z-index: 1000;}
+.nav-item { flex: 1; padding: 12px 0 10px; display: flex; flex-direction: column; align-items: center; gap: 4px; color: #94a3b8; font-size: 0.65rem; font-weight: 700; cursor: pointer; transition: 0.2s;}
+.nav-item.active { color: #3b82f6; }
+.nav-item svg { width: 22px; height: 22px; fill: currentColor; }
+.print-header, .print-footer, .print-inputs-section { display: none; }
+@media print {
+  @page { margin: 15mm; size: A4 portrait; }
+  html, body { width: 100% !important; margin: 0 !important; padding: 0 !important; background: #fff !important; color: #000 !important; font-size: 12px; }
+  .app { max-width: 100% !important; width: 100% !important; padding: 0 !important; margin: 0 !important; }
+  .topbar, .tabs-wrapper, .qc-tabs-wrapper, .input-group, .qc-card-head, .card-head, .btn-print, .admin-panel, .user-profile, .profile-dropdown, .no-print, .bottom-nav, .dashboard-hero, .stats-grid, .module-grid, .k-feed, .tip-banner, .search-panel, .result-bar { display: none !important; }
+  .print-header { display: block !important; margin-bottom: 25px; }
+  .print-footer { display: block !important; margin-top: 40px; text-align: center; font-size: 10px; color: #666; border-top: 1px solid #ccc; padding-top: 10px;}
+  .p-header-top { text-align: center; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 15px;}
+  .p-company { font-size: 22px; font-weight: 800; text-transform: uppercase; color: #000 !important; }
+  .p-dept { font-size: 13px; font-weight: 600; margin-top: 4px; color: #333 !important;}
+  .p-title { font-size: 15px; font-weight: 700; margin-top: 10px; color: #000 !important; text-transform: uppercase;}
+  .p-meta { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 20px; color: #000 !important; border-bottom: 1px solid #ddd; padding-bottom: 10px;}
+  .p-signatures { display: flex; justify-content: space-between; margin-top: 60px; margin-bottom: 20px; font-size: 12px; font-weight: 600; color: #000 !important;}
+  .p-sig-block { display: flex; flex-direction: column; align-items: center; width: 45%;}
+  .p-sig-name { font-size: 14px; font-weight: 800; margin-bottom: 5px; color: #000 !important;}
+  .p-sig-line { width: 100%; border-bottom: 1px solid #000; height: 20px; margin-bottom: 5px; display: block;}
+  .p-sig-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #333 !important;}
+  .print-inputs-section { display: block !important; margin-bottom: 30px; }
+  .print-inputs-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; table-layout: fixed; }
+  .print-inputs-table th, .print-inputs-table td { border: 1px solid #000; padding: 10px 12px; font-size: 12px; text-align: left; word-wrap: break-word; }
+  .print-inputs-table th { background: #f3f4f6 !important; font-weight: 700; color: #000; }
+  .qc-card, .card, .view-section { display: none !important; border: none !important; box-shadow: none !important; margin: 0 !important; }
+  .qc-card.active, .view-section.active .card { display: block !important; width: 100% !important; max-width: 100% !important; margin: 0 auto !important; }
+  .qc-card-body, .card-body { padding: 0 !important; }
+  .result-section, .specs { border: none !important; box-shadow: none !important; padding: 0 !important; margin-top: 0 !important; }
+  .result-title-bar { border-bottom: 1px solid #000; color: #000 !important; font-size: 14px; font-weight: 800; padding-bottom: 5px; margin-bottom: 15px; text-transform: uppercase;}
+  .result-card, .spec { border: 1px solid #000 !important; background: #fff !important; padding: 12px 15px !important; margin-bottom: 10px !important; border-radius: 0 !important; }
+  .result-card .label, .result-card .value, .result-card .unit, .spec .k, .spec .v { color: #000 !important; }
+  .status-box { border: 1px solid #000 !important; background: #fff !important; color: #000 !important; padding: 15px !important; border-radius: 0 !important; margin-top: 15px !important;}
+  .bom-table { border: 1px solid #000; }
+  .bom-table-head, .bom-row, .bom-group-header { border-color: #000; }
+  .bom-table-head > div, .bom-row > div { color: #000 !important; border-color: #000; }
+  .bom-group-header { background: #fff !important; }
+}
+</style>
+</head>
+<body>
+
+<div id="loginScreen">
+  <div class="login-card">
+    <h2>Thermocables Portal</h2>
+    <p>Enter your credentials to access your modules.</p>
+    <input type="text" id="loginUser" class="login-input" placeholder="Username" autocomplete="off">
+    <input type="password" id="loginPass" class="login-input" placeholder="Password (Admin only)" autocomplete="off" style="display: none;">
+    <button class="login-btn" id="loginBtn" onclick="handleLogin()">Next</button>
+    <div class="login-error" id="loginError">Invalid Credentials</div>
+  </div>
+</div>
+
+<div class="app" id="appContainer">
+  
+  <div class="user-profile" onclick="toggleProfile(event)">
+    <svg viewBox="0 0 24 24"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>
+  </div>
+  <div class="profile-dropdown" id="profileDropdown">
+    <div class="dropdown-header">Logged in as <b id="dropUserRole">Guest</b></div>
+    <button class="dropdown-btn" onclick="handleLogout()">Logout</button>
+  </div>
+
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-company" id="headerCompany">THERMOCABLES LTD.</div>
+      <div class="brand-title-row">
+        <span id="headerTitle">PORTAL</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-panel no-print" id="adminPanel">
+    <h3>⚙️ Admin Settings</h3>
+    <div class="admin-grid">
+      <input type="text" id="setCompany" placeholder="Company Name">
+      <input type="text" id="setDept" placeholder="Department">
+      <input type="text" id="setPrepBy" placeholder="Prepared By (Name)">
+      <input type="text" id="setVerBy" placeholder="Verified By (Name)">
+    </div>
+    <button class="admin-save-btn" onclick="saveAdminSettings()">Save Settings</button>
+  </div>
+
+  <div class="print-header">
+    <div class="p-header-top">
+      <div class="p-company" id="pCompany">THERMOCABLES LTD.</div>
+      <div class="p-dept" id="pDept">QC DEPARTMENT</div>
+      <div class="p-title">TEST REPORT</div>
+    </div>
+    <div class="p-meta">
+      <div>Date: <span id="pDate"></span></div>
+      <div>Time: <span id="pTime"></span></div>
+    </div>
+    <div class="p-meta" style="border-bottom: none; margin-bottom: 0;">
+      <div>Report Type: <span id="pTestType" style="font-weight:700;"></span></div>
+    </div>
+  </div>
+  <div class="print-inputs-section" id="printInputs"></div>
+
+  <!-- ================= VIEW 1: HOME DASHBOARD & KNOWLEDGE ================= -->
+  <div class="view-section active" id="view-home">
+    
+    <div class="dashboard-hero">
+      <div class="dash-greeting" id="dashGreeting">Welcome Back,</div>
+      <div class="dash-name" id="welcomeName">User</div>
+      <div class="dash-date">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+        <span id="dashDate"></span>
+      </div>
+    </div>
+
+    <!-- Quick Access Modules -->
+    <div class="module-grid" id="homeLinks">
+      <!-- Injected via JS based on role -->
+    </div>
+
+    <!-- Knowledge Hub -->
+    <div class="section-title">Industrial Knowledge Hub</div>
+    <div class="k-feed">
+      
+      <!-- 5S Card -->
+      <div class="k-card k-lean">
+        <div class="k-icon">🏭</div>
+        <div class="k-content">
+          <h4>The 5S Methodology</h4>
+          <p>A systematic approach to workplace organization that improves efficiency, safety, and morale.</p>
+          <ul>
+            <li><b>Seiri (Sort):</b> Remove unnecessary items.</li>
+            <li><b>Seiton (Set):</b> Arrange tools in order.</li>
+            <li><b>Seiso (Shine):</b> Clean the workspace.</li>
+            <li><b>Seiketsu (Standardize):</b> Create visual rules.</li>
+            <li><b>Shitsuke (Sustain):</b> Maintain discipline.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Lean Card -->
+      <div class="k-card k-lean">
+        <div class="k-icon">⚙️</div>
+        <div class="k-content">
+          <h4>Lean Manufacturing Principles</h4>
+          <p>Maximize value while minimizing waste (Muda).</p>
+          <ul>
+            <li><b>Kaizen:</b> Continuous, incremental improvement.</li>
+            <li><b>Poka-yoke:</b> Mistake-proofing (e.g., ensuring connectors fit only one way).</li>
+            <li><b>Just-In-Time (JIT):</b> Produce only what is needed, when it is needed.</li>
+            <li><b>Gemba:</b> Go and see the actual place where work happens.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Standards Card -->
+      <div class="k-card k-std">
+        <div class="k-icon">📜</div>
+        <div class="k-content">
+          <h4>Key Cable Standards</h4>
+          <p>Essential IEC standards for cable manufacturing:</p>
+          <ul>
+            <li><b>IEC 60228:</b> International standard for conductors (Class 1 solid, Class 2 stranded, Class 5 flexible, Class 6 extra flexible).</li>
+            <li><b>IEC 60502:</b> Power cables with extruded insulation (PVC, XLPE, EPR) for voltages up to 30kV.</li>
+            <li><b>IEC 60332:</b> Flame retardant testing (e.g., Cat A, B, C for bunched cables).</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Formulas Card -->
+      <div class="k-card k-formula">
+        <div class="k-icon">📐</div>
+        <div class="k-content">
+          <h4>Engineering Formulas</h4>
+          <p><b>1. Conductor Resistance (R)</b></p>
+          <div class="formula-box">R = (ρ × L) / A</div>
+          <p style="margin-top:8px; font-size: 0.8rem;">Where ρ (rho) is resistivity (Copper = 0.01724 Ω·mm²/m), L is length in meters, and A is cross-sectional area in mm².</p>
+          
+          <p style="margin-top:16px;"><b>2. Voltage Drop (Single Phase)</b></p>
+          <div class="formula-box">Vd = (2 × I × L × R) / 1000</div>
+          <p style="margin-top:8px; font-size: 0.8rem;">Where I is current (Amps), L is length (m), R is resistance (Ω/km).</p>
+        </div>
+      </div>
+
+      <!-- Fact Card -->
+      <div class="k-card k-fact">
+        <div class="k-icon">💡</div>
+        <div class="k-content">
+          <h4>Did You Know? (Skin Effect)</h4>
+          <p>At high frequencies (like in data cables or high-voltage AC), alternating current tends to flow mostly on the <b>surface</b> of the conductor, not the center. This is called the <b>Skin Effect</b>.</p>
+          <p style="margin-top:8px;">To counteract this, manufacturers use <b>stranded conductors</b> or <b>Litz wire</b> to increase the surface area and reduce AC resistance.</p>
+        </div>
+      </div>
+      
+      <!-- Cable Construction Fact -->
+      <div class="k-card">
+        <div class="k-icon">🔌</div>
+        <div class="k-content">
+          <h4>Cable Construction Anatomy</h4>
+          <p>A standard power cable consists of:</p>
+          <ul>
+            <li><b>Conductor:</b> Carries current (Usually Annealed Copper or Aluminum).</li>
+            <li><b>Insulation:</b> Prevents leakage (XLPE, PVC, Silicone).</li>
+            <li><b>Bedding/Screen:</b> Protects from mechanical damage and provides earthing.</li>
+            <li><b>Armouring:</b> Steel wires for physical protection.</li>
+            <li><b>Outer Sheath:</b> UV and fire-resistant jacket.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= VIEW 2: JOB CARDS ================= -->
+  <div class="view-section" id="view-jobcards">
+    <div class="search-panel">
+      <div class="field" id="jobField">
+        <label>Job Number</label>
+        <input type="text" id="jobInput" placeholder="Type job no..." autocomplete="off">
+        <div class="suggest" id="suggestBox"></div>
+      </div>
+      <div class="field">
+        <label>Operation</label>
+        <select id="opSelect" disabled><option value="">— Select Job First —</option></select>
+      </div>
+      <div class="search-buttons">
+        <button class="btn-search" id="searchBtn">🔍 Show</button>
+        <button class="btn-reset" id="resetBtn">Reset</button>
+      </div>
+    </div>
+
+    <div class="result-bar">
+      <div class="result-title" id="jobResultTitle">Enter details above</div>
+      <div class="counter" id="jobResultCount">0 records</div>
+    </div>
+    <div class="grid" id="jobGrid">
+      <div class="empty"><div class="icon">🔎</div><p>Start typing a <b>job number</b> above.</p></div>
+    </div>
+    <button class="btn-print no-print" onclick="triggerPrint(event, 'job')">Save as PDF</button>
+  </div>
+
+  <!-- ================= VIEW 3: BOM ================= -->
+  <div class="view-section" id="view-bom">
+    <div class="search-panel">
+      <div class="field" id="bomField">
+        <label>SO-ITEM / INDEX</label>
+        <input type="text" id="bomInput" placeholder="Type SO-ITEM or INDEX..." autocomplete="off">
+        <div class="suggest" id="bomSuggestBox"></div>
+      </div>
+      <div class="field">
+        <label>Operation JDM</label>
+        <select id="bomOpSelect" disabled><option value="">— Select SO-ITEM First —</option></select>
+      </div>
+      <div class="search-buttons">
+        <button class="btn-search" id="bomSearchBtn">🔍 Show</button>
+        <button class="btn-reset" id="bomResetBtn">Reset</button>
+      </div>
+    </div>
+
+    <div class="result-bar">
+      <div class="result-title" id="bomResultTitle">Enter details above</div>
+      <div class="counter" id="bomResultCount">0 records</div>
+    </div>
+    <div class="grid" id="bomGrid">
+      <div class="empty"><div class="icon">📦</div><p>Start typing a <b>SO-ITEM</b> above.</p></div>
+    </div>
+    <button class="btn-print no-print" onclick="triggerPrint(event, 'bom')">Save as PDF</button>
+  </div>
+
+  <!-- ================= VIEW 4: QC CALCULATOR ================= -->
+  <div class="view-section" id="view-qccalc">
+    <div class="qc-tabs-wrapper">
+      <div class="qc-tabs">
+        <button class="qc-tab-btn active" onclick="switchQcTab('cr', event)">CR Calc</button>
+        <button class="qc-tab-btn" onclick="switchQcTab('ir', event)">IR Calc</button>
+        <button class="qc-tab-btn" onclick="switchQcTab('cap', event)">Capacitance</button>
+        <button class="qc-tab-btn" onclick="switchQcTab('hvfail', event)">HV Fail</button>
+        <button class="qc-tab-btn" onclick="switchQcTab('thick', event)">Thickness</button>
+        <button class="qc-tab-btn" onclick="switchQcTab('braid', event)">Braid</button>
+        <button class="qc-tab-btn" onclick="switchQcTab('tensile', event)">Tensile</button>
+        <button class="qc-tab-btn" onclick="switchQcTab('hotset', event)">Hot Set</button>
+      </div>
+    </div>
+
+    <!-- QC Tab 1: CR -->
+    <div class="qc-card active" id="qc-card-cr">
+      <div class="qc-card-body">
+        <div class="input-group"><label>CR Reading <span class="unit-hint">(Value)</span></label><input type="number" id="crReading" step="any" placeholder="Enter CR Reading"></div>
+        <div class="input-group"><label>Length <span class="unit-hint">(Meters)</span></label><input type="number" id="crLength" step="any" placeholder="Enter Length in Meters"></div>
+        <div class="input-group"><label>Temperature <span class="unit-hint">(°C)</span></label><input type="number" id="crTemp" step="any" placeholder="Enter Temperature in °C"></div>
+        <div class="input-group"><label>Specified CR <span class="unit-hint">(Value)</span></label><input type="number" id="crSpecified" step="any" placeholder="Enter Specified CR"></div>
+        <div class="result-section">
+          <div class="result-title-bar">Results</div>
+          <div class="result-card primary"><span class="label">Observed CR</span><div class="value-wrapper"><span class="value" id="obsCrOut">—</span></div></div>
+          <div class="status-box status-neutral" id="percentStatusBox">
+            <div class="status-icon" id="statusIcon">—</div>
+            <div class="status-text" id="percentDiffOut">0.00%</div>
+            <div class="status-subtext" id="statusText">Waiting for inputs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QC Tab 2: IR -->
+    <div class="qc-card" id="qc-card-ir">
+      <div class="qc-card-body">
+        <div class="input-group"><label>Reading <span class="unit-hint">(Mega Ohm - MΩ)</span></label><input type="number" id="irReading" step="any" placeholder="Enter Reading in MΩ"></div>
+        <div class="input-group"><label>Length <span class="unit-hint">(Meters)</span></label><input type="number" id="irLength" step="any" placeholder="Enter Length in Meters"></div>
+        <div class="input-group"><label>Core Dia (D) <span class="unit-hint">(mm)</span></label><input type="number" id="irCoreDia" step="any" placeholder="Enter Core Diameter in mm"></div>
+        <div class="input-group"><label>Conductor Dia (d) <span class="unit-hint">(mm)</span></label><input type="number" id="irCondDia" step="any" placeholder="Enter Conductor Diameter in mm"></div>
+        <div class="result-section">
+          <div class="result-title-bar">Results</div>
+          <div class="result-card primary"><span class="label">IR</span><div class="value-wrapper"><span class="value" id="irResultOut">—</span><span class="unit">Ω</span></div></div>
+          <div class="result-card success"><span class="label">IR Constant</span><div class="value-wrapper"><span class="value" id="irConstOut">—</span><span class="unit">MΩ·m</span></div></div>
+          <div class="result-card purple"><span class="label">VR Constant</span><div class="value-wrapper"><span class="value" id="vrConstOut">—</span><span class="unit">Ω·m</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QC Tab 3: Capacitance -->
+    <div class="qc-card" id="qc-card-cap">
+      <div class="qc-card-body">
+        <div class="input-group"><label>Capacitance Reading <span class="unit-hint">(Value)</span></label><input type="number" id="capReading" step="any" placeholder="Enter Capacitance Reading"></div>
+        <div class="input-group"><label>Length <span class="unit-hint">(Meters)</span></label><input type="number" id="capLength" step="any" placeholder="Enter Length in Meters"></div>
+        <div class="result-section">
+          <div class="result-title-bar">Results</div>
+          <div class="result-card primary"><span class="label">Cal. Capacitance</span><div class="value-wrapper"><span class="value" id="capResultOut">—</span><span class="unit">pF/m</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QC Tab 4: HV Fail -->
+    <div class="qc-card" id="qc-card-hvfail">
+      <div class="qc-card-body">
+        <div class="input-group"><label>Total Length <span class="unit-hint">(Meters)</span></label><input type="number" id="hvLength" step="any" placeholder="Enter Total Length"></div>
+        <div class="input-group"><label>Top CR Reading <span class="unit-hint">(Value)</span></label><input type="number" id="hvTopCr" step="any" placeholder="Enter Top CR Reading"></div>
+        <div class="input-group"><label>Bottom CR Reading <span class="unit-hint">(Value)</span></label><input type="number" id="hvBottomCr" step="any" placeholder="Enter Bottom CR Reading"></div>
+        <div class="result-section">
+          <div class="result-title-bar">Results</div>
+          <div class="result-card success"><span class="label">Total CR Reading</span><div class="value-wrapper"><span class="value" id="hvTotalCrOut">—</span></div></div>
+          <div class="result-card primary"><span class="label">From Top Side</span><div class="value-wrapper"><span class="value" id="hvTopSideOut">—</span><span class="unit">Meters</span></div></div>
+          <div class="result-card warning"><span class="label">From Bottom Side</span><div class="value-wrapper"><span class="value" id="hvBottomSideOut">—</span><span class="unit">Meters</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QC Tab 5: Thickness -->
+    <div class="qc-card" id="qc-card-thick">
+      <div class="qc-card-body">
+        <div class="input-group"><label>Minimum Thickness <span class="unit-hint">(mm)</span></label><input type="number" id="thickMin" step="any" placeholder="Enter Minimum Thickness"></div>
+        <div class="input-group"><label>Maximum Thickness <span class="unit-hint">(mm)</span></label><input type="number" id="thickMax" step="any" placeholder="Enter Maximum Thickness"></div>
+        <div class="result-section">
+          <div class="result-title-bar">Results</div>
+          <div class="result-card primary"><span class="label">Average Thickness</span><div class="value-wrapper"><span class="value" id="thickAvgOut">—</span><span class="unit">mm</span></div></div>
+          <div class="result-card success"><span class="label">Concentricity</span><div class="value-wrapper"><span class="value" id="thickConcOut">—</span><span class="unit">%</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QC Tab 6: Braid -->
+    <div class="qc-card" id="qc-card-braid">
+      <div class="qc-card-body">
+        <div class="input-group"><label>Braid Wire dia (d) <span class="unit-hint">(mm)</span></label><input type="number" id="brD" step="any" placeholder="Enter Wire Diameter"></div>
+        <div class="input-group"><label>Dia under braid (D) <span class="unit-hint">(mm)</span></label><input type="number" id="brBigD" step="any" placeholder="Enter Diameter under braid"></div>
+        <div class="input-group"><label>No. Of wires (N) <span class="unit-hint">(Count)</span></label><input type="number" id="brN" step="any" placeholder="Enter Number of wires"></div>
+        <div class="input-group"><label>No. Of carriers (M) <span class="unit-hint">(Count)</span></label><input type="number" id="brM" step="any" placeholder="Enter Number of carriers"></div>
+        <div class="input-group"><label>Lay Length (L) <span class="unit-hint">(mm)</span></label><input type="number" id="brL" step="any" placeholder="Enter Lay Length"></div>
+        <div class="result-section">
+          <div class="result-title-bar">Results</div>
+          <div class="result-card primary"><span class="label">No of Wires Total</span><div class="value-wrapper"><span class="value" id="brTotalWiresOut">—</span></div></div>
+          <div class="result-card success"><span class="label">Filling Factor (F)</span><div class="value-wrapper"><span class="value" id="brFOut">—</span></div></div>
+          <div class="result-card purple"><span class="label">% Coverage</span><div class="value-wrapper"><span class="value" id="brCovOut">—</span><span class="unit">%</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QC Tab 7: Tensile -->
+    <div class="qc-card" id="qc-card-tensile">
+      <div class="qc-card-body">
+        <div class="input-group"><label>Shape <span class="unit-hint">(Select)</span></label>
+          <select id="tensileShape"><option value="tubular">Tubular</option><option value="dumbbell">Dumbbell</option></select>
+        </div>
+        <div id="tubularInputs">
+          <div class="input-group"><label>Diameter of Tubular <span class="unit-hint">(mm)</span></label><input type="number" id="tDia" step="any" placeholder="Enter Diameter"></div>
+          <div class="input-group"><label>Thickness of Tubular <span class="unit-hint">(mm)</span></label><input type="number" id="tThick" step="any" placeholder="Enter Thickness"></div>
+        </div>
+        <div id="dumbbellInputs" style="display:none;">
+          <div class="input-group"><label>Width of Dumbbell <span class="unit-hint">(mm)</span></label><input type="number" id="dWidth" step="any" placeholder="Enter Width"></div>
+          <div class="input-group"><label>Min Thickness of Dumbbell <span class="unit-hint">(mm)</span></label><input type="number" id="dThick" step="any" placeholder="Enter Min Thickness"></div>
+        </div>
+        <div class="input-group"><label>Breakdown Load <span class="unit-hint">(N)</span></label><input type="number" id="tLoad" step="any" placeholder="Enter Breakdown Load"></div>
+        <div class="input-group"><label>Elongated Gauge Length <span class="unit-hint">(mm)</span></label><input type="number" id="tElong" step="any" placeholder="Enter Elongated Length"></div>
+        <div class="input-group"><label>Initial Gauge Length <span class="unit-hint">(mm)</span></label><input type="number" id="tInit" step="any" placeholder="Enter Initial Length"></div>
+        <div class="result-section">
+          <div class="result-title-bar">Results</div>
+          <div class="result-card primary"><span class="label">Area</span><div class="value-wrapper"><span class="value" id="tAreaOut">—</span><span class="unit">mm²</span></div></div>
+          <div class="result-card success"><span class="label">Tensile Strength</span><div class="value-wrapper"><span class="value" id="tTsOut">—</span><span class="unit">N/mm²</span></div></div>
+          <div class="result-card purple"><span class="label">Elongation</span><div class="value-wrapper"><span class="value" id="tElongOut">—</span><span class="unit">%</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- QC Tab 8: Hot Set -->
+    <div class="qc-card" id="qc-card-hotset">
+      <div class="qc-card-body">
+        <div class="input-group"><label>Shape <span class="unit-hint">(Select)</span></label>
+          <select id="hotSetShape"><option value="tubular">Tubular</option><option value="dumbbell">Dumbbell</option></select>
+        </div>
+        <div id="tubularHotInputs">
+          <div class="input-group"><label>Core Diameter <span class="unit-hint">(mm)</span></label><input type="number" id="hCoreDia" step="any" placeholder="Enter Core Diameter"></div>
+          <div class="input-group"><label>Conductor Diameter <span class="unit-hint">(mm)</span></label><input type="number" id="hCondDia" step="any" placeholder="Enter Conductor Diameter"></div>
+        </div>
+        <div id="dumbbellHotInputs" style="display:none;">
+          <div class="input-group"><label>Thickness <span class="unit-hint">(mm)</span></label><input type="number" id="hThick" step="any" placeholder="Enter Thickness"></div>
+          <div class="input-group"><label>Width <span class="unit-hint">(mm)</span></label><input type="number" id="hWidth" step="any" placeholder="Enter Width"></div>
+        </div>
+        <div class="input-group"><label>Initial Gauge Length <span class="unit-hint">(mm)</span></label><input type="number" id="hInit" step="any" placeholder="Enter Initial Length"></div>
+        <div class="input-group"><label>Elongated Gauge Length <span class="unit-hint">(mm)</span></label><input type="number" id="hElong" step="any" placeholder="Enter Elongated Length"></div>
+        <div class="input-group"><label>After Cooling Gauge Length <span class="unit-hint">(mm)</span></label><input type="number" id="hCool" step="any" placeholder="Enter Cooled Length"></div>
+        <div class="result-section">
+          <div class="result-title-bar">Results</div>
+          <div class="result-card primary"><span class="label">Cal. Weight</span><div class="value-wrapper"><span class="value" id="hWeightOut">—</span><span class="unit">g</span></div></div>
+          <div class="result-card warning"><span class="label">Hot set Elongation</span><div class="value-wrapper"><span class="value" id="hHotOut">—</span><span class="unit">%</span></div></div>
+          <div class="result-card success"><span class="label">Permanent set Elongation</span><div class="value-wrapper"><span class="value" id="hPermOut">—</span><span class="unit">%</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-print no-print" onclick="triggerPrint(event, 'qc')">Save as PDF</button>
+  </div>
+
+  <div class="print-footer">
+    <div class="p-signatures">
+      <div class="p-sig-block">
+        <div class="p-sig-name" id="pPrepBy">—</div>
+        <div class="p-sig-line"></div>
+        <div class="p-sig-label">Prepared By</div>
+      </div>
+      <div class="p-sig-block">
+        <div class="p-sig-name" id="pVerBy">—</div>
+        <div class="p-sig-line"></div>
+        <div class="p-sig-label">Verified By</div>
+      </div>
+    </div>
+    <div style="margin-top: 15px;">This is a system-generated report. Thermocables Ltd.</div>
+  </div>
+
+</div>
+
+<div class="bottom-nav" id="bottomNav">
+  <div class="nav-item" onclick="switchMainView('home')">
+    <svg viewBox="0 0 24 24"><path d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" /></svg>
+    Home
+  </div>
+  <div class="nav-item" id="nav-job" onclick="switchMainView('jobcards')">
+    <svg viewBox="0 0 24 24"><path d="M19,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,19H5V5H19V19M17,17H7V15H17V17M17,13H7V11H17V13M17,9H7V7H17V9Z" /></svg>
+    Job Cards
+  </div>
+  <div class="nav-item" id="nav-bom" onclick="switchMainView('bom')">
+    <svg viewBox="0 0 24 24"><path d="M19,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,19H5V5H19V19M17,17H7V15H17V17M17,13H7V11H17V13M17,9H7V7H17V9Z" /></svg>
+    BOM
+  </div>
+  <div class="nav-item" id="nav-qc" onclick="switchMainView('qccalc')">
+    <svg viewBox="0 0 24 24"><path d="M16,4H8C6.89,4 6,4.89 6,6V18A2,2 0 0,0 8,20H16A2,2 0 0,0 18,18V6C18,4.89 17.11,4 16,4M16,18H8V6H16V18M13,8H11V12H13V8M13,14H11V16H13V14Z" /></svg>
+    QC Calc
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+// --- REGISTER SERVICE WORKER ---
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(err => console.log(err)); });
+}
+
+// --- LOGIN LOGIC ---
+let CURRENT_USER = '', CURRENT_ROLE = '', ALLOWED_VIEWS = [];
+let JOB_DATA = [], BOM_DATA = [], USER_PLAN_QTY = null;
+let loginStep = 1;
+const USERS = {
+  'admin': { pass: 'Admin@Tcl', role: 'Admin', views: ['jobcards', 'bom', 'qccalc'] },
+  'rakesh': { pass: 'Rakesh@Tcl', role: 'Manager', views: ['jobcards', 'bom'] },
+  'rasheed': { pass: 'Rasheed@Tcl', role: 'Manager', views: ['jobcards', 'bom'] },
+  'manikanta': { pass: 'Manikanta@Tcl', role: 'Manager', views: ['jobcards', 'bom'] },
+  'outer': { pass: '', role: 'Outer', views: ['jobcards'] },
+  'insulation': { pass: '', role: 'Insulation', views: ['jobcards'] },
+  'qc': { pass: '', role: 'QC', views: ['qccalc'] },
+  'production': { pass: '', role: 'Production', views: ['qccalc'] }
+};
+
+window.handleLogin = function() {
+  const u = document.getElementById('loginUser').value.trim().toLowerCase();
+  const p = document.getElementById('loginPass').value;
+  const err = document.getElementById('loginError');
+  const btn = document.getElementById('loginBtn');
+  
+  if (loginStep === 1) {
+    if (USERS[u]) {
+      if (USERS[u].pass === '') { completeLogin(u); }
+      else {
+        document.getElementById('loginPass').style.display = 'block';
+        document.getElementById('loginPass').focus();
+        btn.textContent = 'Sign In'; loginStep = 2; err.style.display = 'none';
+      }
+    } else { err.style.display = 'block'; }
+  } else {
+    if (p === USERS[u].pass) { completeLogin(u); } else { err.style.display = 'block'; }
+  }
+};
+
+function completeLogin(u) {
+  CURRENT_USER = u; CURRENT_ROLE = USERS[u].role; ALLOWED_VIEWS = USERS[u].views;
+  localStorage.setItem('tc_user', u);
+  
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('appContainer').style.display = 'block';
+  document.getElementById('dropUserRole').textContent = CURRENT_ROLE;
+  
+  document.getElementById('nav-job').style.display = ALLOWED_VIEWS.includes('jobcards') ? 'flex' : 'none';
+  document.getElementById('nav-bom').style.display = ALLOWED_VIEWS.includes('bom') ? 'flex' : 'none';
+  document.getElementById('nav-qc').style.display = ALLOWED_VIEWS.includes('qccalc') ? 'flex' : 'none';
+  
+  if (CURRENT_ROLE === 'Admin') {
+    document.getElementById('adminPanel').style.display = 'block';
+    loadAdminSettings();
+  } else { document.getElementById('adminPanel').style.display = 'none'; }
+  
+  const homeLinks = document.getElementById('homeLinks');
+  homeLinks.innerHTML = '';
+  if (ALLOWED_VIEWS.includes('jobcards')) homeLinks.innerHTML += `<button class="module-card card-job" onclick="switchMainView('jobcards')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,19H5V5H19V19M17,17H7V15H17V17M17,13H7V11H17V13M17,9H7V7H17V9Z" /></svg></div><div class="card-content"><div class="card-title">Job Cards</div><div class="card-desc">Search and view job specifications</div></div></button>`;
+  if (ALLOWED_VIEWS.includes('bom')) homeLinks.innerHTML += `<button class="module-card card-bom" onclick="switchMainView('bom')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3M19,19H5V5H19V19M17,17H7V15H17V17M17,13H7V11H17V13M17,9H7V7H17V9Z" /></svg></div><div class="card-content"><div class="card-title">BOM</div><div class="card-desc">Bill of Materials calculations</div></div></button>`;
+  if (ALLOWED_VIEWS.includes('qccalc')) homeLinks.innerHTML += `<button class="module-card card-qc" onclick="switchMainView('qccalc')"><div class="card-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16,4H8C6.89,4 6,4.89 6,6V18A2,2 0 0,0 8,20H16A2,2 0 0,0 18,18V6C18,4.89 17.11,4 16,4M16,18H8V6H16V18M13,8H11V12H13V8M13,14H11V16H13V14Z" /></svg></div><div class="card-content"><div class="card-title">QC Calculator</div><div class="card-desc">Run CR, IR, Tensile tests</div></div></button>`;
+  
+  document.getElementById('welcomeName').textContent = CURRENT_ROLE;
+  document.getElementById('headerCompany').textContent = localStorage.getItem('tc_company') || 'THERMOCABLES LTD.';
+  
+  // Set date
+  const now = new Date();
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  document.getElementById('dashDate').textContent = now.toLocaleDateString('en-US', options);
+  
+  // Set Greeting
+  const hr = now.getHours();
+  let greeting = 'Good Evening';
+  if(hr < 12) greeting = 'Good Morning';
+  else if(hr < 17) greeting = 'Good Afternoon';
+  document.getElementById('dashGreeting').textContent = greeting;
+
+  loadJobDataFromCSV();
+  if (ALLOWED_VIEWS.includes('bom')) loadBomDataFromCSV();
+  switchMainView('home');
+}
+
+window.handleLogout = function() { localStorage.removeItem('tc_user'); location.reload(); };
+window.addEventListener('load', () => {
+  const savedUser = localStorage.getItem('tc_user');
+  if (savedUser) {
+    document.getElementById('loginUser').value = savedUser;
+    if (savedUser === 'admin') document.getElementById('loginPass').value = 'Admin@Tcl';
+    else if (savedUser === 'rakesh') document.getElementById('loginPass').value = 'Rakesh@Tcl';
+    else if (savedUser === 'rasheed') document.getElementById('loginPass').value = 'Rasheed@Tcl';
+    else if (savedUser === 'manikanta') document.getElementById('loginPass').value = 'Manikanta@Tcl';
+    handleLogin();
+  }
+});
+window.toggleProfile = function(event) { if(event) event.stopPropagation(); document.getElementById('profileDropdown').classList.toggle('show'); };
+document.addEventListener('click', function(event) {
+  const drop = document.getElementById('profileDropdown'), profile = document.querySelector('.user-profile');
+  if (drop.classList.contains('show') && !profile.contains(event.target) && !drop.contains(event.target)) drop.classList.remove('show');
+});
+
+window.saveAdminSettings = function() {
+  localStorage.setItem('tc_company', document.getElementById('setCompany').value);
+  localStorage.setItem('tc_dept', document.getElementById('setDept').value);
+  localStorage.setItem('tc_prep', document.getElementById('setPrepBy').value);
+  localStorage.setItem('tc_ver', document.getElementById('setVerBy').value);
+  document.getElementById('headerCompany').textContent = document.getElementById('setCompany').value || 'THERMOCABLES LTD.';
+  alert('Settings Saved Successfully!');
+};
+function loadAdminSettings() {
+  document.getElementById('setCompany').value = localStorage.getItem('tc_company') || 'THERMOCABLES LTD.';
+  document.getElementById('setDept').value = localStorage.getItem('tc_dept') || 'QC DEPARTMENT';
+  document.getElementById('setPrepBy').value = localStorage.getItem('tc_prep') || '';
+  document.getElementById('setVerBy').value = localStorage.getItem('tc_ver') || '';
+}
+
+window.switchMainView = function(viewName) {
+  document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
+  document.getElementById(`view-${viewName}`).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  
+  if(viewName === 'home') document.querySelectorAll('.nav-item')[0].classList.add('active');
+  else if(viewName === 'jobcards') document.getElementById('nav-job').classList.add('active');
+  else if(viewName === 'bom') document.getElementById('nav-bom').classList.add('active');
+  else if(viewName === 'qccalc') document.getElementById('nav-qc').classList.add('active');
+  
+  const title = viewName === 'home' ? 'PORTAL' : (viewName === 'jobcards' ? 'JOB CARDS' : (viewName === 'bom' ? 'BOM' : 'QC CALCULATOR'));
+  document.getElementById('headerTitle').textContent = title;
+};
+
+window.switchQcTab = function(tabName, event) {
+  document.querySelectorAll('.qc-tab-btn').forEach(btn => btn.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  document.querySelectorAll('.qc-card').forEach(card => card.classList.remove('active'));
+  document.getElementById(`qc-card-${tabName}`).classList.add('active');
+};
+
+/* --- CALCULATIONS & DATA LOGIC (SAME AS PREVIOUS) --- */
+function normalizeHeader(h){ return String(h||'').toLowerCase().replace(/[\s_\-\/\.]+/g,''); }
+function findHeader(headers, ...candidates){ for(const c of candidates){ const found = headers.find(h => normalizeHeader(h) === normalizeHeader(c)); if(found) return found; } return null; }
+async function loadJobDataFromCSV() {
+  try {
+    const response = await fetch('data.csv?v=' + new Date().getTime());
+    if (!response.ok) return;
+    Papa.parse(await response.text(), { header: true, skipEmptyLines: true, complete: function(results) { processJobCSVData(results.data); } });
+  } catch (e) { console.warn('data.csv not found'); }
+}
+function processJobCSVData(rows) {
+  const headers = Object.keys(rows[0] || {});
+  const soItemKey = findHeader(headers, 'SO-ITEM', 'SOITEM', 'INDEX'), opKey = findHeader(headers, 'OPERATION DETAIL', 'OPERATION');
+  if (!soItemKey || !opKey) return;
+  JOB_DATA = [];
+  rows.forEach((row, i) => {
+    const soItem = String(row[soItemKey] || '').trim(), op = String(row[opKey] || '').trim();
+    if (!soItem || !op) return;
+    JOB_DATA.push({ order: i, soItem, so: soItem.split('#')[0].trim(), operation: op, qty: row[findHeader(headers, 'QTY')] || '', customer: row[findHeader(headers, 'CUSTOMER')] || '', size: row[findHeader(headers, 'SIZE')] || '', details: [], drum: row[findHeader(headers, 'DRUM')] || '' });
+  });
+}
+function jobNumberOf(row){ return row.soItem ? row.soItem.split('#')[0].trim() : ''; }
+function buildJobIndex(){ const map = new Map(); JOB_DATA.forEach(r => { const j = jobNumberOf(r); if(!j) return; if(!map.has(j)) map.set(j, {opCount:0, ops:new Set()}); const rec = map.get(j); if(r.operation) rec.ops.add(r.operation); }); map.forEach(v => v.opCount = v.ops.size); return map; }
+function allJobNumbers(){ return Array.from(buildJobIndex().keys()).sort(); }
+function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+const jobInput = document.getElementById('jobInput'), opSelect = document.getElementById('opSelect'), jobGrid = document.getElementById('jobGrid'), suggestBox = document.getElementById('suggestBox');
+let SUGGEST_INDEX = -1, SUGGEST_ITEMS = [];
+
+function renderSuggestions(term){
+  const matches = allJobNumbers().filter(j => j.toLowerCase().includes(term.toLowerCase())); const idx = buildJobIndex(); SUGGEST_INDEX = -1;
+  if(matches.length === 0){ SUGGEST_ITEMS = []; suggestBox.innerHTML = `<div class="suggest-empty">No jobs match</div>`; suggestBox.classList.add('open'); return; }
+  SUGGEST_ITEMS = matches; let html = `<div class="suggest-hint">${matches.length} jobs found</div>`;
+  matches.forEach((j, i) => {
+    const rec = idx.get(j) || {opCount:0};
+    html += `<div class="suggest-item" data-job="${esc(j)}" data-idx="${i}"><span>${j}</span><span class="meta">${rec.opCount} ops</span></div>`;
+  });
+  suggestBox.innerHTML = html; suggestBox.classList.add('open');
+}
+function closeSuggestions(){ suggestBox.classList.remove('open'); SUGGEST_INDEX = -1; }
+function pickSuggestion(jobNo){ jobInput.value = jobNo; closeSuggestions(); refreshOpSelect(); }
+
+jobInput.addEventListener('input', () => { renderSuggestions(jobInput.value); refreshOpSelect(); });
+jobInput.addEventListener('focus', () => { if(!jobInput.value.trim()) renderSuggestions(''); else renderSuggestions(jobInput.value); });
+suggestBox.addEventListener('mousedown', e => { const item = e.target.closest('.suggest-item'); if(item) pickSuggestion(item.dataset.job); });
+
+function refreshOpSelect(){
+  const job = jobInput.value.trim(); opSelect.innerHTML = '';
+  if(!job){ opSelect.innerHTML = '<option value="">— Select Job First —</option>'; opSelect.disabled = true; return; }
+  const jn = job.toLowerCase(); const seen = new Set(); const list = [];
+  JOB_DATA.forEach(r => { if(jobNumberOf(r).toLowerCase() === jn && !seen.has(r.operation)){ seen.add(r.operation); list.push(r.operation); } });
+  if(list.length === 0){ opSelect.innerHTML = '<option value="">— No Operations —</option>'; opSelect.disabled = true; return; }
+  const ph = document.createElement('option'); ph.value = ''; ph.textContent = '— Select Op —'; opSelect.appendChild(ph);
+  list.forEach(op => { const o = document.createElement('option'); o.value = op; o.textContent = op; opSelect.appendChild(o); });
+  opSelect.disabled = false; if(list.length === 1) opSelect.value = list[0];
+}
+
+function renderJobResults(){
+  const job = jobInput.value.trim(), op = opSelect.value;
+  if(!job || !op) return;
+  const matches = JOB_DATA.filter(r => jobNumberOf(r).toLowerCase() === job.toLowerCase() && r.operation === op);
+  document.getElementById('jobResultCount').textContent = `${matches.length} records`;
+  let html = '';
+  matches.forEach(row => {
+    let specs = `<div class="spec accent"><div class="k">JOB NO</div><div class="v">${esc(jobNumberOf(row))}</div></div><div class="spec"><div class="k">INDEX</div><div class="v">${esc(row.soItem)}</div></div><div class="spec"><div class="k">QTY</div><div class="v">${esc(row.qty)}</div></div><div class="spec"><div class="k">CUSTOMER</div><div class="v">${esc(row.customer)}</div></div>`;
+    html += `<div class="card"><div class="card-head"><h3>${esc(row.soItem)}</h3><span class="op-tag">${esc(row.operation)}</span></div><div class="specs">${specs}</div></div>`;
+  });
+  jobGrid.innerHTML = html || `<div class="empty"><p>No records found</p></div>`;
+}
+document.getElementById('searchBtn').addEventListener('click', renderJobResults);
+document.getElementById('resetBtn').addEventListener('click', () => { jobInput.value=''; opSelect.disabled=true; jobGrid.innerHTML='<div class="empty"><p>Start typing a job number</p></div>'; });
+
+async function loadBomDataFromCSV() {
+  try {
+    const response = await fetch('bom.csv?v=' + new Date().getTime());
+    if (!response.ok) return;
+    Papa.parse(await response.text(), { header: false, skipEmptyLines: false, complete: function(results) {
+      const allRows = results.data; if(!allRows || allRows.length < 2) return;
+      const headerRow = allRows[0].map(h => String(h||'').trim());
+      const rows = allRows.slice(1).filter(r => r.some(c => String(c||'').trim() !== '')).map(r => { const obj = {}; headerRow.forEach((h, i) => { obj[h] = r[i] || ''; }); return obj; });
+      processBomCSVData(rows);
+    }});
+  } catch (e) { console.warn('bom.csv not found'); }
+}
+function processBomCSVData(rows) {
+  const headers = Object.keys(rows[0] || {});
+  const sKey = findHeader(headers, 'SO/ITEM NO', 'SOITEMNO'), oKey = findHeader(headers, 'OPERATION JDM'), gKey = findHeader(headers, 'GROUP'), mcKey = findHeader(headers, 'MATERIAL CODE'), mdKey = findHeader(headers, 'MATERIAL DISC'), bKey = findHeader(headers, 'BOM/KM - JDM'), pKey = findHeader(headers, 'PLAN/PRD QTY');
+  const grouped = new Map();
+  rows.forEach(row => {
+    const so = String(row[sKey] || '').replace(/#/g, '').trim(); if(!so) return;
+    if(!grouped.has(so)) grouped.set(so, { soItem: so, defaultPlanQty: parseFloat(row[pKey]) || 0, lines: [], ops: new Set() });
+    const rec = grouped.get(so), op = String(row[oKey] || '').trim();
+    if(op) rec.ops.add(op);
+    if(row[mcKey] || row[mdKey]) rec.lines.push({ group: row[gKey] || 'OTHER', op, matCode: row[mcKey], matDisc: row[mdKey], bomPerKm: parseFloat(row[bKey]) || 0 });
+  });
+  BOM_DATA = Array.from(grouped.values());
+}
+function renderBomResults(){
+  const so = document.getElementById('bomInput').value.trim(), op = document.getElementById('bomOpSelect').value;
+  const item = BOM_DATA.find(b => b.soItem === so);
+  if(!item){ document.getElementById('bomGrid').innerHTML = `<div class="empty"><p>No BOM found</p></div>`; return; }
+  let lines = op ? item.lines.filter(l => l.op === op) : item.lines;
+  const plan = USER_PLAN_QTY !== null ? USER_PLAN_QTY : item.defaultPlanQty;
+  let html = `<div class="card"><div class="card-head"><h3>${esc(so)}</h3></div><div class="qc-card-body"><div class="result-section"><div class="result-title-bar">Plan Qty</div><div class="result-card primary"><input type="number" id="planQtyInput" value="${plan}" style="border:none;background:transparent;font-size:1.3rem;font-weight:800;width:100px;text-align:right;" oninput="window.updateBomCalc()"></div></div><div class="bom-table"><div class="bom-table-head"><div>Mat Code</div><div>Mat Disc</div><div>Qty</div></div>`;
+  const groups = new Map(); lines.forEach(l => { if(!groups.has(l.group)) groups.set(l.group, []); groups.get(l.group).push(l); });
+  Array.from(groups.keys()).sort().forEach(g => { html += `<div class="bom-group-header">${g}</div>`; groups.get(g).forEach(l => { html += `<div class="bom-row"><div>${esc(l.matCode)}</div><div>${esc(l.matDisc)}</div><div>${((plan * l.bomPerKm)/1000).toFixed(2)}</div></div>`; }); });
+  document.getElementById('bomGrid').innerHTML = html + `</div></div></div>`;
+}
+window.updateBomCalc = function() { USER_PLAN_QTY = parseFloat(document.getElementById('planQtyInput').value) || 0; renderBomResults(); };
+document.getElementById('bomSearchBtn').addEventListener('click', renderBomResults);
+
+function formatScientific(num) { if (num === 0) return '0'; const e = Math.floor(Math.log10(Math.abs(num))); const m = num / Math.pow(10, e); return `${m.toFixed(2)} × 10<sup>${e}</sup>`; }
+
+function calculateCR() {
+  const r = parseFloat(document.getElementById('crReading').value) || 0, l = parseFloat(document.getElementById('crLength').value) || 0, t = parseFloat(document.getElementById('crTemp').value) || 0, s = parseFloat(document.getElementById('crSpecified').value) || 0;
+  let obs = (l !== 0 && (230 + t) !== 0) ? (250 / (230 + t)) * (r / l) * 1000 : 0;
+  document.getElementById('obsCrOut').textContent = obs.toFixed(2);
+  let diff = s !== 0 ? ((obs - s) / s) * 100 : 0;
+  document.getElementById('percentDiffOut').textContent = (diff > 0 ? "+" : "") + diff.toFixed(2) + "%";
+  const box = document.getElementById('percentStatusBox'); box.className = 'status-box';
+  if (obs === 0 && s === 0) { box.classList.add('status-neutral'); document.getElementById('statusIcon').textContent='—'; document.getElementById('statusText').textContent='Waiting'; }
+  else if (diff > 0) { box.classList.add('status-high'); document.getElementById('statusIcon').textContent='⚠️'; document.getElementById('statusText').textContent='HIGH'; }
+  else { box.classList.add('status-low'); document.getElementById('statusIcon').textContent='✅'; document.getElementById('statusText').textContent='LOW'; }
+}
+['crReading','crLength','crTemp','crSpecified'].forEach(id => document.getElementById(id).addEventListener('input', calculateCR));
+
+function calculateIR() {
+  const rIn = parseFloat(document.getElementById('irReading').value) || 0, l = parseFloat(document.getElementById('irLength').value) || 0, c = parseFloat(document.getElementById('irCoreDia').value) || 0, d = parseFloat(document.getElementById('irCondDia').value) || 0;
+  const r = rIn * 1000000, ir = (r * l) / 1000;
+  let irC = 0, vrC = 0;
+  if (c > 0 && d > 0 && c !== d) { const logR = Math.log10(c / d); irC = (r * l) / (1000 * logR); vrC = ((2 * 3.142 * r * l) / logR) * Math.pow(10, 8); }
+  document.getElementById('irResultOut').textContent = ir.toFixed(2);
+  document.getElementById('irConstOut').innerHTML = irC > 999999 ? formatScientific(irC) : irC.toFixed(2);
+  document.getElementById('vrConstOut').innerHTML = vrC > 999999 ? formatScientific(vrC) : vrC.toFixed(2);
+}
+['irReading','irLength','irCoreDia','irCondDia'].forEach(id => document.getElementById(id).addEventListener('input', calculateIR));
+
+function calculateCap() { const r = parseFloat(document.getElementById('capReading').value) || 0, l = parseFloat(document.getElementById('capLength').value) || 0; document.getElementById('capResultOut').textContent = (l !== 0 ? (r * 1000) / l : 0).toFixed(2); }
+['capReading','capLength'].forEach(id => document.getElementById(id).addEventListener('input', calculateCap));
+
+function calculateHVFail() {
+  const l = parseFloat(document.getElementById('hvLength').value) || 0, t = parseFloat(document.getElementById('hvTopCr').value) || 0, b = parseFloat(document.getElementById('hvBottomCr').value) || 0;
+  const total = t + b;
+  document.getElementById('hvTotalCrOut').textContent = total.toFixed(2);
+  document.getElementById('hvTopSideOut').textContent = (total !== 0 ? (t * l) / total : 0).toFixed(2);
+  document.getElementById('hvBottomSideOut').textContent = (total !== 0 ? (b * l) / total : 0).toFixed(2);
+}
+['hvLength','hvTopCr','hvBottomCr'].forEach(id => document.getElementById(id).addEventListener('input', calculateHVFail));
+
+function calculateThickness() {
+  const min = parseFloat(document.getElementById('thickMin').value) || 0, max = parseFloat(document.getElementById('thickMax').value) || 0;
+  document.getElementById('thickAvgOut').textContent = ((min + max) / 2).toFixed(2);
+  document.getElementById('thickConcOut').textContent = (max !== 0 ? (min / max) * 100 : 0).toFixed(2);
+}
+['thickMin','thickMax'].forEach(id => document.getElementById(id).addEventListener('input', calculateThickness));
+
+function calculateBraid() {
+  const d = parseFloat(document.getElementById('brD').value) || 0, bigD = parseFloat(document.getElementById('brBigD').value) || 0, n = parseFloat(document.getElementById('brN').value) || 0, m = parseFloat(document.getElementById('brM').value) || 0, l = parseFloat(document.getElementById('brL').value) || 0;
+  document.getElementById('brTotalWiresOut').textContent = (n * m).toFixed(0);
+  let f = 0, cov = 0;
+  if (bigD !== 0 && l !== 0) { const t1 = (m * n * d) / (2 * 3.143 * bigD); const t2 = Math.sqrt(1 + ((3.143 * 3.143 * bigD * bigD) / (l * l))); f = t1 * t2; cov = (2 * f - (f * f)) * 100; }
+  document.getElementById('brFOut').textContent = f.toFixed(4);
+  document.getElementById('brCovOut').textContent = cov.toFixed(2);
+}
+['brD','brBigD','brN','brM','brL'].forEach(id => document.getElementById(id).addEventListener('input', calculateBraid));
+
+document.getElementById('tensileShape').addEventListener('change', (e) => { document.getElementById('tubularInputs').style.display = e.target.value === 'tubular' ? 'block' : 'none'; document.getElementById('dumbbellInputs').style.display = e.target.value === 'dumbbell' ? 'block' : 'none'; calculateTensile(); });
+function calculateTensile() {
+  const load = parseFloat(document.getElementById('tLoad').value) || 0, elong = parseFloat(document.getElementById('tElong').value) || 0, init = parseFloat(document.getElementById('tInit').value) || 0;
+  let area = 0;
+  if (document.getElementById('tensileShape').value === 'tubular') area = 3.142 * ((parseFloat(document.getElementById('tDia').value)||0) - (parseFloat(document.getElementById('tThick').value)||0)) * (parseFloat(document.getElementById('tThick').value)||0);
+  else area = (parseFloat(document.getElementById('dWidth').value)||0) * (parseFloat(document.getElementById('dThick').value)||0);
+  document.getElementById('tAreaOut').textContent = area.toFixed(4);
+  document.getElementById('tTsOut').textContent = (area !== 0 ? load / area : 0).toFixed(2);
+  document.getElementById('tElongOut').textContent = (init !== 0 ? ((elong - init) / init) * 100 : 0).toFixed(2);
+}
+['tDia','tThick','dWidth','dThick','tLoad','tElong','tInit'].forEach(id => document.getElementById(id).addEventListener('input', calculateTensile));
+
+document.getElementById('hotSetShape').addEventListener('change', (e) => { document.getElementById('tubularHotInputs').style.display = e.target.value === 'tubular' ? 'block' : 'none'; document.getElementById('dumbbellHotInputs').style.display = e.target.value === 'dumbbell' ? 'block' : 'none'; calculateHotSet(); });
+function calculateHotSet() {
+  const init = parseFloat(document.getElementById('hInit').value) || 0, elong = parseFloat(document.getElementById('hElong').value) || 0, cool = parseFloat(document.getElementById('hCool').value) || 0;
+  let weight = 0;
+  if (document.getElementById('hotSetShape').value === 'tubular') { const c = parseFloat(document.getElementById('hCoreDia').value)||0, d = parseFloat(document.getElementById('hCondDia').value)||0; weight = 0.7855 * ((c * c) - (d * d)) * 20.4; }
+  else weight = (parseFloat(document.getElementById('hThick').value)||0) * (parseFloat(document.getElementById('hWidth').value)||0) * 20.4;
+  document.getElementById('hWeightOut').textContent = weight.toFixed(2);
+  document.getElementById('hHotOut').textContent = (init !== 0 ? ((elong - init) / init) * 100 : 0).toFixed(2);
+  document.getElementById('hPermOut').textContent = (init !== 0 ? ((cool - init) / init) * 100 : 0).toFixed(2);
+}
+['hCoreDia','hCondDia','hThick','hWidth','hInit','hElong','hCool'].forEach(id => document.getElementById(id).addEventListener('input', calculateHotSet));
+
+window.triggerPrint = function(e, type) {
+  if(e) e.preventDefault();
+  const now = new Date();
+  document.getElementById('pCompany').textContent = localStorage.getItem('tc_company') || 'THERMOCABLES LTD.';
+  document.getElementById('pDept').textContent = localStorage.getItem('tc_dept') || 'DEPARTMENT';
+  document.getElementById('pPrepBy').textContent = localStorage.getItem('tc_prep') || '—';
+  document.getElementById('pVerBy').textContent = localStorage.getItem('tc_ver') || '—';
+  document.getElementById('pDate').textContent = now.toLocaleDateString('en-GB');
+  document.getElementById('pTime').textContent = now.toLocaleTimeString('en-US');
+  const printInputs = document.getElementById('printInputs');
+  printInputs.innerHTML = '';
+  if (type === 'qc') {
+    const activeTab = document.querySelector('.qc-tab-btn.active').innerText;
+    const tabMap = {'CR Calc':'CR Test Report','IR Calc':'IR Test Report','Capacitance':'Capacitance Test Report','HV Fail':'HV Fail Report','Thickness':'Thickness Report','Braid':'Braid Report','Tensile':'Tensile Report','Hot Set':'Hot Set Report'};
+    document.getElementById('pTestType').textContent = tabMap[activeTab] || 'QC Report';
+    let html = `<table class="print-inputs-table"><tr><th>Parameter</th><th>Value</th><th>Unit</th></tr>`;
+    function add(lbl, id, unit){ const v = document.getElementById(id).value; if(v) html += `<tr><td>${lbl}</td><td>${v}</td><td>${unit}</td></tr>`; }
+    if(activeTab === 'CR Calc'){ add('CR Reading','crReading','-'); add('Length','crLength','M'); add('Temp','crTemp','°C'); add('Spec CR','crSpecified','-'); }
+    else if(activeTab === 'IR Calc'){ add('Reading','irReading','MΩ'); add('Length','irLength','M'); add('Core Dia','irCoreDia','mm'); add('Cond Dia','irCondDia','mm'); }
+    else if(activeTab === 'Capacitance'){ add('Reading','capReading','-'); add('Length','capLength','M'); }
+    else if(activeTab === 'HV Fail'){ add('Total Length','hvLength','M'); add('Top CR','hvTopCr','-'); add('Bottom CR','hvBottomCr','-'); }
+    else if(activeTab === 'Thickness'){ add('Min Thk','thickMin','mm'); add('Max Thk','thickMax','mm'); }
+    else if(activeTab === 'Braid'){ add('Wire Dia','brD','mm'); add('Dia under braid','brBigD','mm'); add('No. Wires','brN','Count'); add('No. Carriers','brM','Count'); add('Lay Length','brL','mm'); }
+    else if(activeTab === 'Tensile'){ const shp = document.getElementById('tensileShape').value; if(shp==='tubular'){ add('Diameter','tDia','mm'); add('Thickness','tThick','mm'); } else { add('Width','dWidth','mm'); add('Min Thk','dThick','mm'); } add('Load','tLoad','N'); add('Elong Length','tElong','mm'); add('Init Length','tInit','mm'); }
+    else if(activeTab === 'Hot Set'){ const shp = document.getElementById('hotSetShape').value; if(shp==='tubular'){ add('Core Dia','hCoreDia','mm'); add('Cond Dia','hCondDia','mm'); } else { add('Thickness','hThick','mm'); add('Width','hWidth','mm'); } add('Init Length','hInit','mm'); add('Elong Length','hElong','mm'); add('Cool Length','hCool','mm'); }
+    printInputs.innerHTML = html + `</table>`;
+  } else if (type === 'job') { document.getElementById('pTestType').textContent = 'Job Card'; }
+  else if (type === 'bom') { document.getElementById('pTestType').textContent = 'BOM Report'; }
+  window.print();
+};
+
+})();
+</script>
+</body>
+</html>
