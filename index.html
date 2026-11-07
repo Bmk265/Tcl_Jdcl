@@ -153,13 +153,17 @@ body{
 .card-foot .drum{color:#475569;word-break:break-word;font-weight:600;}
 .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:60px 20px;text-align:center;background:#fff;border-radius:20px;border:2px dashed #e2e8f0;}
 .empty .icon{font-size:3rem;opacity:.5}
-.bom-table{display:flex;flex-direction:column;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0;}
-.bom-table-head{display:grid;grid-template-columns:110px 1fr 100px;background:#e2e8f0;border-bottom:2px solid #cbd5e1;}
+
+/* BOM Table */
+.bom-table{display:flex;flex-direction:column;border-radius:12px;overflow:hidden;border:1px solid #e2e8f0; width: 100%; overflow-x: auto;}
+.bom-table-head{display:grid;grid-template-columns:90px 1fr 70px;background:#e2e8f0;border-bottom:2px solid #cbd5e1; min-width: 300px;}
 .bom-table-head > div{padding:10px 12px;font-size:.6rem;font-weight:800;text-transform:uppercase;color:#475569;}
-.bom-group-header{background:#eff6ff;border-top:1px solid #bfdbfe;border-bottom:1px solid #bfdbfe;padding:8px 12px;font-size:.7rem;font-weight:800;color:#1e40af;text-transform:uppercase;}
-.bom-row{display:grid;grid-template-columns:110px 1fr 100px;border-bottom:1px solid #f1f5f9;}
-.bom-row > div{padding:10px 12px;font-size:.75rem;color:#334155;display:flex;align-items:center;border-right:1px solid #f1f5f9;}
+.bom-group-header{background:#eff6ff;border-top:1px solid #bfdbfe;border-bottom:1px solid #bfdbfe;padding:8px 12px;font-size:.7rem;font-weight:800;color:#1e40af;text-transform:uppercase; min-width: 300px; display: flex; align-items: center;}
+.bom-row{display:grid;grid-template-columns:90px 1fr 70px;border-bottom:1px solid #f1f5f9; min-width: 300px;}
+.bom-row > div{padding:10px 12px;font-size:.75rem;color:#334155;display:flex;align-items:center;border-right:1px solid #f1f5f9; word-break: break-word;}
 .bom-row > div:last-child{border-right:none;justify-content:flex-end;font-weight:800;color:#2563eb;background:#fafbfc;}
+
+.plan-input {width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #bfdbfe; text-align: center; font-size: 1.3rem; font-weight: 800; background: #fff; outline: none; color: #1e3a8a;}
 
 /* QC CALCULATOR */
 .qc-tabs-wrapper { background: #ffffff; border-radius: 16px; padding: 6px; margin-bottom: 20px; border: 1px solid #e2e8f0;}
@@ -198,42 +202,64 @@ body{
 .nav-item.active { color: #3b82f6; }
 .nav-item svg { width: 22px; height: 22px; fill: currentColor; }
 
-/* PRINT */
+/* PRINT STYLES */
 .print-header, .print-footer, .print-inputs-section { display: none; }
 @media print {
   @page { margin: 15mm; size: A4 portrait; }
   html, body { width: 100% !important; margin: 0 !important; padding: 0 !important; background: #fff !important; color: #000 !important; font-size: 12px; }
   .app { max-width: 100% !important; width: 100% !important; padding: 0 !important; margin: 0 !important; }
-  .topbar, .tabs-wrapper, .qc-tabs-wrapper, .input-group, .qc-card-head, .card-head, .btn-print, .admin-panel, .user-profile, .profile-dropdown, .no-print, .bottom-nav, .dashboard-hero, .stats-grid, .module-grid, .k-feed, .tip-banner, .search-panel, .result-bar, .modal-overlay { display: none !important; }
-  .print-header { display: block !important; margin-bottom: 25px; }
-  .print-footer { display: block !important; margin-top: 40px; text-align: center; font-size: 10px; color: #666; border-top: 1px solid #ccc; padding-top: 10px;}
+  
+  /* Hide everything by default */
+  body * { visibility: hidden; }
+  
+  /* Show only the specific containers */
+  .print-header, .print-header *, 
+  .print-footer, .print-footer *,
+  .print-inputs-section, .print-inputs-section *,
+  .printable-card, .printable-card * { visibility: visible; }
+  
+  .printable-card { position: absolute; left: 0; top: 0; width: 100%; border: none !important; box-shadow: none !important; margin: 0 !important; padding: 0 !important; page-break-inside: avoid;}
+  
+  .print-header { display: block !important; margin-bottom: 25px; position: absolute; top: 0; left: 0; width: 100%;}
+  .print-inputs-section { display: block !important; margin-bottom: 30px; position: absolute; top: 140px; left: 0; width: 100%;}
+  .printable-card { margin-top: 280px !important; display: block !important;}
+  .print-footer { display: block !important; margin-top: 40px; text-align: center; font-size: 10px; color: #666; border-top: 1px solid #ccc; padding-top: 10px; position: absolute; bottom: 0; left: 0; width: 100%;}
+
   .p-header-top { text-align: center; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 15px;}
   .p-company { font-size: 22px; font-weight: 800; text-transform: uppercase; color: #000 !important; }
   .p-dept { font-size: 13px; font-weight: 600; margin-top: 4px; color: #333 !important;}
   .p-title { font-size: 15px; font-weight: 700; margin-top: 10px; color: #000 !important; text-transform: uppercase;}
   .p-meta { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 20px; color: #000 !important; border-bottom: 1px solid #ddd; padding-bottom: 10px;}
+  
   .p-signatures { display: flex; justify-content: space-between; margin-top: 60px; margin-bottom: 20px; font-size: 12px; font-weight: 600; color: #000 !important;}
   .p-sig-block { display: flex; flex-direction: column; align-items: center; width: 45%;}
   .p-sig-name { font-size: 14px; font-weight: 800; margin-bottom: 5px; color: #000 !important;}
   .p-sig-line { width: 100%; border-bottom: 1px solid #000; height: 20px; margin-bottom: 5px; display: block;}
   .p-sig-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #333 !important;}
-  .print-inputs-section { display: block !important; margin-bottom: 30px; }
+
   .print-inputs-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; table-layout: fixed; }
   .print-inputs-table th, .print-inputs-table td { border: 1px solid #000; padding: 10px 12px; font-size: 12px; text-align: left; word-wrap: break-word; }
   .print-inputs-table th { background: #f3f4f6 !important; font-weight: 700; color: #000; }
-  .qc-card, .card, .view-section { display: none !important; border: none !important; box-shadow: none !important; margin: 0 !important; }
-  .qc-card.active, .view-section.active .card { display: block !important; width: 100% !important; max-width: 100% !important; margin: 0 auto !important; }
-  .qc-card-body, .card-body { padding: 0 !important; }
-  .result-section, .specs { border: none !important; box-shadow: none !important; padding: 0 !important; margin-top: 0 !important; }
-  .result-title-bar { border-bottom: 1px solid #000; color: #000 !important; font-size: 14px; font-weight: 800; padding-bottom: 5px; margin-bottom: 15px; text-transform: uppercase;}
-  .result-card, .spec { border: 1px solid #000 !important; background: #fff !important; padding: 12px 15px !important; margin-bottom: 10px !important; border-radius: 0 !important; }
-  .result-card .label, .result-card .value, .result-card .unit, .spec .k, .spec .v { color: #000 !important; }
-  .status-box { border: 1px solid #000 !important; background: #fff !important; color: #000 !important; padding: 15px !important; border-radius: 0 !important; margin-top: 15px !important;}
+  
+  .card-head { border-bottom: 1px solid #000; background: #fff !important; padding: 10px 0;}
+  .card-head h3 { color: #000; font-size: 18px; }
+  .card-foot { border-top: 1px solid #000; background: #fff; padding: 10px 0; color: #000;}
+  .spec { border-bottom: 1px solid #ccc; }
+  .spec .k { background: #fff; color: #000; border-right: 1px solid #ccc;}
+  .spec .v { color: #000; }
   .bom-table { border: 1px solid #000; }
-  .bom-table-head, .bom-row, .bom-group-header { border-color: #000; }
-  .bom-table-head > div, .bom-row > div { color: #000 !important; border-color: #000; }
-  .bom-group-header { background: #fff !important; }
-  .card-foot { border: 1px solid #000 !important; border-top: none !important; padding: 10px 15px !important; color: #000 !important;}
+  .bom-table-head { border-bottom: 1px solid #000; background: #fff;}
+  .bom-table-head > div { color: #000; }
+  .bom-group-header { background: #fff; color: #000; border: none; border-bottom: 1px solid #000;}
+  .bom-row { border-bottom: 1px solid #ccc; }
+  .bom-row > div { color: #000; border-right: 1px solid #ccc;}
+  .bom-row > div:last-child { background: #fff; color: #000; }
+  .result-section { border: none; padding: 0; }
+  .result-card { border: 1px solid #000; background: #fff; color: #000; margin-bottom: 10px;}
+  .result-card * { color: #000 !important; }
+  .plan-input { border: none; text-align: left; font-size: 14px; }
+  .op-tag { border: 1px solid #000; color: #000; background: #fff; }
+  .chip-val { border: 1px solid #000; background: #fff; color: #000; }
 }
 </style>
 </head>
@@ -280,6 +306,7 @@ body{
     <button class="admin-save-btn" onclick="saveAdminSettings()">Save Settings</button>
   </div>
 
+  <!-- PRINT HEADERS -->
   <div class="print-header">
     <div class="p-header-top">
       <div class="p-company" id="pCompany">THERMOCABLES LTD.</div>
@@ -308,65 +335,25 @@ body{
       </div>
     </div>
 
-    <!-- Quick Access Modules -->
-    <div class="module-grid" id="homeLinks">
-      <!-- Injected via JS based on role -->
-    </div>
+    <div class="module-grid" id="homeLinks"></div>
 
-    <!-- Knowledge Hub -->
     <div class="section-title">Industrial Knowledge Hub</div>
     <div class="k-feed">
-      
-      <!-- 5S Card -->
       <div class="k-card k-lean" onclick="openKnowledge('5s')">
-        <div class="k-icon">🏭</div>
-        <div class="k-content">
-          <h4>The 5S Methodology</h4>
-          <p>Workplace organization for efficiency & safety</p>
-        </div>
-        <div class="k-arrow">›</div>
+        <div class="k-icon">🏭</div><div class="k-content"><h4>The 5S Methodology</h4><p>Workplace organization for efficiency & safety</p></div><div class="k-arrow">›</div>
       </div>
-
-      <!-- Lean Card -->
       <div class="k-card k-lean" onclick="openKnowledge('lean')">
-        <div class="k-icon">⚙️</div>
-        <div class="k-content">
-          <h4>Lean Manufacturing</h4>
-          <p>Maximize value & minimize waste (Kaizen, JIT)</p>
-        </div>
-        <div class="k-arrow">›</div>
+        <div class="k-icon">⚙️</div><div class="k-content"><h4>Lean Manufacturing</h4><p>Maximize value & minimize waste (Kaizen, JIT)</p></div><div class="k-arrow">›</div>
       </div>
-
-      <!-- Standards Card -->
       <div class="k-card k-std" onclick="openKnowledge('standards')">
-        <div class="k-icon">📜</div>
-        <div class="k-content">
-          <h4>IEC Cable Standards</h4>
-          <p>Essential global standards for testing & construction</p>
-        </div>
-        <div class="k-arrow">›</div>
+        <div class="k-icon">📜</div><div class="k-content"><h4>IEC Cable Standards</h4><p>Essential global standards for testing & construction</p></div><div class="k-arrow">›</div>
       </div>
-
-      <!-- Formulas Card -->
       <div class="k-card k-formula" onclick="openKnowledge('formulas')">
-        <div class="k-icon">📐</div>
-        <div class="k-content">
-          <h4>Engineering Formulas</h4>
-          <p>Calculate resistance, voltage drop & capacitance</p>
-        </div>
-        <div class="k-arrow">›</div>
+        <div class="k-icon">📐</div><div class="k-content"><h4>Engineering Formulas</h4><p>Calculate resistance, voltage drop & capacitance</p></div><div class="k-arrow">›</div>
       </div>
-
-      <!-- Construction Fact -->
       <div class="k-card" onclick="openKnowledge('construction')">
-        <div class="k-icon">🔌</div>
-        <div class="k-content">
-          <h4>Cable Construction</h4>
-          <p>Anatomy of a standard power cable</p>
-        </div>
-        <div class="k-arrow">›</div>
+        <div class="k-icon">🔌</div><div class="k-content"><h4>Cable Construction</h4><p>Anatomy of a standard power cable</p></div><div class="k-arrow">›</div>
       </div>
-
     </div>
   </div>
 
@@ -387,7 +374,6 @@ body{
         <button class="btn-reset" id="resetBtn">Reset</button>
       </div>
     </div>
-
     <div class="result-bar">
       <div class="result-title" id="jobResultTitle">Enter details above</div>
       <div class="counter" id="jobResultCount">0 records</div>
@@ -415,7 +401,6 @@ body{
         <button class="btn-reset" id="bomResetBtn">Reset</button>
       </div>
     </div>
-
     <div class="result-bar">
       <div class="result-title" id="bomResultTitle">Enter details above</div>
       <div class="counter" id="bomResultCount">0 records</div>
@@ -634,9 +619,7 @@ body{
       <div class="k-icon" id="modalIcon" style="font-size: 1.5rem; width: 48px; height: 48px;">📚</div>
       <h3 id="modalTitle">Title</h3>
     </div>
-    <div class="modal-body" id="modalBody">
-      <!-- Content injected dynamically -->
-    </div>
+    <div class="modal-body" id="modalBody"></div>
   </div>
 </div>
 
@@ -644,12 +627,10 @@ body{
 (function(){
 "use strict";
 
-// --- REGISTER SERVICE WORKER ---
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(err => console.log(err)); });
 }
 
-// --- LOGIN LOGIC ---
 let CURRENT_USER = '', CURRENT_ROLE = '', ALLOWED_VIEWS = [];
 let JOB_DATA = [], BOM_DATA = [], USER_PLAN_QTY = null;
 let loginStep = 1;
@@ -803,6 +784,9 @@ window.closeKnowledge = function(event) {
 /* --- JOB CARDS & BOM DATA LOGIC --- */
 function normalizeHeader(h){ return String(h||'').toLowerCase().replace(/[\s_\-\/\.]+/g,''); }
 function findHeader(headers, ...candidates){ for(const c of candidates){ const found = headers.find(h => normalizeHeader(h) === normalizeHeader(c)); if(found) return found; } return null; }
+function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function formatQty(n) { if(n === null || n === undefined || isNaN(n)) return '—'; return Number(n).toFixed(4).replace(/\.?0+$/, '') || '0'; }
+function formatScientific(num) { if (num === 0) return '0'; const e = Math.floor(Math.log10(Math.abs(num))); const m = num / Math.pow(10, e); return `${m.toFixed(2)} × 10<sup>${e}</sup>`; }
 
 async function loadJobDataFromCSV() {
   try {
@@ -852,7 +836,6 @@ function processJobCSVData(rows) {
 function jobNumberOf(row){ return row.soItem ? row.soItem.split('#')[0].trim() : ''; }
 function buildJobIndex(){ const map = new Map(); JOB_DATA.forEach(r => { const j = jobNumberOf(r); if(!j) return; if(!map.has(j)) map.set(j, {opCount:0, ops:new Set()}); const rec = map.get(j); if(r.operation) rec.ops.add(r.operation); }); map.forEach(v => v.opCount = v.ops.size); return map; }
 function allJobNumbers(){ return Array.from(buildJobIndex().keys()).sort(); }
-function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 const jobInput = document.getElementById('jobInput'), opSelect = document.getElementById('opSelect'), jobGrid = document.getElementById('jobGrid'), suggestBox = document.getElementById('suggestBox');
 let SUGGEST_INDEX = -1, SUGGEST_ITEMS = [];
@@ -902,16 +885,10 @@ function renderJobResults(){
     specs += `<div class="spec"><div class="k">NEXT OP</div><div class="v">${esc(row.nextOp||'—')}</div></div>`;
     (row.details||[]).forEach(([k,v])=>{ specs += `<div class="spec"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div></div>`; });
     
-    html += `<div class="card">
-      <div class="card-head">
-        <h3><span class="bullet"></span>${esc(row.soItem)}</h3>
-        <span class="op-tag">${esc(row.operation)}</span>
-      </div>
+    html += `<div class="card printable-card">
+      <div class="card-head"><h3><span class="bullet"></span>${esc(row.soItem)}</h3><span class="op-tag">${esc(row.operation)}</span></div>
       <div class="specs">${specs}</div>
-      <div class="card-foot">
-        <span>🏷️ ${esc(row.so)}</span>
-        <span class="drum">🥁 ${esc(row.drum||'—')}</span>
-      </div>
+      <div class="card-foot"><span>🏷️ ${esc(row.so)}</span><span class="drum">🥁 ${esc(row.drum||'—')}</span></div>
     </div>`;
   });
   jobGrid.innerHTML = html || `<div class="empty"><p>No records found</p></div>`;
@@ -920,6 +897,8 @@ document.getElementById('searchBtn').addEventListener('click', renderJobResults)
 document.getElementById('resetBtn').addEventListener('click', () => { jobInput.value=''; opSelect.disabled=true; jobGrid.innerHTML='<div class="empty"><p>Start typing a job number</p></div>'; });
 
 /* BOM LOGIC */
+let CURRENT_BOM_LINES = []; // Store lines globally for live calculation
+
 async function loadBomDataFromCSV() {
   try {
     const response = await fetch('bom.csv?v=' + new Date().getTime());
@@ -1066,36 +1045,59 @@ function renderBomResults(){
   let lines = item.lines;
   if(selectedOpName) lines = lines.filter(l => l.operationJDM === selectedOpName);
   
+  CURRENT_BOM_LINES = lines;
+  
   const groupMap = new Map();
   lines.forEach(l => { const g = l.group || 'OTHER'; if(!groupMap.has(g)) groupMap.set(g, []); groupMap.get(g).push(l); });
   
-  let html = `<div class="card"><div class="card-head"><h3>${esc(item.soItem)}</h3><span class="op-tag">BOM</span></div><div class="qc-card-body">
-    <div class="result-section"><div class="result-title-bar">PLAN/PRD QTY</div><div class="result-card primary"><input type="number" id="planQtyInput" value="${formatQty(effectivePlanQty)}" style="border:none;background:transparent;font-size:1.3rem;font-weight:800;width:100%;text-align:right;outline:none;" oninput="window.updateBomCalc()"></div></div>
-    <div class="bom-table"><div class="bom-table-head"><div>Mat Code</div><div>Mat Disc</div><div>Qty</div></div>`;
+  let html = `<div class="card printable-card">
+    <div class="card-head"><h3>${esc(item.soItem)}</h3><span class="op-tag">BOM</span></div>
+    <div class="qc-card-body">
+      <div class="result-section">
+        <div class="result-title-bar">PLAN/PRD QTY</div>
+        <div class="result-card primary">
+          <input type="number" id="planQtyInput" class="plan-input" value="${formatQty(effectivePlanQty)}" oninput="window.updateBomCalc(this)">
+        </div>
+      </div>
+      <div class="bom-table">
+        <div class="bom-table-head"><div>Mat Code</div><div>Mat Disc</div><div>Qty</div></div>`;
     
   const sortedGroups = Array.from(groupMap.keys()).sort();
+  let rowIndex = 0;
   sortedGroups.forEach(g => {
     html += `<div class="bom-group-header">${esc(g)} <span style="margin-left:auto;font-size:0.6rem;background:#dbeafe;padding:2px 8px;border-radius:10px;">${groupMap.get(g).length}</span></div>`;
     groupMap.get(g).forEach(l => {
       const computed = (effectivePlanQty * l.bomPerKm) / 1000;
-      html += `<div class="bom-row"><div>${esc(l.matCode)}</div><div>${esc(l.matDisc)}</div><div>${formatQty(computed)}</div></div>`;
+      html += `<div class="bom-row">
+        <div>${esc(l.matCode)}</div>
+        <div>${esc(l.matDisc)}</div>
+        <div class="bom-qty-cell" data-index="${rowIndex}">${formatQty(computed)}</div>
+      </div>`;
+      rowIndex++;
     });
   });
   
   html += `</div></div></div>`;
   document.getElementById('bomGrid').innerHTML = html;
 }
-window.updateBomCalc = function() {
-  const val = parseFloat(document.getElementById('planQtyInput').value);
-  USER_PLAN_QTY = isNaN(val) ? 0 : val;
-  renderBomResults();
+
+window.updateBomCalc = function(inputElement) {
+  const val = parseFloat(inputElement.value) || 0;
+  USER_PLAN_QTY = val;
+  
+  // Update DOM directly without re-rendering (fixes keyboard closing)
+  const qtyCells = document.querySelectorAll('.bom-qty-cell');
+  CURRENT_BOM_LINES.forEach((l, i) => {
+    if(qtyCells[i]) {
+      const computed = (val * l.bomPerKm) / 1000;
+      qtyCells[i].textContent = formatQty(computed);
+    }
+  });
 };
+
 document.getElementById('bomSearchBtn').addEventListener('click', renderBomResults);
 document.getElementById('bomResetBtn').addEventListener('click', () => { bomInput.value=''; document.getElementById('bomOpSelect').disabled=true; document.getElementById('bomGrid').innerHTML='<div class="empty"><p>Start typing a SO-ITEM</p></div>'; });
 document.getElementById('bomOpSelect').addEventListener('change', renderBomResults);
-
-function formatQty(n) { if(n === null || n === undefined || isNaN(n)) return '—'; return Number(n).toFixed(4).replace(/\.?0+$/, '') || '0'; }
-function formatScientific(num) { if (num === 0) return '0'; const e = Math.floor(Math.log10(Math.abs(num))); const m = num / Math.pow(10, e); return `${m.toFixed(2)} × 10<sup>${e}</sup>`; }
 
 /* QC CALC LOGIC */
 function calculateCR() {
@@ -1184,8 +1186,10 @@ window.triggerPrint = function(e, type) {
   document.getElementById('pVerBy').textContent = localStorage.getItem('tc_ver') || '—';
   document.getElementById('pDate').textContent = now.toLocaleDateString('en-GB');
   document.getElementById('pTime').textContent = now.toLocaleTimeString('en-US');
+  
   const printInputs = document.getElementById('printInputs');
   printInputs.innerHTML = '';
+
   if (type === 'qc') {
     const activeTab = document.querySelector('.qc-tab-btn.active').innerText;
     const tabMap = {'CR Calc':'CR Test Report','IR Calc':'IR Test Report','Capacitance':'Capacitance Test Report','HV Fail':'HV Fail Report','Thickness':'Thickness Report','Braid':'Braid Report','Tensile':'Tensile Report','Hot Set':'Hot Set Report'};
@@ -1201,8 +1205,20 @@ window.triggerPrint = function(e, type) {
     else if(activeTab === 'Tensile'){ const shp = document.getElementById('tensileShape').value; if(shp==='tubular'){ add('Diameter','tDia','mm'); add('Thickness','tThick','mm'); } else { add('Width','dWidth','mm'); add('Min Thk','dThick','mm'); } add('Load','tLoad','N'); add('Elong Length','tElong','mm'); add('Init Length','tInit','mm'); }
     else if(activeTab === 'Hot Set'){ const shp = document.getElementById('hotSetShape').value; if(shp==='tubular'){ add('Core Dia','hCoreDia','mm'); add('Cond Dia','hCondDia','mm'); } else { add('Thickness','hThick','mm'); add('Width','hWidth','mm'); } add('Init Length','hInit','mm'); add('Elong Length','hElong','mm'); add('Cool Length','hCool','mm'); }
     printInputs.innerHTML = html + `</table>`;
-  } else if (type === 'job') { document.getElementById('pTestType').textContent = 'Job Card'; }
-  else if (type === 'bom') { document.getElementById('pTestType').textContent = 'BOM Report'; }
+  } else if (type === 'job') {
+    document.getElementById('pTestType').textContent = 'Job Card';
+    let html = `<table class="print-inputs-table"><tr><th>Search Parameter</th><th>Value</th></tr>`;
+    html += `<tr><td>Job Number</td><td>${esc(jobInput.value)}</td></tr>`;
+    html += `<tr><td>Operation</td><td>${esc(opSelect.value)}</td></tr></table>`;
+    printInputs.innerHTML = html;
+  } else if (type === 'bom') {
+    document.getElementById('pTestType').textContent = 'BOM Report';
+    let html = `<table class="print-inputs-table"><tr><th>Search Parameter</th><th>Value</th></tr>`;
+    html += `<tr><td>SO-ITEM</td><td>${esc(bomInput.value)}</td></tr>`;
+    html += `<tr><td>Operation JDM</td><td>${esc(document.getElementById('bomOpSelect').value || 'All')}</td></tr>`;
+    html += `<tr><td>Plan Qty</td><td>${formatQty(USER_PLAN_QTY !== null ? USER_PLAN_QTY : (BOM_DATA.find(b=>b.soItem===bomInput.value.trim())?.defaultPlanQty || 0))}</td></tr></table>`;
+    printInputs.innerHTML = html;
+  }
   window.print();
 };
 
