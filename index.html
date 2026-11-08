@@ -102,7 +102,7 @@ body{
 .modal-body th, .modal-body td { border: 1px solid #e2e8f0; padding: 8px 12px; text-align: left; }
 .modal-body th { background: #f8fafc; font-weight: 700; color: #334155; }
 
-/* JOB CARDS & BOM */
+/* JOB CARDS & BOM & GATE PASS */
 .search-panel{display:grid;grid-template-columns:1fr;gap:12px;background: rgba(255, 255, 255, 0.9);border-radius: 20px;padding:16px;margin-bottom: 16px;position:relative;z-index:20;border: 1px solid #fff;}
 .field{display:flex;flex-direction:column;gap:6px;min-width:0;position:relative}
 .field label{font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;font-weight:800;color:#64748b;}
@@ -190,9 +190,10 @@ body{
 .nav-item svg { width: 22px; height: 22px; fill: currentColor; }
 
 /* PRINT STYLES */
-.print-header, .print-footer, .print-inputs-section { display: none; }
+.print-header, .print-footer, .print-inputs-section, .gate-pass-print-container { display: none; }
+
 @media print {
-  @page { margin: 15mm; size: A4 portrait; }
+  @page { margin: 10mm; size: A4 portrait; } /* 10mm margins on all sides */
   html, body { width: 100% !important; margin: 0 !important; padding: 0 !important; background: #fff !important; color: #000 !important; font-size: 12px; }
   .app { max-width: 100% !important; width: 100% !important; padding: 0 !important; margin: 0 !important; display: block !important; }
 
@@ -266,6 +267,119 @@ body{
   .p-sig-name { font-size: 14px; font-weight: 800; margin-bottom: 5px; color: #000 !important;}
   .p-sig-line { width: 100%; border-bottom: 1px solid #000; height: 20px; margin-bottom: 5px; display: block;}
   .p-sig-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #333 !important;}
+
+  /* ================= GATE PASS SPECIFIC PRINT (9 × 3 grid, 10mm margins) ================= */
+  body.printing-gatepass .print-header,
+  body.printing-gatepass .print-footer,
+  body.printing-gatepass .print-inputs-section,
+  body.printing-gatepass .topbar,
+  body.printing-gatepass .bottom-nav,
+  body.printing-gatepass .view-section,
+  body.printing-gatepass .app > *:not(.gate-pass-print-container) {
+    display: none !important;
+  }
+
+  /* Body fills exactly the A4 content box (210-20 × 297-20 = 190 × 277 mm) */
+  body.printing-gatepass {
+    width: 190mm !important;
+    height: 277mm !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  body.printing-gatepass .app {
+    max-width: 100% !important;
+    width: 190mm !important;
+    height: 277mm !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    overflow: hidden !important;
+    position: static !important;
+  }
+
+  /* 9 rows × 3 columns. 3mm gap = scissor channel. Content fills 190 × 277 exactly. */
+  body.printing-gatepass .gate-pass-print-container {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    grid-template-rows: repeat(9, 1fr) !important;
+    gap: 3mm !important;
+    width: 190mm !important;
+    height: 277mm !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    page-break-inside: avoid !important;
+    page-break-after: avoid !important;
+    page-break-before: avoid !important;
+  }
+
+  body.printing-gatepass .gate-pass-card {
+    width: 100% !important;
+    height: 100% !important;
+    border: 1px dashed #666 !important;
+    padding: 1.5mm !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    background: #fff !important;
+    overflow: hidden !important;
+    page-break-inside: avoid !important;
+  }
+
+  .gp-company {
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 900 !important;
+    text-transform: uppercase !important;
+    margin-bottom: 1mm !important;
+    color: #000 !important;
+    text-align: center !important;
+    width: 100% !important;
+    letter-spacing: 0.5px;
+  }
+  .gp-dept {
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 9px !important;
+    font-weight: 700 !important;
+    color: #333 !important;
+    margin-bottom: 2mm !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+  .gp-datetime {
+    display: flex !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    font-size: 8px !important;
+    font-family: monospace !important;
+    color: #000 !important;
+  }
+  .gp-sig-area {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    margin-top: auto !important;
+  }
+  .gp-sig-line {
+    width: 85% !important;
+    border-bottom: 1px solid #000 !important;
+    height: 6mm !important;
+  }
+  .gp-sig-label {
+    font-size: 7px !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    margin-top: 1mm !important;
+    color: #000 !important;
+    text-align: center !important;
+    text-transform: uppercase;
+  }
 }
 </style>
 </head>
@@ -299,17 +413,6 @@ body{
         <span id="headerTitle">PORTAL</span>
       </div>
     </div>
-  </div>
-
-  <div class="admin-panel no-print" id="adminPanel">
-    <h3>⚙️ Admin Settings</h3>
-    <div class="admin-grid">
-      <input type="text" id="setCompany" placeholder="Company Name">
-      <input type="text" id="setDept" placeholder="Department">
-      <input type="text" id="setPrepBy" placeholder="Prepared By (Name)">
-      <input type="text" id="setVerBy" placeholder="Verified By (Name)">
-    </div>
-    <button class="admin-save-btn" onclick="saveAdminSettings()">Save Settings</button>
   </div>
 
   <!-- PRINT HEADERS -->
@@ -417,6 +520,19 @@ body{
 
   <!-- ================= VIEW 4: QC CALCULATOR ================= -->
   <div class="view-section" id="view-qccalc">
+
+    <!-- ADMIN PANEL — only visible inside QC Calc tab (and only to Admin) -->
+    <div class="admin-panel no-print" id="adminPanel">
+      <h3>⚙️ Admin Settings</h3>
+      <div class="admin-grid">
+        <input type="text" id="setCompany" placeholder="Company Name">
+        <input type="text" id="setDept" placeholder="Department">
+        <input type="text" id="setPrepBy" placeholder="Prepared By (Name)">
+        <input type="text" id="setVerBy" placeholder="Verified By (Name)">
+      </div>
+      <button class="admin-save-btn" onclick="saveAdminSettings()">Save Settings</button>
+    </div>
+
     <div class="qc-tabs-wrapper">
       <div class="qc-tabs">
         <button class="qc-tab-btn active" onclick="switchQcTab('cr', event)">CR Calc</button>
@@ -577,6 +693,20 @@ body{
     <button class="btn-print no-print" onclick="triggerPrint(event, 'qc')">Save as PDF</button>
   </div>
 
+  <!-- ================= VIEW 5: GATE PASS ================= -->
+  <div class="view-section" id="view-gatepass">
+    <div class="card">
+      <div class="card-head"><h3>Gate Pass Generator</h3></div>
+      <div class="card-body">
+        <div class="input-group"><label>Department <span class="unit-hint">(Text)</span></label><input type="text" id="gpDept" placeholder="e.g. PRODUCTION" value="PRODUCTION"></div>
+        <div class="input-group"><label>Date <span class="unit-hint">(DD/MM/YYYY)</span></label><input type="text" id="gpDate" placeholder="e.g. 08/11/2026"></div>
+        <div class="input-group"><label>Time <span class="unit-hint">(HH:MM AM/PM)</span></label><input type="text" id="gpTime" placeholder="e.g. 10:30 AM"></div>
+        <button class="btn-print no-print" onclick="triggerPrint(event, 'gatepass')">Generate & Save PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRINT FOOTER (Hidden on screen) -->
   <div class="print-footer">
     <div class="p-signatures">
       <div class="p-sig-block">
@@ -592,6 +722,9 @@ body{
     </div>
     <div style="margin-top: 15px;">This is a system-generated report. Thermocables Ltd.</div>
   </div>
+
+  <!-- GATE PASS PRINT CONTAINER -->
+  <div class="gate-pass-print-container" id="gatePassPrintArea"></div>
 
 </div>
 
@@ -612,6 +745,10 @@ body{
   <div class="nav-item" id="nav-qc" onclick="switchMainView('qccalc')">
     <svg viewBox="0 0 24 24"><path d="M16,4H8C6.89,4 6,4.89 6,6V18A2,2 0 0,0 8,20H16A2,2 0 0,0 18,18V6C18,4.89 17.11,4 16,4M16,18H8V6H16V18M13,8H11V12H13V8M13,14H11V16H13V14Z" /></svg>
     QC Calc
+  </div>
+  <div class="nav-item" id="nav-gatepass" onclick="switchMainView('gatepass')" style="display: none;">
+    <svg viewBox="0 0 24 24"><path d="M4,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4M4,6V18H20V6H4M6,8H12V12H6V8M14,8H18V10H14V8M14,12H18V14H14V12M6,14H18V16H6V14Z" /></svg>
+    Gate Pass
   </div>
 </div>
 
@@ -638,15 +775,17 @@ if ('serviceWorker' in navigator) {
 let CURRENT_USER = '', CURRENT_ROLE = '', ALLOWED_VIEWS = [];
 let JOB_DATA = [], BOM_DATA = [], USER_PLAN_QTY = null;
 let loginStep = 1;
+
+// ✅ ALL USERS NOW HAVE GATE PASS ACCESS
 const USERS = {
-  'admin': { pass: 'Admin@Tcl', role: 'Admin', views: ['jobcards', 'bom', 'qccalc'] },
-  'rakesh': { pass: 'Rakesh@Tcl', role: 'Manager', views: ['jobcards', 'bom'] },
-  'rasheed': { pass: 'Rasheed@Tcl', role: 'Manager', views: ['jobcards', 'bom'] },
-  'manikanta': { pass: 'Manikanta@Tcl', role: 'Manager', views: ['jobcards', 'bom'] },
-  'outer': { pass: '', role: 'Outer', views: ['jobcards'] },
-  'insulation': { pass: '', role: 'Insulation', views: ['jobcards'] },
-  'qc': { pass: '', role: 'QC', views: ['qccalc'] },
-  'production': { pass: '', role: 'Production', views: ['qccalc'] }
+  'admin':      { pass: 'Admin@Tcl',     role: 'Admin',      views: ['jobcards', 'bom', 'qccalc', 'gatepass'] },
+  'rakesh':     { pass: 'Rakesh@Tcl',    role: 'Manager',    views: ['jobcards', 'bom', 'gatepass'] },
+  'rasheed':    { pass: 'Rasheed@Tcl',   role: 'Manager',    views: ['jobcards', 'bom', 'gatepass'] },
+  'manikanta':  { pass: 'Manikanta@Tcl', role: 'Manager',    views: ['jobcards', 'bom', 'gatepass'] },
+  'outer':      { pass: '',              role: 'Outer',      views: ['jobcards', 'gatepass'] },
+  'insulation': { pass: '',              role: 'Insulation', views: ['jobcards', 'gatepass'] },
+  'qc':         { pass: '',              role: 'QC',         views: ['qccalc', 'gatepass'] },
+  'production': { pass: '',              role: 'Production', views: ['qccalc', 'gatepass'] }
 };
 
 window.handleLogin = function() {
@@ -680,6 +819,7 @@ function completeLogin(u) {
   document.getElementById('nav-job').style.display = ALLOWED_VIEWS.includes('jobcards') ? 'flex' : 'none';
   document.getElementById('nav-bom').style.display = ALLOWED_VIEWS.includes('bom') ? 'flex' : 'none';
   document.getElementById('nav-qc').style.display = ALLOWED_VIEWS.includes('qccalc') ? 'flex' : 'none';
+  document.getElementById('nav-gatepass').style.display = ALLOWED_VIEWS.includes('gatepass') ? 'flex' : 'none';
   
   if (CURRENT_ROLE === 'Admin') {
     document.getElementById('adminPanel').style.display = 'block';
@@ -746,8 +886,9 @@ window.switchMainView = function(viewName) {
   else if(viewName === 'jobcards') document.getElementById('nav-job').classList.add('active');
   else if(viewName === 'bom') document.getElementById('nav-bom').classList.add('active');
   else if(viewName === 'qccalc') document.getElementById('nav-qc').classList.add('active');
+  else if(viewName === 'gatepass') document.getElementById('nav-gatepass').classList.add('active');
   
-  const title = viewName === 'home' ? 'PORTAL' : (viewName === 'jobcards' ? 'JOB CARDS' : (viewName === 'bom' ? 'BOM' : 'QC CALCULATOR'));
+  const title = viewName === 'home' ? 'PORTAL' : (viewName === 'jobcards' ? 'JOB CARDS' : (viewName === 'bom' ? 'BOM' : (viewName === 'qccalc' ? 'QC CALCULATOR' : 'GATE PASS')));
   document.getElementById('headerTitle').textContent = title;
 };
 
@@ -895,7 +1036,7 @@ document.getElementById('searchBtn').addEventListener('click', renderJobResults)
 document.getElementById('resetBtn').addEventListener('click', () => { jobInput.value=''; opSelect.disabled=true; jobGrid.innerHTML='<div class="empty"><p>Start typing a job number</p></div>'; });
 
 /* BOM LOGIC */
-let CURRENT_BOM_LINES = []; // Store lines globally for live calculation
+let CURRENT_BOM_LINES = [];
 
 async function loadBomDataFromCSV() {
   try {
@@ -1083,7 +1224,6 @@ window.updateBomCalc = function(inputElement) {
   const val = parseFloat(inputElement.value) || 0;
   USER_PLAN_QTY = val;
   
-  // Update DOM directly without re-rendering (fixes keyboard closing)
   const qtyCells = document.querySelectorAll('.bom-qty-cell');
   CURRENT_BOM_LINES.forEach((l, i) => {
     if(qtyCells[i]) {
@@ -1187,7 +1327,11 @@ window.triggerPrint = function(e, type) {
   
   const docTitle = document.getElementById('pDocTitle');
   const printInputs = document.getElementById('printInputs');
+  const gpContainer = document.getElementById('gatePassPrintArea');
+  
   printInputs.innerHTML = '';
+  gpContainer.innerHTML = '';
+  document.body.classList.remove('printing-gatepass');
 
   if (type === 'qc') {
     docTitle.textContent = 'QC TEST REPORT';
@@ -1208,7 +1352,6 @@ window.triggerPrint = function(e, type) {
   } else if (type === 'job') {
     docTitle.textContent = 'JOB CARD DETAILS';
     document.getElementById('pTestType').textContent = 'Job Card';
-    // Removed search parameters for Job Cards as requested
   } else if (type === 'bom') {
     docTitle.textContent = 'BOM DETAILS';
     document.getElementById('pTestType').textContent = 'BOM Report';
@@ -1217,6 +1360,33 @@ window.triggerPrint = function(e, type) {
     html += `<tr><td>Operation JDM</td><td>${esc(document.getElementById('bomOpSelect').value || 'All')}</td></tr>`;
     html += `<tr><td>Plan Qty</td><td>${formatQty(USER_PLAN_QTY !== null ? USER_PLAN_QTY : (BOM_DATA.find(b=>b.soItem===bomInput.value.trim())?.defaultPlanQty || 0))}</td></tr></table>`;
     printInputs.innerHTML = html;
+  } else if (type === 'gatepass') {
+    document.body.classList.add('printing-gatepass');
+    
+    const gpDept = document.getElementById('gpDept').value || 'PRODUCTION';
+    const gpDate = document.getElementById('gpDate').value || now.toLocaleDateString('en-GB');
+    const gpTime = document.getElementById('gpTime').value || now.toLocaleTimeString('en-US');
+    const company = localStorage.getItem('tc_company') || 'THERMOCABLES LTD.';
+
+    let gpHtml = '';
+    // 9 rows × 3 columns = 27 cards. Fills A4 exactly (190 × 277 mm content area).
+    for (let i = 0; i < 27; i++) {
+      gpHtml += `
+        <div class="gate-pass-card">
+          <div class="gp-company">${esc(company)}</div>
+          <div class="gp-dept">${esc(gpDept)}</div>
+          <div class="gp-datetime">
+            <span>Date: ${esc(gpDate)}</span>
+            <span>Time: ${esc(gpTime)}</span>
+          </div>
+          <div class="gp-sig-area">
+            <div class="gp-sig-line"></div>
+            <div class="gp-sig-label">Supervisor Sign</div>
+          </div>
+        </div>
+      `;
+    }
+    gpContainer.innerHTML = gpHtml;
   }
   window.print();
 };
