@@ -7,8 +7,11 @@
 <meta name="theme-color" content="#f1f5f9">
 <title>Thermocables Portal</title>
 
+<!-- ✅ NEW: Thermocables SVG icons (uploaded to repo root) -->
+<link rel="icon" type="image/svg+xml" href="thermocables-logo.svg">
+<link rel="shortcut icon" type="image/svg+xml" href="thermocables-logo.svg">
+<link rel="apple-touch-icon" href="thermocables-logo.svg">
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMGIyMDQ2Ii8+PHBhdGggZD0iTTMwIDY1VjM1aDh2MjJoMjB2OEgzMHptMjgtMzBoMTJ2MzBINTgvMzV6IiBmaWxsPSJ3aGl0ZSIvPjxjaXJjbGUgY3g9IjQ2IiBjeT0iNDIiIHI9IjYiIGZpbGw9IiMzYjgyZjYiLz48L3N2Zz4=">
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
@@ -278,7 +281,7 @@ body{
 .status-neutral{background: #f1f5f9; border: 1px solid #e2e8f0; color: #475569;}
 .btn-print { background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; border: none; padding: 16px; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 16px;}
 
-/* ============ GATE PASS — NEW POLISHED UI ============ */
+/* ============ GATE PASS — POLISHED UI ============ */
 .gp-hero {
   background: linear-gradient(135deg, #1e40af 0%, #0f172a 100%);
   border-radius: 20px;
@@ -386,7 +389,6 @@ body{
 }
 @media (max-width: 480px) { .gp-field-row { grid-template-columns: 1fr; } }
 
-/* Custom Time Picker with AM/PM */
 .gp-time-picker {
   display: flex;
   align-items: center;
@@ -442,7 +444,6 @@ body{
   padding: 0 2px;
 }
 
-/* Live Preview */
 .gp-preview {
   background: linear-gradient(135deg, #eff6ff, #dbeafe);
   border: 1px solid #bfdbfe;
@@ -482,7 +483,6 @@ body{
   margin-left: 4px;
 }
 
-/* Generate Button */
 .gp-generate-btn {
   display: flex;
   align-items: center;
@@ -975,7 +975,6 @@ body{
     <button class="btn-print no-print" onclick="triggerPrint(event, 'qc')">Save as PDF</button>
   </div>
 
-  <!-- ================= VIEW 5: GATE PASS (NEW POLISHED UI) ================= -->
   <div class="view-section" id="view-gatepass">
 
     <div class="gp-hero">
@@ -1115,20 +1114,17 @@ const USERS = {
   'production': { pass: '',              role: 'Production', views: ['qccalc', 'gatepass'] }
 };
 
-/* ---- Date/time formatting helpers ---- */
 function formatDateForDisplay(isoDate) {
   if (!isoDate) return '';
   const [y, m, d] = isoDate.split('-');
   return `${d}/${m}/${y}`;
 }
 
-/* ---- Gate Pass UI: populate dropdowns, defaults, live preview ---- */
 function initGatePassUI() {
   const hourSel = document.getElementById('gpHour');
   const minSel = document.getElementById('gpMinute');
   if (!hourSel || !minSel) return;
 
-  // Hours 01-12
   for (let h = 1; h <= 12; h++) {
     const v = String(h).padStart(2, '0');
     const opt = document.createElement('option');
@@ -1136,7 +1132,6 @@ function initGatePassUI() {
     opt.textContent = v;
     hourSel.appendChild(opt);
   }
-  // Minutes 00-59
   for (let m = 0; m < 60; m++) {
     const v = String(m).padStart(2, '0');
     const opt = document.createElement('option');
@@ -1145,7 +1140,6 @@ function initGatePassUI() {
     minSel.appendChild(opt);
   }
 
-  // Set defaults to current time
   const now = new Date();
   let h = now.getHours();
   const ampm = h >= 12 ? 'PM' : 'AM';
@@ -1154,7 +1148,6 @@ function initGatePassUI() {
   minSel.value = String(now.getMinutes()).padStart(2, '0');
   document.getElementById('gpAmPm').value = ampm;
 
-  // Default date = today
   const dateEl = document.getElementById('gpDate');
   if (!dateEl.value) {
     const yyyy = now.getFullYear();
@@ -1163,7 +1156,6 @@ function initGatePassUI() {
     dateEl.value = `${yyyy}-${mm}-${dd}`;
   }
 
-  // Attach listeners for live preview
   dateEl.addEventListener('change', updateGatePassPreview);
   dateEl.addEventListener('input', updateGatePassPreview);
   hourSel.addEventListener('change', updateGatePassPreview);
