@@ -8,10 +8,7 @@
 <title>Thermocables Portal</title>
 
 <link rel="manifest" href="manifest.json">
-
-<!-- NEW: SVG favicon + apple-touch-icon (hexagon + lightning bolt) -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='b' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230f172a'/%3E%3Cstop offset='1' stop-color='%231e40af'/%3E%3C/linearGradient%3E%3ClinearGradient id='l' x1='0.5' y1='0' x2='0.5' y2='1'%3E%3Cstop offset='0' stop-color='%233b82f6'/%3E%3Cstop offset='0.5' stop-color='%238b5cf6'/%3E%3Cstop offset='1' stop-color='%23fbbf24'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M 50 3 L 92 27 L 92 73 L 50 97 L 8 73 L 8 27 Z' fill='url(%23b)'/%3E%3Cpath d='M 58 22 L 32 56 L 46 56 L 40 80 L 68 44 L 54 44 Z' fill='url(%23l)'/%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='b' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230f172a'/%3E%3Cstop offset='1' stop-color='%231e40af'/%3E%3C/linearGradient%3E%3ClinearGradient id='l' x1='0.5' y1='0' x2='0.5' y2='1'%3E%3Cstop offset='0' stop-color='%233b82f6'/%3E%3Cstop offset='0.5' stop-color='%238b5cf6'/%3E%3Cstop offset='1' stop-color='%23fbbf24'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M 50 3 L 92 27 L 92 73 L 50 97 L 8 73 L 8 27 Z' fill='url(%23b)'/%3E%3Cpath d='M 58 22 L 32 56 L 46 56 L 40 80 L 68 44 L 54 44 Z' fill='url(%23l)'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMGIyMDQ2Ii8+PHBhdGggZD0iTTMwIDY1VjM1aDh2MjJoMjB2OEgzMHptMjgtMzBoMTJ2MzBINTgvMzV6IiBmaWxsPSJ3aGl0ZSIvPjxjaXJjbGUgY3g9IjQ2IiBjeT0iNDIiIHI9IjYiIGZpbGw9IiMzYjgyZjYiLz48L3N2Zz4=">
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
@@ -30,7 +27,7 @@ body{
   -webkit-font-smoothing: antialiased;
   font-size: 14px;
   line-height: 1.5;
-  padding-bottom: 80px;
+  padding-bottom: 100px;
 }
 
 /* LOGIN & HEADER */
@@ -51,7 +48,7 @@ body{
 .dropdown-header b { color: #0f172a; display: block; font-size: 0.9rem;}
 .dropdown-btn {width: 100%; padding: 8px; border-radius: 8px; border: none;background: #fef2f2; color: #ef4444; font-weight: 700; font-size: 0.8rem; cursor: pointer;}
 
-/* UPDATED TOPBAR — now hosts the new logo */
+/* UPDATED TOPBAR — hosts logo badge + text */
 .topbar{
   position: relative;
   display: flex;
@@ -75,8 +72,6 @@ body{
     radial-gradient(circle at 85% 100%, rgba(251, 191, 36, 0.07), transparent 45%);
   pointer-events: none;
 }
-
-/* UPDATED BRAND — logo badge + text stack */
 .brand{
   position: relative;
   z-index: 1;
@@ -101,7 +96,6 @@ body{
     filter: drop-shadow(0 10px 22px rgba(251, 191, 36, 0.4));
   }
 }
-
 .brand-text{
   display: flex;
   flex-direction: column;
@@ -139,6 +133,36 @@ body{
 .view-section { display: none; animation: fadeIn 0.3s ease; }
 .view-section.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ============ APP FOOTER (Made with ♥️ by Manikanta Bodepu) ============ */
+.app-footer{
+  text-align: center;
+  padding: 24px 16px 12px;
+  margin-top: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.02em;
+  border-top: 1px dashed #e2e8f0;
+  line-height: 1.6;
+}
+.app-footer .heart{
+  display: inline-block;
+  color: #ef4444;
+  font-size: 0.9rem;
+  animation: heartbeat 1.6s ease-in-out infinite;
+  transform-origin: center;
+}
+.app-footer .author{
+  color: #475569;
+  font-weight: 800;
+}
+@keyframes heartbeat{
+  0%, 100% { transform: scale(1); }
+  15%      { transform: scale(1.25); }
+  30%      { transform: scale(1); }
+  45%      { transform: scale(1.18); }
+}
 
 /* HOME DASHBOARD */
 .dashboard-hero {background: linear-gradient(135deg, #0f172a, #1e293b);border-radius: 24px; padding: 24px; color: #fff; margin-bottom: 24px;position: relative; overflow: hidden; box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.4);}
@@ -273,7 +297,7 @@ body{
   html, body { width: 100% !important; margin: 0 !important; padding: 0 !important; background: #fff !important; color: #000 !important; font-size: 12px; }
   .app { max-width: 100% !important; width: 100% !important; padding: 0 !important; margin: 0 !important; display: block !important; }
 
-  .topbar, .tabs-wrapper, .qc-tabs-wrapper, .input-group, .search-panel, .result-bar, .btn-print, .admin-panel, .user-profile, .profile-dropdown, .no-print, .bottom-nav, .dashboard-hero, .stats-grid, .module-grid, .k-feed, .tip-banner, .modal-overlay, .section-title { display: none !important; }
+  .topbar, .tabs-wrapper, .qc-tabs-wrapper, .input-group, .search-panel, .result-bar, .btn-print, .admin-panel, .user-profile, .profile-dropdown, .no-print, .bottom-nav, .dashboard-hero, .stats-grid, .module-grid, .k-feed, .tip-banner, .modal-overlay, .section-title, .app-footer { display: none !important; }
 
   .print-header, .print-inputs-section, .print-footer { display: block !important; }
 
@@ -341,6 +365,7 @@ body{
   body.printing-gatepass .topbar,
   body.printing-gatepass .bottom-nav,
   body.printing-gatepass .view-section,
+  body.printing-gatepass .app-footer,
   body.printing-gatepass .app > *:not(.gate-pass-print-container) {
     display: none !important;
   }
@@ -352,7 +377,6 @@ body{
     padding: 0 !important;
     overflow: hidden !important;
   }
-
   body.printing-gatepass .app {
     max-width: 100% !important;
     width: 190mm !important;
@@ -363,7 +387,6 @@ body{
     overflow: hidden !important;
     position: static !important;
   }
-
   body.printing-gatepass .gate-pass-print-container {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
@@ -379,7 +402,6 @@ body{
     page-break-after: avoid !important;
     page-break-before: avoid !important;
   }
-
   body.printing-gatepass .gate-pass-card {
     width: 100% !important;
     height: 100% !important;
@@ -395,7 +417,6 @@ body{
     overflow: hidden !important;
     page-break-inside: avoid !important;
   }
-
   .gp-company { font-family: Arial, Helvetica, sans-serif !important; font-size: 11px !important; font-weight: 900 !important; text-transform: uppercase !important; margin-bottom: 1mm !important; color: #000 !important; text-align: center !important; width: 100% !important; letter-spacing: 0.5px; }
   .gp-dept { font-family: Arial, Helvetica, sans-serif !important; font-size: 9px !important; font-weight: 700 !important; color: #333 !important; margin-bottom: 2mm !important; text-align: center !important; width: 100% !important; }
   .gp-datetime { display: flex !important; justify-content: space-between !important; width: 100% !important; font-size: 8px !important; font-family: monospace !important; color: #000 !important; }
@@ -428,7 +449,6 @@ body{
     <button class="dropdown-btn" onclick="handleLogout()">Logout</button>
   </div>
 
-  <!-- ================= NEW TOPBAR WITH LOGO ================= -->
   <div class="topbar">
     <div class="brand">
       <div class="brand-logo" aria-hidden="true">
@@ -464,7 +484,6 @@ body{
     </div>
   </div>
 
-  <!-- PRINT HEADERS -->
   <div class="print-header">
     <div class="p-header-top">
       <div class="p-company" id="pCompany">THERMOCABLES LTD.</div>
@@ -481,9 +500,8 @@ body{
   </div>
   <div class="print-inputs-section" id="printInputs"></div>
 
-  <!-- ================= VIEW 1: HOME DASHBOARD & KNOWLEDGE ================= -->
+  <!-- ================= VIEW 1: HOME ================= -->
   <div class="view-section active" id="view-home">
-    
     <div class="dashboard-hero">
       <div class="dash-greeting" id="dashGreeting">Welcome Back,</div>
       <div class="dash-name" id="welcomeName">User</div>
@@ -570,7 +588,6 @@ body{
   <!-- ================= VIEW 4: QC CALCULATOR ================= -->
   <div class="view-section" id="view-qccalc">
 
-    <!-- ADMIN PANEL — only visible inside QC Calc tab (and only to Admin) -->
     <div class="admin-panel no-print" id="adminPanel">
       <h3>⚙️ Admin Settings</h3>
       <div class="admin-grid">
@@ -740,11 +757,16 @@ body{
       <div class="card-head"><h3>Gate Pass Generator</h3></div>
       <div class="card-body">
         <div class="input-group"><label>Department <span class="unit-hint">(Text)</span></label><input type="text" id="gpDept" placeholder="e.g. PRODUCTION" value="PRODUCTION"></div>
-        <div class="input-group"><label>Date <span class="unit-hint">(DD/MM/YYYY)</span></label><input type="text" id="gpDate" placeholder="e.g. 08/11/2026"></div>
-        <div class="input-group"><label>Time <span class="unit-hint">(HH:MM AM/PM)</span></label><input type="text" id="gpTime" placeholder="e.g. 10:30 AM"></div>
+        <div class="input-group"><label>Date <span class="unit-hint">(Pick a date)</span></label><input type="date" id="gpDate"></div>
+        <div class="input-group"><label>Time <span class="unit-hint">(Pick a time)</span></label><input type="time" id="gpTime"></div>
         <button class="btn-print no-print" onclick="triggerPrint(event, 'gatepass')">Generate & Save PDF</button>
       </div>
     </div>
+  </div>
+
+  <!-- ================= APP FOOTER (shows on all tabs) ================= -->
+  <div class="app-footer no-print">
+    Made with <span class="heart">♥️</span> by <span class="author">Manikanta Bodepu</span>
   </div>
 
   <div class="print-footer">
@@ -825,6 +847,23 @@ const USERS = {
   'qc':         { pass: '',              role: 'QC',         views: ['qccalc', 'gatepass'] },
   'production': { pass: '',              role: 'Production', views: ['qccalc', 'gatepass'] }
 };
+
+/* ---- Gate Pass date/time formatting helpers ---- */
+function formatDateForDisplay(isoDate) {
+  // "2026-11-09" -> "09/11/2026"
+  if (!isoDate) return '';
+  const [y, m, d] = isoDate.split('-');
+  return `${d}/${m}/${y}`;
+}
+function formatTimeForDisplay(time24) {
+  // "14:05" -> "02:05 PM"
+  if (!time24) return '';
+  const [hStr, mStr] = time24.split(':');
+  let h = parseInt(hStr, 10);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  h = h % 12 || 12;
+  return `${String(h).padStart(2, '0')}:${mStr} ${ampm}`;
+}
 
 window.handleLogin = function() {
   const u = document.getElementById('loginUser').value.trim().toLowerCase();
@@ -924,7 +963,22 @@ window.switchMainView = function(viewName) {
   else if(viewName === 'jobcards') document.getElementById('nav-job').classList.add('active');
   else if(viewName === 'bom') document.getElementById('nav-bom').classList.add('active');
   else if(viewName === 'qccalc') document.getElementById('nav-qc').classList.add('active');
-  else if(viewName === 'gatepass') document.getElementById('nav-gatepass').classList.add('active');
+  else if(viewName === 'gatepass') {
+    document.getElementById('nav-gatepass').classList.add('active');
+    // Auto-fill gate pass date/time if empty
+    const dateEl = document.getElementById('gpDate');
+    const timeEl = document.getElementById('gpTime');
+    if (!dateEl.value || !timeEl.value) {
+      const now = new Date();
+      const yyyy = now.getFullYear();
+      const mm = String(now.getMonth() + 1).padStart(2, '0');
+      const dd = String(now.getDate()).padStart(2, '0');
+      const hh = String(now.getHours()).padStart(2, '0');
+      const mi = String(now.getMinutes()).padStart(2, '0');
+      if (!dateEl.value) dateEl.value = `${yyyy}-${mm}-${dd}`;
+      if (!timeEl.value) timeEl.value = `${hh}:${mi}`;
+    }
+  }
   
   const title = viewName === 'home' ? 'PORTAL' : (viewName === 'jobcards' ? 'JOB CARDS' : (viewName === 'bom' ? 'BOM' : (viewName === 'qccalc' ? 'QC CALCULATOR' : 'GATE PASS')));
   document.getElementById('headerTitle').textContent = title;
@@ -1402,8 +1456,10 @@ window.triggerPrint = function(e, type) {
     document.body.classList.add('printing-gatepass');
     
     const gpDept = document.getElementById('gpDept').value || 'PRODUCTION';
-    const gpDate = document.getElementById('gpDate').value || now.toLocaleDateString('en-GB');
-    const gpTime = document.getElementById('gpTime').value || now.toLocaleTimeString('en-US');
+    const gpDateRaw = document.getElementById('gpDate').value;
+    const gpTimeRaw = document.getElementById('gpTime').value;
+    const gpDate = gpDateRaw ? formatDateForDisplay(gpDateRaw) : now.toLocaleDateString('en-GB');
+    const gpTime = gpTimeRaw ? formatTimeForDisplay(gpTimeRaw) : now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
     const company = localStorage.getItem('tc_company') || 'THERMOCABLES LTD.';
 
     let gpHtml = '';
