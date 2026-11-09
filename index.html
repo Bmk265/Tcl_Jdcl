@@ -8,7 +8,10 @@
 <title>Thermocables Portal</title>
 
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMGIyMDQ2Ii8+PHBhdGggZD0iTTMwIDY1VjM1aDh2MjJoMjB2OEgzMHptMjgtMzBoMTJ2MzBINTgvMzV6IiBmaWxsPSJ3aGl0ZSIvPjxjaXJjbGUgY3g9IjQ2IiBjeT0iNDIiIHI9IjYiIGZpbGw9IiMzYjgyZjYiLz48L3N2Zz4=">
+
+<!-- NEW: SVG favicon + apple-touch-icon (hexagon + lightning bolt) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='b' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230f172a'/%3E%3Cstop offset='1' stop-color='%231e40af'/%3E%3C/linearGradient%3E%3ClinearGradient id='l' x1='0.5' y1='0' x2='0.5' y2='1'%3E%3Cstop offset='0' stop-color='%233b82f6'/%3E%3Cstop offset='0.5' stop-color='%238b5cf6'/%3E%3Cstop offset='1' stop-color='%23fbbf24'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M 50 3 L 92 27 L 92 73 L 50 97 L 8 73 L 8 27 Z' fill='url(%23b)'/%3E%3Cpath d='M 58 22 L 32 56 L 46 56 L 40 80 L 68 44 L 54 44 Z' fill='url(%23l)'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='b' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%230f172a'/%3E%3Cstop offset='1' stop-color='%231e40af'/%3E%3C/linearGradient%3E%3ClinearGradient id='l' x1='0.5' y1='0' x2='0.5' y2='1'%3E%3Cstop offset='0' stop-color='%233b82f6'/%3E%3Cstop offset='0.5' stop-color='%238b5cf6'/%3E%3Cstop offset='1' stop-color='%23fbbf24'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M 50 3 L 92 27 L 92 73 L 50 97 L 8 73 L 8 27 Z' fill='url(%23b)'/%3E%3Cpath d='M 58 22 L 32 56 L 46 56 L 40 80 L 68 44 L 54 44 Z' fill='url(%23l)'/%3E%3C/svg%3E">
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
@@ -47,10 +50,83 @@ body{
 .dropdown-header { font-size: 0.75rem; color: #64748b; margin-bottom: 8px; text-align: center;}
 .dropdown-header b { color: #0f172a; display: block; font-size: 0.9rem;}
 .dropdown-btn {width: 100%; padding: 8px; border-radius: 8px; border: none;background: #fef2f2; color: #ef4444; font-weight: 700; font-size: 0.8rem; cursor: pointer;}
-.topbar{position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;padding: 24px 20px; background: rgba(255, 255, 255, 0.85);backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.9);border-radius: 24px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);margin-bottom: 20px; overflow: hidden;}
-.brand{position: relative; z-index: 1; display:flex; flex-direction:column; align-items:center; gap: 4px; margin-top: 10px;}
-.brand-company{font-size:.7rem; font-weight:700; color:#64748b; letter-spacing:.15em; text-transform:uppercase; text-align: center;}
-.brand-title-row span{font-weight:800; font-size:1.4rem; letter-spacing:-.02em; color: #0f172a; text-align: center;}
+
+/* UPDATED TOPBAR — now hosts the new logo */
+.topbar{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 22px 24px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.topbar::before{
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(59, 130, 246, 0.08), transparent 45%),
+    radial-gradient(circle at 85% 100%, rgba(251, 191, 36, 0.07), transparent 45%);
+  pointer-events: none;
+}
+
+/* UPDATED BRAND — logo badge + text stack */
+.brand{
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.brand-logo{
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+  animation: logoFloat 4s ease-in-out infinite;
+}
+.brand-logo svg{ width: 100%; height: 100%; display: block; }
+@keyframes logoFloat{
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    filter: drop-shadow(0 6px 16px rgba(30, 64, 175, 0.35));
+  }
+  50% {
+    transform: translateY(-3px) scale(1.03);
+    filter: drop-shadow(0 10px 22px rgba(251, 191, 36, 0.4));
+  }
+}
+
+.brand-text{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+}
+.brand-company{
+  font-size: .65rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+.brand-title-row{ line-height: 1; }
+.brand-title-row span{
+  font-weight: 800;
+  font-size: 1.35rem;
+  letter-spacing: -.02em;
+  color: #0f172a;
+  background: linear-gradient(135deg, #0f172a 0%, #1e40af 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 
 /* ADMIN */
 .admin-panel {background: #fff; border: 1px solid #fcd34d; border-radius: 20px; padding: 20px;margin-bottom: 20px; display: none;}
@@ -193,25 +269,20 @@ body{
 .print-header, .print-footer, .print-inputs-section, .gate-pass-print-container { display: none; }
 
 @media print {
-  @page { margin: 10mm; size: A4 portrait; } /* 10mm margins on all sides */
+  @page { margin: 10mm; size: A4 portrait; }
   html, body { width: 100% !important; margin: 0 !important; padding: 0 !important; background: #fff !important; color: #000 !important; font-size: 12px; }
   .app { max-width: 100% !important; width: 100% !important; padding: 0 !important; margin: 0 !important; display: block !important; }
 
-  /* Hide UI Elements */
   .topbar, .tabs-wrapper, .qc-tabs-wrapper, .input-group, .search-panel, .result-bar, .btn-print, .admin-panel, .user-profile, .profile-dropdown, .no-print, .bottom-nav, .dashboard-hero, .stats-grid, .module-grid, .k-feed, .tip-banner, .modal-overlay, .section-title { display: none !important; }
 
-  /* Show Print Containers */
   .print-header, .print-inputs-section, .print-footer { display: block !important; }
 
-  /* Hide all views and cards by default */
   .view-section { display: none !important; }
   .card, .qc-card { display: none !important; border: none !important; box-shadow: none !important; }
 
-  /* Show only the active view and printable cards */
   .view-section.active { display: block !important; }
   .printable-card, .qc-card.active { display: block !important; width: 100% !important; margin: 0 !important; padding: 0 !important; border: none !important; }
 
-  /* Header Formatting */
   .p-header-top { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 10px;}
   .p-company { font-size: 20px; font-weight: 800; text-transform: uppercase; color: #000 !important; }
   .p-dept { font-size: 12px; font-weight: 600; margin-top: 2px; color: #333 !important;}
@@ -220,13 +291,11 @@ body{
   .p-meta div { margin-bottom: 4px; }
   .p-meta span { font-weight: 700; }
 
-  /* Input Table */
   .print-inputs-section { margin-bottom: 25px; }
   .print-inputs-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; table-layout: fixed; }
   .print-inputs-table th, .print-inputs-table td { border: 1px solid #000; padding: 8px 10px; font-size: 12px; text-align: left; word-wrap: break-word; }
   .print-inputs-table th { background: #f3f4f6 !important; font-weight: 700; color: #000; }
 
-  /* Card Styling */
   .card-head { border-bottom: 1px solid #000 !important; background: #fff !important; padding: 10px 0 !important; margin-bottom: 10px !important;}
   .card-head h3 { color: #000 !important; font-size: 16px !important; margin: 0 !important;}
   .op-tag { border: 1px solid #000 !important; color: #000 !important; background: #fff !important; padding: 4px 8px !important;}
@@ -238,7 +307,6 @@ body{
   .chip-val { border: none !important; background: #fff !important; color: #000 !important; padding: 0 !important; font-weight: 700 !important;}
   .card-foot { border: 1px solid #000 !important; border-top: none !important; padding: 10px !important; color: #000 !important; background: #fff !important; }
 
-  /* BOM Table */
   .bom-table { border: 1px solid #000 !important; }
   .bom-table-head { border-bottom: 1px solid #000 !important; background: #fff !important; display: grid !important; grid-template-columns: 100px 1fr 80px !important; }
   .bom-table-head > div { color: #000 !important; padding: 8px !important; border-right: 1px solid #000 !important; }
@@ -253,7 +321,6 @@ body{
   .result-card * { color: #000 !important; }
   .result-title-bar { border: none !important; border-bottom: 1px solid #000 !important; color: #000 !important; padding-bottom: 5px !important; margin-bottom: 5px !important;}
 
-  /* Footer */
   .print-footer {
     display: block !important;
     margin-top: 50px;
@@ -268,7 +335,6 @@ body{
   .p-sig-line { width: 100%; border-bottom: 1px solid #000; height: 20px; margin-bottom: 5px; display: block;}
   .p-sig-label { font-size: 11px; font-weight: 700; text-transform: uppercase; color: #333 !important;}
 
-  /* ================= GATE PASS SPECIFIC PRINT (9 × 3 grid, 10mm margins) ================= */
   body.printing-gatepass .print-header,
   body.printing-gatepass .print-footer,
   body.printing-gatepass .print-inputs-section,
@@ -279,7 +345,6 @@ body{
     display: none !important;
   }
 
-  /* Body fills exactly the A4 content box (210-20 × 297-20 = 190 × 277 mm) */
   body.printing-gatepass {
     width: 190mm !important;
     height: 277mm !important;
@@ -299,7 +364,6 @@ body{
     position: static !important;
   }
 
-  /* 9 rows × 3 columns. 3mm gap = scissor channel. Content fills 190 × 277 exactly. */
   body.printing-gatepass .gate-pass-print-container {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
@@ -332,54 +396,12 @@ body{
     page-break-inside: avoid !important;
   }
 
-  .gp-company {
-    font-family: Arial, Helvetica, sans-serif !important;
-    font-size: 11px !important;
-    font-weight: 900 !important;
-    text-transform: uppercase !important;
-    margin-bottom: 1mm !important;
-    color: #000 !important;
-    text-align: center !important;
-    width: 100% !important;
-    letter-spacing: 0.5px;
-  }
-  .gp-dept {
-    font-family: Arial, Helvetica, sans-serif !important;
-    font-size: 9px !important;
-    font-weight: 700 !important;
-    color: #333 !important;
-    margin-bottom: 2mm !important;
-    text-align: center !important;
-    width: 100% !important;
-  }
-  .gp-datetime {
-    display: flex !important;
-    justify-content: space-between !important;
-    width: 100% !important;
-    font-size: 8px !important;
-    font-family: monospace !important;
-    color: #000 !important;
-  }
-  .gp-sig-area {
-    width: 100% !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    margin-top: auto !important;
-  }
-  .gp-sig-line {
-    width: 85% !important;
-    border-bottom: 1px solid #000 !important;
-    height: 6mm !important;
-  }
-  .gp-sig-label {
-    font-size: 7px !important;
-    font-family: Arial, Helvetica, sans-serif !important;
-    margin-top: 1mm !important;
-    color: #000 !important;
-    text-align: center !important;
-    text-transform: uppercase;
-  }
+  .gp-company { font-family: Arial, Helvetica, sans-serif !important; font-size: 11px !important; font-weight: 900 !important; text-transform: uppercase !important; margin-bottom: 1mm !important; color: #000 !important; text-align: center !important; width: 100% !important; letter-spacing: 0.5px; }
+  .gp-dept { font-family: Arial, Helvetica, sans-serif !important; font-size: 9px !important; font-weight: 700 !important; color: #333 !important; margin-bottom: 2mm !important; text-align: center !important; width: 100% !important; }
+  .gp-datetime { display: flex !important; justify-content: space-between !important; width: 100% !important; font-size: 8px !important; font-family: monospace !important; color: #000 !important; }
+  .gp-sig-area { width: 100% !important; display: flex !important; flex-direction: column !important; align-items: center !important; margin-top: auto !important; }
+  .gp-sig-line { width: 85% !important; border-bottom: 1px solid #000 !important; height: 6mm !important; }
+  .gp-sig-label { font-size: 7px !important; font-family: Arial, Helvetica, sans-serif !important; margin-top: 1mm !important; color: #000 !important; text-align: center !important; text-transform: uppercase; }
 }
 </style>
 </head>
@@ -406,11 +428,38 @@ body{
     <button class="dropdown-btn" onclick="handleLogout()">Logout</button>
   </div>
 
+  <!-- ================= NEW TOPBAR WITH LOGO ================= -->
   <div class="topbar">
     <div class="brand">
-      <div class="brand-company" id="headerCompany">THERMOCABLES LTD.</div>
-      <div class="brand-title-row">
-        <span id="headerTitle">PORTAL</span>
+      <div class="brand-logo" aria-hidden="true">
+        <svg viewBox="0 0 100 100" role="img" aria-label="Thermocables Logo">
+          <defs>
+            <linearGradient id="logoBg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#0f172a"/>
+              <stop offset="1" stop-color="#1e40af"/>
+            </linearGradient>
+            <linearGradient id="logoBolt" x1="0.5" y1="0" x2="0.5" y2="1">
+              <stop offset="0" stop-color="#3b82f6"/>
+              <stop offset="0.45" stop-color="#8b5cf6"/>
+              <stop offset="1" stop-color="#fbbf24"/>
+            </linearGradient>
+            <linearGradient id="logoRing" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#60a5fa"/>
+              <stop offset="1" stop-color="#fbbf24"/>
+            </linearGradient>
+          </defs>
+          <path d="M 50 3 L 92 27 L 92 73 L 50 97 L 8 73 L 8 27 Z" fill="url(#logoBg)"/>
+          <path d="M 50 3 L 92 27 L 92 73 L 50 97 L 8 73 L 8 27 Z" fill="none" stroke="url(#logoRing)" stroke-width="1.2" opacity="0.55"/>
+          <path d="M 50 12 L 82 32 L 82 68 L 50 88 L 18 68 L 18 32 Z" fill="none" stroke="#3b82f6" stroke-width="0.6" opacity="0.25"/>
+          <path d="M 58 22 L 32 56 L 46 56 L 40 80 L 68 44 L 54 44 Z" fill="url(#logoBolt)"/>
+          <circle cx="40" cy="80" r="1.6" fill="#fbbf24" opacity="0.9"/>
+        </svg>
+      </div>
+      <div class="brand-text">
+        <div class="brand-company" id="headerCompany">THERMOCABLES LTD.</div>
+        <div class="brand-title-row">
+          <span id="headerTitle">PORTAL</span>
+        </div>
       </div>
     </div>
   </div>
@@ -546,7 +595,6 @@ body{
       </div>
     </div>
 
-    <!-- QC Tab 1: CR -->
     <div class="qc-card active" id="qc-card-cr">
       <div class="qc-card-body">
         <div class="input-group"><label>CR Reading <span class="unit-hint">(Value)</span></label><input type="number" id="crReading" step="any" placeholder="Enter CR Reading"></div>
@@ -565,7 +613,6 @@ body{
       </div>
     </div>
 
-    <!-- QC Tab 2: IR -->
     <div class="qc-card" id="qc-card-ir">
       <div class="qc-card-body">
         <div class="input-group"><label>Reading <span class="unit-hint">(Mega Ohm - MΩ)</span></label><input type="number" id="irReading" step="any" placeholder="Enter Reading in MΩ"></div>
@@ -581,7 +628,6 @@ body{
       </div>
     </div>
 
-    <!-- QC Tab 3: Capacitance -->
     <div class="qc-card" id="qc-card-cap">
       <div class="qc-card-body">
         <div class="input-group"><label>Capacitance Reading <span class="unit-hint">(Value)</span></label><input type="number" id="capReading" step="any" placeholder="Enter Capacitance Reading"></div>
@@ -593,7 +639,6 @@ body{
       </div>
     </div>
 
-    <!-- QC Tab 4: HV Fail -->
     <div class="qc-card" id="qc-card-hvfail">
       <div class="qc-card-body">
         <div class="input-group"><label>Total Length <span class="unit-hint">(Meters)</span></label><input type="number" id="hvLength" step="any" placeholder="Enter Total Length"></div>
@@ -608,7 +653,6 @@ body{
       </div>
     </div>
 
-    <!-- QC Tab 5: Thickness -->
     <div class="qc-card" id="qc-card-thick">
       <div class="qc-card-body">
         <div class="input-group"><label>Minimum Thickness <span class="unit-hint">(mm)</span></label><input type="number" id="thickMin" step="any" placeholder="Enter Minimum Thickness"></div>
@@ -621,7 +665,6 @@ body{
       </div>
     </div>
 
-    <!-- QC Tab 6: Braid -->
     <div class="qc-card" id="qc-card-braid">
       <div class="qc-card-body">
         <div class="input-group"><label>Braid Wire dia (d) <span class="unit-hint">(mm)</span></label><input type="number" id="brD" step="any" placeholder="Enter Wire Diameter"></div>
@@ -638,7 +681,6 @@ body{
       </div>
     </div>
 
-    <!-- QC Tab 7: Tensile -->
     <div class="qc-card" id="qc-card-tensile">
       <div class="qc-card-body">
         <div class="input-group"><label>Shape <span class="unit-hint">(Select)</span></label>
@@ -664,7 +706,6 @@ body{
       </div>
     </div>
 
-    <!-- QC Tab 8: Hot Set -->
     <div class="qc-card" id="qc-card-hotset">
       <div class="qc-card-body">
         <div class="input-group"><label>Shape <span class="unit-hint">(Select)</span></label>
@@ -706,7 +747,6 @@ body{
     </div>
   </div>
 
-  <!-- PRINT FOOTER (Hidden on screen) -->
   <div class="print-footer">
     <div class="p-signatures">
       <div class="p-sig-block">
@@ -723,7 +763,6 @@ body{
     <div style="margin-top: 15px;">This is a system-generated report. Thermocables Ltd.</div>
   </div>
 
-  <!-- GATE PASS PRINT CONTAINER -->
   <div class="gate-pass-print-container" id="gatePassPrintArea"></div>
 
 </div>
@@ -776,7 +815,6 @@ let CURRENT_USER = '', CURRENT_ROLE = '', ALLOWED_VIEWS = [];
 let JOB_DATA = [], BOM_DATA = [], USER_PLAN_QTY = null;
 let loginStep = 1;
 
-// ✅ ALL USERS NOW HAVE GATE PASS ACCESS
 const USERS = {
   'admin':      { pass: 'Admin@Tcl',     role: 'Admin',      views: ['jobcards', 'bom', 'qccalc', 'gatepass'] },
   'rakesh':     { pass: 'Rakesh@Tcl',    role: 'Manager',    views: ['jobcards', 'bom', 'gatepass'] },
