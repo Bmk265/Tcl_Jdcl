@@ -1,23 +1,25 @@
 {
   "name": "Thermocables Portal",
-  "short_name": "TC Portal",
-  "description": "Unified Portal for Job Cards, BOM & QC Calculations",
-  "start_url": "./index.html",
+  "short_name": "Thermocables",
+  "description": "Thermocables Industrial Portal",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#f1f5f9",
   "theme_color": "#0f172a",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMGIyMDQ2Ii8+PHBhdGggZD0iTTMwIDY1VjM1aDh2MjJoMjB2OEgzMHptMjgtMzBoMTJ2MzBINTgvMzV6IiBmaWxsPSJ3aGl0ZSIvPjxjaXJjbGUgY3g9IjQ2IiBjeT0iNDIiIHI9IjYiIGZpbGw9IiMzYjgyZjYiLz48L3N2Zz4=",
-      "sizes": "192x192",
+      "src": "thermocables-logo.svg",
+      "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMGIyMDQ2Ii8+PHBhdGggZD0iTTMwIDY1VjM1aDh2MjJoMjB2OEgzMHptMjgtMzBoMTJ2MzBINTgvMzV6IiBmaWxsPSJ3aGl0ZSIvPjxjaXJjbGUgY3g9IjQ2IiBjeT0iNDIiIHI9IjYiIGZpbGw9IiMzYjgyZjYiLz48L3N2Zz4=",
-      "sizes": "512x512",
+      "src": "thermocables-logo.svg",
+      "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     }
   ]
 }
