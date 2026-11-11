@@ -2,16 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#f1f5f9">
 <title>Thermocables Portal</title>
 
-<!-- ✅ NEW: Thermocables SVG icons (uploaded to repo root) -->
-<link rel="icon" type="image/svg+xml" href="thermocables-logo.svg">
-<link rel="shortcut icon" type="image/svg+xml" href="thermocables-logo.svg">
-<link rel="apple-touch-icon" href="thermocables-logo.svg">
 <link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIyIiBmaWxsPSIjMGIyMDQ2Ii8+PHBhdGggZD0iTTMwIDY1VjM1aDh2MjJoMjB2OEgzMHptMjgtMzBoMTJ2MzBINTgvMzV6IiBmaWxsPSJ3aGl0ZSIvPjxjaXJjbGUgY3g9IjQ2IiBjeT0iNDIiIHI9IjYiIGZpbGw9IiMzYjgyZjYiLz48L3N2Zz4=">
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
@@ -27,14 +24,16 @@ body{
   background-image: radial-gradient(at 0% 0%, hsla(253,16%,7%,0.05) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(225,39%,30%,0.05) 0, transparent 50%);
   color: #1e293b;
   min-height: 100vh;
+  min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
   font-size: 14px;
   line-height: 1.5;
-  padding-bottom: 100px;
+  padding-bottom: calc(96px + env(safe-area-inset-bottom));
+  overflow-x: hidden;
 }
 
 /* LOGIN & HEADER */
-#loginScreen {position: fixed; top: 0; left: 0; width: 100%; height: 100%;background: #f1f5f9;display: flex; align-items: center; justify-content: center;z-index: 9999; padding: 20px;}
+#loginScreen {position: fixed; top: 0; left: 0; width: 100%; height: 100vh; height: 100dvh;background: #f1f5f9;display: flex; align-items: center; justify-content: center;z-index: 9999; padding: 20px;}
 .login-card {background: #ffffff; border: 1px solid #e2e8f0;border-radius: 24px; padding: 40px 30px; width: 100%; max-width: 380px;text-align: center; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);}
 .login-card h2 { color: #0f172a; font-size: 1.5rem; font-weight: 800; margin-bottom: 8px;}
 .login-card p { color: #64748b; font-size: 0.85rem; margin-bottom: 24px; }
@@ -186,7 +185,7 @@ body{
 /* MODAL */
 .modal-overlay {position: fixed; top: 0; left: 0; width: 100%; height: 100%;background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);z-index: 2000; display: none; align-items: flex-end; justify-content: center;}
 .modal-overlay.open { display: flex; }
-.modal-content {background: #fff; width: 100%; max-width: 600px; max-height: 85vh;border-radius: 24px 24px 0 0; padding: 24px; overflow-y: auto;animation: slideUp 0.3s ease; position: relative;}
+.modal-content {background: #fff; width: 100%; max-width: 600px; max-height: 85vh; max-height: 85dvh;border-radius: 24px 24px 0 0; padding: 24px; overflow-y: auto;animation: slideUp 0.3s ease; position: relative;}
 @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 .modal-close {position: absolute; top: 16px; right: 16px; width: 32px; height: 32px;background: #f1f5f9; border-radius: 50%; border: none; font-size: 1.2rem;display: flex; align-items: center; justify-content: center; cursor: pointer; color: #64748b;}
 .modal-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-right: 30px;}
@@ -224,13 +223,13 @@ body{
 .grid{display:grid;grid-template-columns:1fr; gap:16px;}
 .card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.04);border:1px solid #f1f5f9;}
 .card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px;border-bottom:1px solid #f1f5f9;background:#fafbfc;}
-.card-head h3{font-size:1rem;font-weight:800;color:#0f172a; display: flex; align-items: center; gap: 8px;}
+.card-head h3{font-size:1rem;font-weight:800;color:#0f172a; display: flex; align-items: center; gap: 8px; word-break: break-word;}
 .card-head h3 .bullet{width:8px;height:8px;border-radius:50%;background:#3b82f6;flex-shrink:0;}
-.op-tag{font-size:.65rem;font-weight:800;text-transform:uppercase;padding:6px 12px;border-radius:20px;background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe;}
+.op-tag{font-size:.65rem;font-weight:800;text-transform:uppercase;padding:6px 12px;border-radius:20px;background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe;white-space:nowrap;}
 .specs{display:flex;flex-direction:column;}
 .spec{display:grid;grid-template-columns:120px 1fr;border-bottom:1px solid #f1f5f9;}
-.spec .k{padding:12px 16px;font-size:.65rem;font-weight:800;text-transform:uppercase;color:#64748b;background:#f8fafc;border-right:1px solid #f1f5f9;display:flex;align-items:center;}
-.spec .v{padding:12px 16px;font-size:.85rem;font-weight:500;color:#1e293b;display:flex;align-items:center;}
+.spec .k{padding:12px 16px;font-size:.65rem;font-weight:800;text-transform:uppercase;color:#64748b;background:#f8fafc;border-right:1px solid #f1f5f9;display:flex;align-items:center;word-break:break-word;}
+.spec .v{padding:12px 16px;font-size:.85rem;font-weight:500;color:#1e293b;display:flex;align-items:center;word-break:break-word;}
 .spec.accent .k{color:#2563eb;background:#eff6ff;}
 .chip-val{background:#eff6ff;color:#2563eb;font-weight:800;padding:2px 8px;border-radius:6px;font-size:.8rem;display:inline-block;}
 .card-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;background:#f8fafc;border-top:1px solid #f1f5f9;font-size:.75rem;font-weight:600;color:#64748b;flex-wrap:wrap;}
@@ -266,7 +265,7 @@ body{
 .input-group input:focus{border-color:#3b82f6;background:#fff;}
 .result-section { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 16px; margin-top: 12px; display: flex; flex-direction: column; gap: 12px;}
 .result-title-bar { font-size: 0.7rem; font-weight: 800; color: #64748b; text-transform: uppercase; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; }
-.result-card { display: flex; justify-content: space-between; align-items: center; padding: 16px; border-radius: 12px; border: 1px solid #e2e8f0; background: #f8fafc;}
+.result-card { display: flex; justify-content: space-between; align-items: center; padding: 16px; border-radius: 12px; border: 1px solid #e2e8f0; background: #f8fafc; gap: 12px;}
 .result-card.primary { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-color: #bfdbfe;}
 .result-card.success { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-color: #6ee7b7;}
 .result-card.purple { background: linear-gradient(135deg, #f5f3ff, #ede9fe); border-color: #c4b5fd;}
@@ -281,7 +280,7 @@ body{
 .status-neutral{background: #f1f5f9; border: 1px solid #e2e8f0; color: #475569;}
 .btn-print { background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; border: none; padding: 16px; border-radius: 12px; font-size: 1rem; font-weight: 700; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 16px;}
 
-/* ============ GATE PASS — POLISHED UI ============ */
+/* ============ GATE PASS — NEW POLISHED UI ============ */
 .gp-hero {
   background: linear-gradient(135deg, #1e40af 0%, #0f172a 100%);
   border-radius: 20px;
@@ -389,6 +388,7 @@ body{
 }
 @media (max-width: 480px) { .gp-field-row { grid-template-columns: 1fr; } }
 
+/* Custom Time Picker with AM/PM */
 .gp-time-picker {
   display: flex;
   align-items: center;
@@ -444,6 +444,7 @@ body{
   padding: 0 2px;
 }
 
+/* Live Preview */
 .gp-preview {
   background: linear-gradient(135deg, #eff6ff, #dbeafe);
   border: 1px solid #bfdbfe;
@@ -483,6 +484,7 @@ body{
   margin-left: 4px;
 }
 
+/* Generate Button */
 .gp-generate-btn {
   display: flex;
   align-items: center;
@@ -513,7 +515,7 @@ body{
 
 /* BOTTOM NAV */
 .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-top: 1px solid #e2e8f0; display: flex; justify-content: space-around; padding-bottom: env(safe-area-inset-bottom); z-index: 1000;}
-.nav-item { flex: 1; padding: 12px 0 10px; display: flex; flex-direction: column; align-items: center; gap: 4px; color: #94a3b8; font-size: 0.65rem; font-weight: 700; cursor: pointer; transition: 0.2s;}
+.nav-item { flex: 1; padding: 12px 0 10px; display: flex; flex-direction: column; align-items: center; gap: 4px; color: #94a3b8; font-size: 0.65rem; font-weight: 700; cursor: pointer; transition: 0.2s; min-width: 0;}
 .nav-item.active { color: #3b82f6; }
 .nav-item svg { width: 22px; height: 22px; fill: currentColor; }
 
@@ -652,6 +654,50 @@ body{
   .gp-sig-line { width: 85% !important; border-bottom: 1px solid #000 !important; height: 6mm !important; }
   .gp-sig-label { font-size: 7px !important; font-family: Arial, Helvetica, sans-serif !important; margin-top: 1mm !important; color: #000 !important; text-align: center !important; text-transform: uppercase; }
 }
+
+/* ============ RESPONSIVE: ALL SCREENS ============ */
+html { -webkit-text-size-adjust: 100%; }
+
+@media (min-width: 640px) {
+  .search-panel { grid-template-columns: 1.5fr 1fr; }
+  .search-buttons { grid-column: 1 / -1; }
+}
+
+@media (min-width: 768px) {
+  .app { max-width: 920px; padding: 20px 24px; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .topbar { padding: 26px 32px; }
+  .user-profile { right: 44px; top: 34px; }
+  .profile-dropdown { right: 44px; top: 82px; }
+  .bottom-nav {
+    left: 50%; right: auto; transform: translateX(-50%);
+    max-width: 920px; width: 100%;
+    border: 1px solid #e2e8f0; border-bottom: none;
+    border-radius: 22px 22px 0 0;
+    box-shadow: 0 -6px 30px rgba(15,23,42,.06);
+  }
+  .nav-item { padding: 14px 0 12px; font-size: 0.7rem; gap: 6px; }
+  .nav-item svg { width: 24px; height: 24px; }
+}
+
+@media (max-width: 380px) {
+  body { padding-bottom: calc(84px + env(safe-area-inset-bottom)); }
+  .app { padding: 12px; }
+  .topbar { padding: 16px 18px; }
+  .brand-logo { width: 46px; height: 46px; }
+  .brand-title-row span { font-size: 1.15rem; }
+  .brand-company { font-size: 0.6rem; letter-spacing: 0.1em; }
+  .user-profile { right: 18px; top: 22px; width: 32px; height: 32px; }
+  .profile-dropdown { right: 18px; top: 62px; }
+  .bottom-nav .nav-item { font-size: 0.58rem; gap: 3px; padding: 10px 0 8px; white-space: nowrap; }
+  .bottom-nav .nav-item svg { width: 19px; height: 19px; }
+  .spec { grid-template-columns: 96px 1fr; }
+  .spec .k, .spec .v { padding: 10px 12px; font-size: 0.78rem; }
+  .result-card .value { font-size: 1.1rem; }
+  .plan-input { font-size: 1.1rem; padding: 10px; }
+  .bom-table-head, .bom-row, .bom-group-header { min-width: 260px; }
+  .bom-table-head, .bom-row { grid-template-columns: 80px 1fr 60px; }
+}
 </style>
 </head>
 <body>
@@ -762,7 +808,7 @@ body{
     <div class="search-panel">
       <div class="field" id="jobField">
         <label>Job Number</label>
-        <input type="text" id="jobInput" placeholder="Type job no..." autocomplete="off">
+        <input type="text" id="jobInput" placeholder="Type job no..." autocomplete="off" inputmode="text">
         <div class="suggest" id="suggestBox"></div>
       </div>
       <div class="field">
@@ -788,7 +834,7 @@ body{
     <div class="search-panel">
       <div class="field" id="bomField">
         <label>SO-ITEM / INDEX</label>
-        <input type="text" id="bomInput" placeholder="Type SO-ITEM or INDEX..." autocomplete="off">
+        <input type="text" id="bomInput" placeholder="Type SO-ITEM or INDEX..." autocomplete="off" inputmode="text">
         <div class="suggest" id="bomSuggestBox"></div>
       </div>
       <div class="field">
@@ -802,7 +848,7 @@ body{
     </div>
     <div class="result-bar">
       <div class="result-title" id="bomResultTitle">Enter details above</div>
-      <div class="counter" id="bomResultCount">0 records</div>
+      <div class="result-counter counter" id="bomResultCount">0 records</div>
     </div>
     <div class="grid" id="bomGrid">
       <div class="empty"><div class="icon">📦</div><p>Start typing a <b>SO-ITEM</b> above.</p></div>
@@ -975,6 +1021,7 @@ body{
     <button class="btn-print no-print" onclick="triggerPrint(event, 'qc')">Save as PDF</button>
   </div>
 
+  <!-- ================= VIEW 5: GATE PASS ================= -->
   <div class="view-section" id="view-gatepass">
 
     <div class="gp-hero">
@@ -1003,8 +1050,7 @@ body{
             <input type="date" id="gpDate">
           </div>
           <div class="gp-field">
-            <!-- ✅ Changed "Time" to "Out Time" here -->
-            <label>Out Time <span class="gp-label-hint">(AM / PM)</span></label>
+            <label>Time <span class="gp-label-hint">(AM / PM)</span></label>
             <div class="gp-time-picker">
               <select id="gpHour" aria-label="Hour"></select>
               <span class="gp-time-sep">:</span>
@@ -1021,8 +1067,7 @@ body{
           <div class="gp-preview-label">👁️ Preview</div>
           <div class="gp-preview-content">
             <span>Date: <b id="gpPreviewDate">—</b></span>
-            <!-- ✅ Changed "Time" to "Out Time" here -->
-            <span>Out Time: <b id="gpPreviewTime">—</b></span>
+            <span>Time: <b id="gpPreviewTime">—</b></span>
           </div>
         </div>
 
@@ -1116,12 +1161,14 @@ const USERS = {
   'production': { pass: '',              role: 'Production', views: ['qccalc', 'gatepass'] }
 };
 
+/* ---- Date/time formatting helpers ---- */
 function formatDateForDisplay(isoDate) {
   if (!isoDate) return '';
   const [y, m, d] = isoDate.split('-');
   return `${d}/${m}/${y}`;
 }
 
+/* ---- Gate Pass UI: populate dropdowns, defaults, live preview ---- */
 function initGatePassUI() {
   const hourSel = document.getElementById('gpHour');
   const minSel = document.getElementById('gpMinute');
@@ -1174,6 +1221,15 @@ function updateGatePassPreview() {
   const ap = document.getElementById('gpAmPm').value;
   document.getElementById('gpPreviewDate').textContent = d ? formatDateForDisplay(d) : '—';
   document.getElementById('gpPreviewTime').textContent = (h && m && ap) ? `${h}:${m} ${ap}` : '—';
+}
+
+/* ---- LOGIN ---- */
+function resetLoginStep(){
+  loginStep = 1;
+  document.getElementById('loginPass').style.display = 'none';
+  document.getElementById('loginPass').value = '';
+  document.getElementById('loginBtn').textContent = 'Next';
+  document.getElementById('loginError').style.display = 'none';
 }
 
 window.handleLogin = function() {
@@ -1233,7 +1289,17 @@ function completeLogin(u) {
 }
 
 window.handleLogout = function() { localStorage.removeItem('tc_user'); location.reload(); };
+
 window.addEventListener('load', () => {
+  document.getElementById('loginUser').addEventListener('input', () => {
+    if (loginStep === 2) resetLoginStep();
+  });
+  ['loginUser','loginPass'].forEach(id => {
+    document.getElementById(id).addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); handleLogin(); }
+    });
+  });
+
   const savedUser = localStorage.getItem('tc_user');
   if (savedUser) {
     document.getElementById('loginUser').value = savedUser;
@@ -1244,6 +1310,7 @@ window.addEventListener('load', () => {
     handleLogin();
   }
 });
+
 window.toggleProfile = function(event) { if(event) event.stopPropagation(); document.getElementById('profileDropdown').classList.toggle('show'); };
 document.addEventListener('click', function(event) {
   const drop = document.getElementById('profileDropdown'), profile = document.querySelector('.user-profile');
@@ -1289,6 +1356,7 @@ window.switchMainView = function(viewName) {
   
   const title = viewName === 'home' ? 'PORTAL' : (viewName === 'jobcards' ? 'JOB CARDS' : (viewName === 'bom' ? 'BOM' : (viewName === 'qccalc' ? 'QC CALCULATOR' : 'GATE PASS')));
   document.getElementById('headerTitle').textContent = title;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
 window.switchQcTab = function(tabName, event) {
@@ -1319,13 +1387,14 @@ window.closeKnowledge = function(event) {
   document.getElementById('knowledgeModal').classList.remove('open');
 };
 
-/* --- JOB CARDS & BOM DATA LOGIC --- */
+/* --- SHARED CSV HELPERS --- */
 function normalizeHeader(h){ return String(h||'').toLowerCase().replace(/[\s_\-\/\.]+/g,''); }
 function findHeader(headers, ...candidates){ for(const c of candidates){ const found = headers.find(h => normalizeHeader(h) === normalizeHeader(c)); if(found) return found; } return null; }
 function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function formatQty(n) { if(n === null || n === undefined || isNaN(n)) return '—'; return Number(n).toFixed(4).replace(/\.?0+$/, '') || '0'; }
 function formatScientific(num) { if (num === 0) return '0'; const e = Math.floor(Math.log10(Math.abs(num))); const m = num / Math.pow(10, e); return `${m.toFixed(2)} × 10<sup>${e}</sup>`; }
 
+/* --- JOB DATA --- */
 async function loadJobDataFromCSV() {
   try {
     const response = await fetch('data.csv?v=' + new Date().getTime());
@@ -1333,6 +1402,7 @@ async function loadJobDataFromCSV() {
     Papa.parse(await response.text(), { header: true, skipEmptyLines: true, complete: function(results) { processJobCSVData(results.data); } });
   } catch (e) { console.warn('data.csv not found'); }
 }
+
 function processJobCSVData(rows) {
   const headers = Object.keys(rows[0] || {});
   const soItemKey = findHeader(headers, 'SO-ITEM', 'SOITEM', 'INDEX'), opKey = findHeader(headers, 'OPERATION DETAIL', 'OPERATION');
@@ -1375,6 +1445,7 @@ function jobNumberOf(row){ return row.soItem ? row.soItem.split('#')[0].trim() :
 function buildJobIndex(){ const map = new Map(); JOB_DATA.forEach(r => { const j = jobNumberOf(r); if(!j) return; if(!map.has(j)) map.set(j, {opCount:0, ops:new Set()}); const rec = map.get(j); if(r.operation) rec.ops.add(r.operation); }); map.forEach(v => v.opCount = v.ops.size); return map; }
 function allJobNumbers(){ return Array.from(buildJobIndex().keys()).sort(); }
 
+/* --- JOB CARDS CONTROLLER (AUTO-SHOW) --- */
 const jobInput = document.getElementById('jobInput'), opSelect = document.getElementById('opSelect'), jobGrid = document.getElementById('jobGrid'), suggestBox = document.getElementById('suggestBox');
 let SUGGEST_INDEX = -1, SUGGEST_ITEMS = [];
 
@@ -1384,33 +1455,78 @@ function renderSuggestions(term){
   SUGGEST_ITEMS = matches; let html = `<div class="suggest-hint">${matches.length} jobs found</div>`;
   matches.forEach((j, i) => {
     const rec = idx.get(j) || {opCount:0};
-    html += `<div class="suggest-item" data-job="${esc(j)}" data-idx="${i}"><span>${j}</span><span class="meta">${rec.opCount} ops</span></div>`;
+    html += `<div class="suggest-item" data-job="${esc(j)}" data-idx="${i}"><span>${esc(j)}</span><span class="meta">${rec.opCount} ops</span></div>`;
   });
   suggestBox.innerHTML = html; suggestBox.classList.add('open');
 }
 function closeSuggestions(){ suggestBox.classList.remove('open'); SUGGEST_INDEX = -1; }
-function pickSuggestion(jobNo){ jobInput.value = jobNo; closeSuggestions(); refreshOpSelect(); }
 
-jobInput.addEventListener('input', () => { renderSuggestions(jobInput.value); refreshOpSelect(); });
-jobInput.addEventListener('focus', () => { if(!jobInput.value.trim()) renderSuggestions(''); else renderSuggestions(jobInput.value); });
-suggestBox.addEventListener('mousedown', e => { const item = e.target.closest('.suggest-item'); if(item) pickSuggestion(item.dataset.job); });
+function findExactJob(term){
+  const t = String(term || '').trim().toLowerCase();
+  if(!t) return null;
+  for(const k of buildJobIndex().keys()){ if(k.toLowerCase() === t) return k; }
+  return null;
+}
 
-function refreshOpSelect(){
-  const job = jobInput.value.trim(); opSelect.innerHTML = '';
+function refreshOpSelect(jobArg, autoSelectFirst){
+  const job = (jobArg === undefined ? jobInput.value : jobArg).trim();
+  opSelect.innerHTML = '';
   if(!job){ opSelect.innerHTML = '<option value="">— Select Job First —</option>'; opSelect.disabled = true; return; }
   const jn = job.toLowerCase(); const seen = new Set(); const list = [];
   JOB_DATA.forEach(r => { if(jobNumberOf(r).toLowerCase() === jn && !seen.has(r.operation)){ seen.add(r.operation); list.push(r.operation); } });
   if(list.length === 0){ opSelect.innerHTML = '<option value="">— No Operations —</option>'; opSelect.disabled = true; return; }
   const ph = document.createElement('option'); ph.value = ''; ph.textContent = '— Select Op —'; opSelect.appendChild(ph);
   list.forEach(op => { const o = document.createElement('option'); o.value = op; o.textContent = op; opSelect.appendChild(o); });
-  opSelect.disabled = false; if(list.length === 1) opSelect.value = list[0];
+  opSelect.disabled = false;
+  if(list.length === 1 || autoSelectFirst) opSelect.value = list[0];
 }
+
+function pickSuggestion(jobNo){
+  jobInput.value = jobNo;
+  closeSuggestions();
+  refreshOpSelect(jobNo, true);
+  if(opSelect.value) renderJobResults();
+}
+
+/* AUTO-SHOW: exact job match renders immediately — no tap needed */
+jobInput.addEventListener('input', () => {
+  const term = jobInput.value.trim();
+  const exact = findExactJob(term);
+  if(exact){
+    closeSuggestions();
+    refreshOpSelect(exact, true);
+    if(opSelect.value) renderJobResults();
+  } else {
+    renderSuggestions(term);
+    refreshOpSelect(term, false);
+    document.getElementById('jobResultTitle').textContent = 'Enter details above';
+    document.getElementById('jobResultCount').textContent = '0 records';
+    jobGrid.innerHTML = '<div class="empty"><div class="icon">🔎</div><p>Start typing a <b>job number</b> above.</p></div>';
+  }
+});
+jobInput.addEventListener('focus', () => { renderSuggestions(jobInput.value.trim()); });
+jobInput.addEventListener('keydown', (e) => {
+  if(e.key !== 'Enter') return;
+  e.preventDefault();
+  const first = suggestBox.querySelector('.suggest-item');
+  if(suggestBox.classList.contains('open') && first) pickSuggestion(first.dataset.job);
+  else if(opSelect.value) renderJobResults();
+  closeSuggestions();
+});
+suggestBox.addEventListener('mousedown', e => { const item = e.target.closest('.suggest-item'); if(item) pickSuggestion(item.dataset.job); });
+opSelect.addEventListener('change', () => { if(opSelect.value) renderJobResults(); });
+document.addEventListener('click', e => { if(!document.getElementById('jobField').contains(e.target)) closeSuggestions(); });
 
 function renderJobResults(){
   const job = jobInput.value.trim(), op = opSelect.value;
   if(!job || !op) return;
   const matches = JOB_DATA.filter(r => jobNumberOf(r).toLowerCase() === job.toLowerCase() && r.operation === op);
+  document.getElementById('jobResultTitle').textContent = `${job} • ${op}`;
   document.getElementById('jobResultCount').textContent = `${matches.length} records`;
+  if(matches.length === 0){
+    jobGrid.innerHTML = `<div class="empty"><div class="icon">📭</div><p>No records for <b>${esc(job)}</b> / <b>${esc(op)}</b></p></div>`;
+    return;
+  }
   let html = '';
   matches.forEach(row => {
     let specs = '';
@@ -1429,13 +1545,22 @@ function renderJobResults(){
       <div class="card-foot"><span>🏷️ ${esc(row.so)}</span><span class="drum">🥁 ${esc(row.drum||'—')}</span></div>
     </div>`;
   });
-  jobGrid.innerHTML = html || `<div class="empty"><p>No records found</p></div>`;
+  jobGrid.innerHTML = html;
 }
-document.getElementById('searchBtn').addEventListener('click', renderJobResults);
-document.getElementById('resetBtn').addEventListener('click', () => { jobInput.value=''; opSelect.disabled=true; jobGrid.innerHTML='<div class="empty"><p>Start typing a job number</p></div>'; });
 
-/* BOM LOGIC */
+document.getElementById('searchBtn').addEventListener('click', renderJobResults);
+document.getElementById('resetBtn').addEventListener('click', () => {
+  jobInput.value = '';
+  opSelect.innerHTML = '<option value="">— Select Job First —</option>';
+  opSelect.disabled = true;
+  jobGrid.innerHTML = '<div class="empty"><div class="icon">🔎</div><p>Start typing a <b>job number</b> above.</p></div>';
+  document.getElementById('jobResultTitle').textContent = 'Enter details above';
+  document.getElementById('jobResultCount').textContent = '0 records';
+});
+
+/* --- BOM DATA --- */
 let CURRENT_BOM_LINES = [];
+let LAST_BOM_ITEM = null;
 
 async function loadBomDataFromCSV() {
   try {
@@ -1471,6 +1596,7 @@ async function loadBomDataFromCSV() {
     }});
   } catch (e) { console.warn('bom.csv not found'); }
 }
+
 function processBomCSVData(rows) {
   if(!rows || !rows.length) return;
   const headers = Object.keys(rows[0] || {});
@@ -1494,7 +1620,6 @@ function processBomCSVData(rows) {
   rows.forEach(row => {
     const rawSoItem = String(row[soItemKey] || '').trim();
     const soItemRaw = cleanSoItem(rawSoItem);
-    
     if(!soItemRaw) return;
     
     if(!grouped.has(soItemRaw)){
@@ -1542,7 +1667,9 @@ function filterBomKeys(term){ const q = cleanSoItem(term).toLowerCase(); return 
 function bomOpsForItem(soItem){ if(!soItem) return []; const item = BOM_DATA.find(b => b.soItem === soItem); if(!item) return []; const list = []; item.operationJDMToOpnCode.forEach((code, name) => list.push({ name, code })); list.sort(); return list; }
 
 function refreshBomOpSelect(){
-  const soItem = document.getElementById('bomInput').value.trim(); const bomOpSelect = document.getElementById('bomOpSelect'); bomOpSelect.innerHTML = '';
+  const soItem = document.getElementById('bomInput').value.trim();
+  const bomOpSelect = document.getElementById('bomOpSelect');
+  bomOpSelect.innerHTML = '';
   if(!soItem){ bomOpSelect.innerHTML = '<option value="">— Select SO-ITEM First —</option>'; bomOpSelect.disabled = true; return; }
   const ops = bomOpsForItem(soItem);
   if(ops.length === 0){ bomOpSelect.innerHTML = '<option value="">— No Operations —</option>'; bomOpSelect.disabled = true; return; }
@@ -1551,6 +1678,7 @@ function refreshBomOpSelect(){
   bomOpSelect.disabled = false;
 }
 
+/* --- BOM CONTROLLER (AUTO-SHOW) --- */
 const bomInput = document.getElementById('bomInput');
 const bomSuggestBox = document.getElementById('bomSuggestBox');
 let BOM_SUGGEST_INDEX = -1, BOM_SUGGEST_ITEMS = [];
@@ -1567,24 +1695,75 @@ function renderBomSuggestions(term){
   bomSuggestBox.innerHTML = html; bomSuggestBox.classList.add('open');
 }
 function closeBomSuggestions(){ bomSuggestBox.classList.remove('open'); BOM_SUGGEST_INDEX = -1; }
-function pickBomSuggestion(soItem){ bomInput.value = soItem; closeBomSuggestions(); refreshBomOpSelect(); USER_PLAN_QTY = null; renderBomResults(); }
 
-bomInput.addEventListener('input', () => { renderBomSuggestions(bomInput.value); refreshBomOpSelect(); });
-bomInput.addEventListener('focus', () => { if(!bomInput.value.trim()) renderBomSuggestions(''); else renderBomSuggestions(bomInput.value); });
+function findExactBomItem(term){
+  const t = cleanSoItem(term);
+  if(!t) return null;
+  const hit = BOM_DATA.find(b => b.soItem.toLowerCase() === t.toLowerCase());
+  return hit ? hit.soItem : null;
+}
+
+function pickBomSuggestion(soItem){
+  bomInput.value = soItem;
+  closeBomSuggestions();
+  refreshBomOpSelect();
+  renderBomResults();
+}
+
+/* AUTO-SHOW: exact SO-ITEM match renders immediately — no tap needed */
+bomInput.addEventListener('input', () => {
+  const term = bomInput.value.trim();
+  const exact = findExactBomItem(term);
+  if(exact){
+    closeBomSuggestions();
+    refreshBomOpSelect();
+    renderBomResults();
+  } else {
+    renderBomSuggestions(term);
+    refreshBomOpSelect();
+    document.getElementById('bomResultTitle').textContent = 'Enter details above';
+    document.getElementById('bomResultCount').textContent = '0 records';
+    document.getElementById('bomGrid').innerHTML = '<div class="empty"><div class="icon">📦</div><p>Start typing a <b>SO-ITEM</b> above.</p></div>';
+  }
+});
+bomInput.addEventListener('focus', () => { renderBomSuggestions(bomInput.value.trim()); });
+bomInput.addEventListener('keydown', (e) => {
+  if(e.key !== 'Enter') return;
+  e.preventDefault();
+  const first = bomSuggestBox.querySelector('.suggest-item');
+  if(bomSuggestBox.classList.contains('open') && first) pickBomSuggestion(first.dataset.bom);
+  else renderBomResults();
+  closeBomSuggestions();
+});
 bomSuggestBox.addEventListener('mousedown', e => { const item = e.target.closest('.suggest-item'); if(item) pickBomSuggestion(item.dataset.bom); });
 document.addEventListener('click', e => { if(!document.getElementById('bomField').contains(e.target)) closeBomSuggestions(); });
 
 function renderBomResults(){
   const soItem = bomInput.value.trim(), selectedOpName = document.getElementById('bomOpSelect').value;
   const item = BOM_DATA.find(b => b.soItem === soItem);
-  if(!item){ document.getElementById('bomGrid').innerHTML = `<div class="empty"><p>No BOM found</p></div>`; return; }
-  
+  if(!item){
+    document.getElementById('bomResultTitle').textContent = 'Enter details above';
+    document.getElementById('bomResultCount').textContent = '0 records';
+    document.getElementById('bomGrid').innerHTML = `<div class="empty"><div class="icon">📦</div><p>No BOM found for <b>${esc(soItem)}</b></p></div>`;
+    return;
+  }
+
+  /* plan qty belongs to one item only — never carry it across items */
+  if(LAST_BOM_ITEM !== soItem){ USER_PLAN_QTY = null; LAST_BOM_ITEM = soItem; }
+
   const effectivePlanQty = (USER_PLAN_QTY !== null && !isNaN(USER_PLAN_QTY)) ? USER_PLAN_QTY : item.defaultPlanQty;
   let lines = item.lines;
   if(selectedOpName) lines = lines.filter(l => l.operationJDM === selectedOpName);
   
-  CURRENT_BOM_LINES = lines;
+  document.getElementById('bomResultTitle').textContent = soItem + (selectedOpName ? ` • ${selectedOpName}` : '');
+  document.getElementById('bomResultCount').textContent = `${lines.length} records`;
   
+  if(lines.length === 0){
+    document.getElementById('bomGrid').innerHTML = `<div class="empty"><div class="icon">📦</div><p>No BOM lines for this operation.</p></div>`;
+    CURRENT_BOM_LINES = [];
+    return;
+  }
+
   const groupMap = new Map();
   lines.forEach(l => { const g = l.group || 'OTHER'; if(!groupMap.has(g)) groupMap.set(g, []); groupMap.get(g).push(l); });
   
@@ -1600,20 +1779,22 @@ function renderBomResults(){
       <div class="bom-table">
         <div class="bom-table-head"><div>Mat Code</div><div>Mat Disc</div><div>Qty</div></div>`;
     
+  /* build the DOM order list as we render — this is what the qty math must use */
+  const orderedLines = [];
   const sortedGroups = Array.from(groupMap.keys()).sort();
-  let rowIndex = 0;
   sortedGroups.forEach(g => {
     html += `<div class="bom-group-header">${esc(g)} <span style="margin-left:auto;font-size:0.6rem;background:#dbeafe;padding:2px 8px;border-radius:10px;">${groupMap.get(g).length}</span></div>`;
     groupMap.get(g).forEach(l => {
+      orderedLines.push(l);
       const computed = (effectivePlanQty * l.bomPerKm) / 1000;
       html += `<div class="bom-row">
         <div>${esc(l.matCode)}</div>
         <div>${esc(l.matDisc)}</div>
-        <div class="bom-qty-cell" data-index="${rowIndex}">${formatQty(computed)}</div>
+        <div class="bom-qty-cell" data-bom-per-km="${l.bomPerKm}">${formatQty(computed)}</div>
       </div>`;
-      rowIndex++;
     });
   });
+  CURRENT_BOM_LINES = orderedLines;
   
   html += `</div></div></div>`;
   document.getElementById('bomGrid').innerHTML = html;
@@ -1622,19 +1803,23 @@ function renderBomResults(){
 window.updateBomCalc = function(inputElement) {
   const val = parseFloat(inputElement.value) || 0;
   USER_PLAN_QTY = val;
-  
-  const qtyCells = document.querySelectorAll('.bom-qty-cell');
-  CURRENT_BOM_LINES.forEach((l, i) => {
-    if(qtyCells[i]) {
-      const computed = (val * l.bomPerKm) / 1000;
-      qtyCells[i].textContent = formatQty(computed);
-    }
+  document.querySelectorAll('.bom-qty-cell').forEach(cell => {
+    const perKm = parseFloat(cell.dataset.bomPerKm) || 0;
+    cell.textContent = formatQty((val * perKm) / 1000);
   });
 };
 
 document.getElementById('bomSearchBtn').addEventListener('click', renderBomResults);
-document.getElementById('bomResetBtn').addEventListener('click', () => { bomInput.value=''; document.getElementById('bomOpSelect').disabled=true; document.getElementById('bomGrid').innerHTML='<div class="empty"><p>Start typing a SO-ITEM</p></div>'; });
 document.getElementById('bomOpSelect').addEventListener('change', renderBomResults);
+document.getElementById('bomResetBtn').addEventListener('click', () => {
+  bomInput.value = '';
+  document.getElementById('bomOpSelect').innerHTML = '<option value="">— Select SO-ITEM First —</option>';
+  document.getElementById('bomOpSelect').disabled = true;
+  document.getElementById('bomGrid').innerHTML = '<div class="empty"><div class="icon">📦</div><p>Start typing a <b>SO-ITEM</b> above.</p></div>';
+  document.getElementById('bomResultTitle').textContent = 'Enter details above';
+  document.getElementById('bomResultCount').textContent = '0 records';
+  USER_PLAN_QTY = null; LAST_BOM_ITEM = null; CURRENT_BOM_LINES = [];
+});
 
 /* QC CALC LOGIC */
 function calculateCR() {
@@ -1714,6 +1899,7 @@ function calculateHotSet() {
 }
 ['hCoreDia','hCondDia','hThick','hWidth','hInit','hElong','hCool'].forEach(id => document.getElementById(id).addEventListener('input', calculateHotSet));
 
+/* --- PRINT --- */
 window.triggerPrint = function(e, type) {
   if(e) e.preventDefault();
   const now = new Date();
@@ -1779,8 +1965,7 @@ window.triggerPrint = function(e, type) {
           <div class="gp-dept">${esc(gpDept)}</div>
           <div class="gp-datetime">
             <span>Date: ${esc(gpDate)}</span>
-            <!-- ✅ Changed "Time" to "Out Time" here for print output -->
-            <span>Out Time: ${esc(gpTime)}</span>
+            <span>Time: ${esc(gpTime)}</span>
           </div>
           <div class="gp-sig-area">
             <div class="gp-sig-line"></div>
@@ -1791,10 +1976,15 @@ window.triggerPrint = function(e, type) {
     }
     gpContainer.innerHTML = gpHtml;
   }
-  window.print();
+  /* let the browser apply the print class before snapshotting */
+  requestAnimationFrame(() => window.print());
 };
 
-/* Initialize Gate Pass UI (dropdowns, defaults, live preview) */
+window.addEventListener('afterprint', () => {
+  document.body.classList.remove('printing-gatepass');
+});
+
+/* Initialize Gate Pass UI */
 initGatePassUI();
 
 })();
