@@ -868,7 +868,7 @@ html { -webkit-text-size-adjust: 100%; }
             <input type="date" id="gpDate">
           </div>
           <div class="gp-field">
-            <label>Time <span class="gp-label-hint">(AM / PM)</span></label>
+            <label>Out Time <span class="gp-label-hint">(AM / PM)</span></label>
             <div class="gp-time-picker">
               <select id="gpHour" aria-label="Hour"></select>
               <span class="gp-time-sep">:</span>
@@ -885,7 +885,7 @@ html { -webkit-text-size-adjust: 100%; }
           <div class="gp-preview-label">👁️ Preview</div>
           <div class="gp-preview-content">
             <span>Date: <b id="gpPreviewDate">—</b></span>
-            <span>Time: <b id="gpPreviewTime">—</b></span>
+            <span>Out Time: <b id="gpPreviewTime">—</b></span>
           </div>
         </div>
 
@@ -1784,7 +1784,7 @@ window.triggerPrint = function(e, type) {
           <div class="gp-dept">${esc(gpDept)}</div>
           <div class="gp-datetime">
             <span>Date: ${esc(gpDate)}</span>
-            <span>Time: ${esc(gpTime)}</span>
+            <span>Out Time: ${esc(gpTime)}</span>
           </div>
           <div class="gp-sig-area">
             <div class="gp-sig-line"></div>
