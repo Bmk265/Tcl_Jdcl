@@ -46,13 +46,86 @@ body{
 .login-btn {width: 100%; padding: 14px; border-radius: 12px; border: none; margin-top: 8px;background: linear-gradient(135deg, #3b82f6, #2563eb); color: #fff;font-size: 1rem; font-weight: 700; cursor: pointer;}
 .login-error { color: #ef4444; font-size: 0.8rem; font-weight: 600; margin-top: 12px; display: none; }
 .app{max-width:600px;margin:0 auto;padding:16px; display: none; position: relative; overflow-x: hidden;}
-.user-profile {position: absolute; top: 30px; right: 32px; z-index: 50;width: 36px; height: 36px; border-radius: 50%;background: #f1f5f9; border: 1px solid #cbd5e1;display: flex; align-items: center; justify-content: center;cursor: pointer;}
-.user-profile svg { width: 20px; height: 20px; fill: #475569; }
-.profile-dropdown {position: absolute; top: 75px; right: 32px; z-index: 100;background: #ffffff; border-radius: 12px; padding: 12px;box-shadow: 0 10px 25px rgba(0,0,0,0.1); display: none; min-width: 160px;border: 1px solid #e2e8f0;}
+.user-profile {
+  position: absolute; top: 26px; right: 28px; z-index: 50;
+  width: 42px; height: 42px; border-radius: 14px;
+  background: linear-gradient(135deg, #0f172a 0%, #1e40af 100%);
+  border: 2px solid #ffffff;
+  box-shadow: 0 6px 16px rgba(30, 64, 175, 0.25);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.user-profile:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 8px 20px rgba(30, 64, 175, 0.35); }
+.user-profile:active { transform: scale(0.95); }
+.user-profile .avatar-initials {
+  color: #ffffff; font-weight: 800; font-size: 0.9rem; letter-spacing: 0.04em;
+}
+.user-profile .status-dot {
+  position: absolute; bottom: -2px; right: -2px;
+  width: 11px; height: 11px; border-radius: 50%;
+  background: #10b981; border: 2px solid #ffffff;
+}
+
+.profile-dropdown {
+  position: absolute; top: 78px; right: 28px; z-index: 100;
+  background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 22px; padding: 14px;
+  box-shadow: 0 20px 45px -10px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(226, 232, 240, 0.8);
+  display: none; min-width: 245px;
+  transform-origin: top right;
+  animation: popIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.92) translateY(-8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
 .profile-dropdown.show { display: block; }
-.dropdown-header { font-size: 0.75rem; color: #64748b; margin-bottom: 8px; text-align: center;}
-.dropdown-header b { color: #0f172a; display: block; font-size: 0.9rem;}
-.dropdown-btn {width: 100%; padding: 8px; border-radius: 8px; border: none;background: #fef2f2; color: #ef4444; font-weight: 700; font-size: 0.8rem; cursor: pointer;}
+
+.dropdown-user-card {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px; margin-bottom: 10px;
+  background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+  border: 1px solid #dbeafe; border-radius: 16px;
+}
+.dropdown-avatar-lg {
+  width: 40px; height: 40px; border-radius: 12px;
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  color: #fff; font-weight: 800; font-size: 0.95rem;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+}
+.dropdown-user-info { display: flex; flex-direction: column; min-width: 0; }
+.dropdown-user-name { font-size: 0.95rem; font-weight: 800; color: #0f172a; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dropdown-role-badge {
+  display: inline-flex; align-items: center; gap: 5px; margin-top: 3px;
+  font-size: 0.65rem; font-weight: 700; color: #1d4ed8;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.dropdown-role-badge::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%; background: #10b981;
+}
+
+.dropdown-divider { height: 1px; background: #f1f5f9; margin: 8px 4px; }
+
+.dropdown-action-item {
+  width: 100%; padding: 10px 12px; border-radius: 12px; border: none;
+  background: transparent; color: #334155;
+  font-weight: 700; font-size: 0.82rem; cursor: pointer;
+  display: flex; align-items: center; gap: 10px; text-align: left;
+  transition: all 0.15s ease; margin-bottom: 4px;
+}
+.dropdown-action-item:hover { background: #f1f5f9; color: #0f172a; transform: translateX(2px); }
+.dropdown-action-item:active { transform: scale(0.98); }
+.dropdown-action-icon {
+  width: 30px; height: 30px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.dropdown-action-icon.qr { background: #eff6ff; color: #2563eb; }
+.dropdown-action-icon.banner { background: #fffbeb; color: #d97706; }
+.dropdown-action-icon.logout { background: #fef2f2; color: #ef4444; }
+.dropdown-action-item.danger { color: #dc2626; margin-bottom: 0; }
+.dropdown-action-item.danger:hover { background: #fef2f2; }
 
 .topbar{
   position: relative;
@@ -111,6 +184,195 @@ body{
 .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .admin-grid input { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid #e2e8f0; font-size: 0.85rem; outline: none;}
 .admin-save-btn { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #f59e0b; color: #fff; font-weight: 700; margin-top: 12px; cursor: pointer;}
+
+/* BANNER STYLES */
+.promo-banner {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #2563eb 100%);
+  color: white;
+  padding: 18px 20px;
+  border-radius: 22px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  cursor: pointer;
+  box-shadow: 0 12px 28px -6px rgba(15, 23, 42, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  overflow: hidden;
+  position: relative;
+  min-height: 155px;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.promo-banner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px -6px rgba(15, 23, 42, 0.3);
+}
+.promo-banner:active {
+  transform: scale(0.99);
+}
+.promo-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.05) 0%, rgba(15, 23, 42, 0.25) 45%, rgba(15, 23, 42, 0.85) 100%);
+  z-index: 0;
+}
+.promo-banner-content {
+  position: relative;
+  z-index: 1;
+  font-weight: 800;
+  font-size: 1.05rem;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+  word-break: break-word;
+  text-align: left;
+  max-width: 88%;
+}
+.promo-banner-dots {
+  position: absolute;
+  bottom: 14px;
+  right: 16px;
+  z-index: 2;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+.promo-banner-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+}
+.promo-banner-dot.active {
+  width: 18px;
+  background: #ffffff;
+}
+.promo-banner-link-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+}
+
+/* Modal Form Controls (Banner Manager) */
+.report-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.report-form-group label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.report-form-group label span {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.report-form-group input[type="text"] {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid #e2e8f0;
+  background: #f8fafc;
+  color: #0f172a;
+  font-size: 0.9rem;
+  font-weight: 600;
+  outline: none;
+  transition: all 0.2s;
+}
+.report-form-group input[type="text"]:focus {
+  border-color: #3b82f6;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+}
+.file-upload-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px dashed #cbd5e1;
+  background: #f8fafc;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.file-upload-box:hover {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+.file-upload-box input[type="file"] {
+  width: 100%;
+  font-size: 0.82rem;
+  color: #475569;
+  cursor: pointer;
+}
+.btn-send {
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+  transition: all 0.2s;
+}
+.btn-send:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+}
+.admin-banner-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+  transition: border-color 0.2s;
+}
+.admin-banner-item:hover {
+  border-color: #cbd5e1;
+}
+.admin-banner-thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: #e2e8f0;
+  flex-shrink: 0;
+}
 
 /* VIEWS */
 .view-section { display: none; animation: fadeIn 0.3s ease; }
@@ -377,7 +639,7 @@ body{
   html, body { width: 100% !important; margin: 0 !important; padding: 0 !important; background: #fff !important; color: #000 !important; font-size: 12px; }
   .app { max-width: 100% !important; width: 100% !important; padding: 0 !important; margin: 0 !important; display: block !important; }
 
-  .topbar, .tabs-wrapper, .qc-tabs-wrapper, .input-group, .search-panel, .result-bar, .btn-print, .admin-panel, .user-profile, .profile-dropdown, .no-print, .bottom-nav, .dashboard-hero, .stats-grid, .module-grid, .k-feed, .tip-banner, .modal-overlay, .section-title, .app-footer, .gp-hero, .gp-form-card { display: none !important; }
+  .topbar, .tabs-wrapper, .qc-tabs-wrapper, .input-group, .search-panel, .result-bar, .btn-print, .admin-panel, .user-profile, .profile-dropdown, .no-print, .bottom-nav, .dashboard-hero, .stats-grid, .module-grid, .k-feed, .tip-banner, .modal-overlay, .section-title, .app-footer, .gp-hero, .gp-form-card, .promo-banner { display: none !important; }
 
   .print-header, .print-inputs-section, .print-footer { display: block !important; }
 
@@ -484,8 +746,8 @@ html { -webkit-text-size-adjust: 100%; }
   .app { max-width: 920px; padding: 20px 24px; }
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .topbar { padding: 26px 32px; }
-  .user-profile { right: 44px; top: 34px; }
-  .profile-dropdown { right: 44px; top: 82px; }
+  .user-profile { right: 40px; top: 31px; }
+  .profile-dropdown { right: 40px; top: 84px; }
   .bottom-nav {
     left: 50%; right: auto; transform: translateX(-50%);
     max-width: 920px; width: 100%;
@@ -503,8 +765,9 @@ html { -webkit-text-size-adjust: 100%; }
   .brand-logo { width: 46px; height: 46px; }
   .brand-title-row span { font-size: 1.15rem; }
   .brand-company { font-size: 0.6rem; letter-spacing: 0.1em; }
-  .user-profile { right: 18px; top: 22px; width: 32px; height: 32px; }
-  .profile-dropdown { right: 18px; top: 62px; }
+  .user-profile { right: 18px; top: 20px; width: 38px; height: 38px; border-radius: 12px; }
+  .user-profile .avatar-initials { font-size: 0.8rem; }
+  .profile-dropdown { right: 18px; top: 66px; min-width: 225px; }
   .bottom-nav .nav-item { font-size: 0.58rem; gap: 3px; padding: 8px 2px; }
   .bottom-nav .nav-item svg { width: 18px; height: 18px; }
   
@@ -517,9 +780,81 @@ html { -webkit-text-size-adjust: 100%; }
   .bom-table-head, .bom-row, .bom-group-header { min-width: 260px; }
   .bom-table-head, .bom-row { grid-template-columns: 80px 1fr 60px; }
 }
+
+/* ============ OFFLINE / SYNC UI ============ */
+.offline-banner {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: #f59e0b;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+  transition: background 0.25s ease;
+  pointer-events: none;
+}
+body.has-offline-banner .app { padding-top: 48px; }
+body.has-offline-banner .user-profile { top: calc(26px + 36px); }
+body.has-offline-banner .profile-dropdown { top: calc(78px + 36px); }
+
+.update-toast {
+  position: fixed;
+  bottom: calc(96px + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99998;
+  display: none;
+  align-items: center;
+  gap: 10px;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.4);
+  max-width: calc(100% - 32px);
+}
+.update-toast.show { display: flex; }
+.update-toast span { flex: 1; min-width: 0; }
+.update-toast button {
+  border: none;
+  border-radius: 8px;
+  padding: 7px 14px;
+  font-weight: 800;
+  font-size: 0.78rem;
+  cursor: pointer;
+  background: #3b82f6;
+  color: #ffffff;
+  white-space: nowrap;
+}
+.update-toast button.dismiss {
+  background: transparent;
+  color: #94a3b8;
+  padding: 7px 8px;
+}
+
+@media print {
+  .offline-banner, .update-toast { display: none !important; }
+}
 </style>
 </head>
 <body>
+
+<!-- Offline / sync status banner -->
+<div id="offlineBanner" class="offline-banner" style="display: none;" role="status" aria-live="polite"></div>
+
+<!-- "New version available" toast -->
+<div id="updateToast" class="update-toast" style="display: none;" role="alert">
+  <span>🆕 A new version is available.</span>
+  <button onclick="window.location.reload()">Reload</button>
+  <button class="dismiss" onclick="document.getElementById('updateToast').style.display='none'">Later</button>
+</div>
 
 <div id="loginScreen">
   <div class="login-card">
@@ -534,12 +869,41 @@ html { -webkit-text-size-adjust: 100%; }
 
 <div class="app" id="appContainer">
   
-  <div class="user-profile" onclick="toggleProfile(event)">
-    <svg viewBox="0 0 24 24"><path d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" /></svg>
+  <div class="user-profile" onclick="toggleProfile(event)" title="Account & Quick Actions">
+    <span class="avatar-initials" id="headerAvatarInitials">TC</span>
+    <span class="status-dot"></span>
   </div>
   <div class="profile-dropdown" id="profileDropdown">
-    <div class="dropdown-header">Logged in as <b id="dropUserRole">Guest</b></div>
-    <button class="dropdown-btn" onclick="handleLogout()">Logout</button>
+    <div class="dropdown-user-card">
+      <div class="dropdown-avatar-lg" id="dropAvatarInitials">TC</div>
+      <div class="dropdown-user-info">
+        <div class="dropdown-user-name" id="dropUserName">Guest</div>
+        <div class="dropdown-role-badge" id="dropUserRole">Role</div>
+      </div>
+    </div>
+
+    <button class="dropdown-action-item" onclick="openQrModal(event)">
+      <span class="dropdown-action-icon qr">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      </span>
+      <span>Scan to Open App</span>
+    </button>
+
+    <button class="dropdown-action-item" id="nav-banner-mgmt" style="display: none;" onclick="openBannerModal(event)">
+      <span class="dropdown-action-icon banner">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="3"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+      </span>
+      <span>Manage Banners</span>
+    </button>
+
+    <div class="dropdown-divider"></div>
+
+    <button class="dropdown-action-item danger" onclick="handleLogout()">
+      <span class="dropdown-action-icon logout">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </span>
+      <span>Sign Out</span>
+    </button>
   </div>
 
   <div class="topbar">
@@ -594,6 +958,9 @@ html { -webkit-text-size-adjust: 100%; }
   <div class="print-inputs-section" id="printInputs"></div>
 
   <div class="view-section active" id="view-home">
+    <!-- NEW: Promotional Banner -->
+    <div id="promoBanner" class="promo-banner" style="display: none;" onclick="handleBannerClick(event)"></div>
+
     <div class="dashboard-hero">
       <div class="dash-greeting" id="dashGreeting">Welcome Back,</div>
       <div class="dash-name" id="welcomeName">User</div>
@@ -949,10 +1316,53 @@ html { -webkit-text-size-adjust: 100%; }
   <div class="modal-content" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="closeKnowledge(event)">✕</button>
     <div class="modal-header">
-      <div class="k-icon" id="modalIcon" style="font-size: 1.5rem; width: 48px; height: 48px;">📚</div>
+      <div class="k-icon" id="modalIcon" style="font-size: 1.5rem; width: 48px; height: 48px;">??</div>
       <h3 id="modalTitle">Title</h3>
     </div>
     <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- NEW QR MODAL -->
+<div class="modal-overlay" id="qrModal" onclick="closeQrModal(event)">
+  <div class="modal-content" onclick="event.stopPropagation()" style="text-align: center;">
+    <button class="modal-close" onclick="closeQrModal(event)">✕</button>
+    <div class="modal-header" style="justify-content: center; margin-bottom: 10px; padding-right: 0;">
+      <h3>Scan to Open Portal</h3>
+    </div>
+    <div class="modal-body" style="display: flex; flex-direction: column; align-items: center; gap: 16px;">
+      <p style="font-size: 0.9rem; color: #64748b;">Point your phone camera here to open the portal on your mobile device.</p>
+      <img id="qrCodeImage" src="" alt="QR Code" style="width: 220px; height: 220px; border-radius: 12px; border: 1px solid #e2e8f0; padding: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+      <button class="btn-print" onclick="closeQrModal()" style="margin-top: 10px;">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- NEW BANNER MANAGEMENT MODAL -->
+<div class="modal-overlay" id="bannerModal" onclick="closeBannerModal(event)">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeBannerModal(event)">✕</button>
+    <div class="modal-header">
+      <h3>📢 Manage Banners</h3>
+    </div>
+    <div class="modal-body">
+      <div class="report-form-group">
+        <label>Banner Title <span>(Optional)</span></label>
+        <input type="text" id="setBannerText" placeholder="e.g. Safety First — Zero Incidents">
+      </div>
+      <div class="report-form-group">
+        <label>Banner Image <span>(Optional if title provided)</span></label>
+        <div class="file-upload-box">
+          <input type="file" id="setBannerFile" accept="image/*">
+        </div>
+      </div>
+      <div class="report-form-group">
+        <label>Redirect Link <span>(Optional)</span></label>
+        <input type="text" id="setBannerLink" placeholder="https://example.com">
+      </div>
+      <button class="btn-send" style="width: 100%; margin-top: 4px;" onclick="addBanner()">+ Publish Banner</button>
+      <div id="adminBannerList" style="margin-top: 18px; display: flex; flex-direction: column; gap: 8px;"></div>
+    </div>
   </div>
 </div>
 
@@ -960,13 +1370,34 @@ html { -webkit-text-size-adjust: 100%; }
 (function(){
 "use strict";
 
+/* --- SERVICE WORKER REGISTRATION (OFFLINE SUPPORT) --- */
+let SW_REGISTRATION = null;
+
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(err => console.log(err)); });
+  window.addEventListener('load', async () => {
+    try {
+      SW_REGISTRATION = await navigator.serviceWorker.register('sw.js', { scope: './' });
+      console.log('[SW] Registered, scope:', SW_REGISTRATION.scope);
+      SW_REGISTRATION.update().catch(() => {});
+    } catch (err) {
+      console.warn('[SW] Registration failed:', err);
+    }
+  });
+
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    const toast = document.getElementById('updateToast');
+    if (toast) toast.classList.add('show');
+  });
 }
 
 let CURRENT_USER = '', CURRENT_ROLE = '', ALLOWED_VIEWS = [];
 let JOB_DATA = [], BOM_DATA = [], USER_PLAN_QTY = null;
 let loginStep = 1;
+
+/* --- BANNER STATE --- */
+let BANNERS = JSON.parse(localStorage.getItem('tc_banners')) || [];
+let CURRENT_BANNER_IDX = 0;
+let BANNER_INTERVAL = null;
 
 const USERS = {
   'admin':      { pass: 'Admin@Tcl',     role: 'Admin',      views: ['jobcards', 'bom', 'qccalc', 'gatepass'] },
@@ -1076,6 +1507,11 @@ function completeLogin(u) {
   
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('appContainer').style.display = 'block';
+  const displayName = u.charAt(0).toUpperCase() + u.slice(1);
+  const initials = displayName.slice(0, 2).toUpperCase();
+  document.getElementById('headerAvatarInitials').textContent = initials;
+  document.getElementById('dropAvatarInitials').textContent = initials;
+  document.getElementById('dropUserName').textContent = displayName;
   document.getElementById('dropUserRole').textContent = CURRENT_ROLE;
   
   document.getElementById('nav-job').style.display = ALLOWED_VIEWS.includes('jobcards') ? 'flex' : 'none';
@@ -1085,8 +1521,12 @@ function completeLogin(u) {
   
   if (CURRENT_ROLE === 'Admin') {
     document.getElementById('adminPanel').style.display = 'block';
+    document.getElementById('nav-banner-mgmt').style.display = 'block';
     loadAdminSettings();
-  } else { document.getElementById('adminPanel').style.display = 'none'; }
+  } else { 
+    document.getElementById('adminPanel').style.display = 'none'; 
+    document.getElementById('nav-banner-mgmt').style.display = 'none';
+  }
   
   document.getElementById('welcomeName').textContent = CURRENT_ROLE;
   document.getElementById('headerCompany').textContent = localStorage.getItem('tc_company') || 'THERMOCABLES LTD.';
@@ -1103,8 +1543,94 @@ function completeLogin(u) {
 
   loadJobDataFromCSV();
   if (ALLOWED_VIEWS.includes('bom')) loadBomDataFromCSV();
+  
+  loadBanners();
   switchMainView('home');
+
+  // Show offline banner immediately if starting offline
+  if (!navigator.onLine) setSyncState('offline');
 }
+
+/* --- OFFLINE / ONLINE SYNC ORCHESTRATION --- */
+let isSyncing = false;
+
+function setSyncState(state) {
+  const banner = document.getElementById('offlineBanner');
+  if (!banner) return;
+
+  const configs = {
+    offline:  { text: '⚠️  Offline — showing cached data', bg: '#f59e0b', persist: true },
+    syncing:  { text: '🔄  Refreshing latest data…',       bg: '#3b82f6', persist: true },
+    synced:   { text: '✓  Data up to date',                bg: '#10b981', persist: false },
+    partial:  { text: '⚠️  Some data could not be refreshed', bg: '#f59e0b', persist: false },
+    error:    { text: '✗  Failed to refresh data',         bg: '#ef4444', persist: false }
+  };
+
+  const cfg = configs[state] || configs.offline;
+  banner.textContent = cfg.text;
+  banner.style.background = cfg.bg;
+  banner.style.display = 'flex';
+  document.body.classList.add('has-offline-banner');
+
+  if (banner._hideTimer) { clearTimeout(banner._hideTimer); banner._hideTimer = null; }
+
+  if (!cfg.persist) {
+    banner._hideTimer = setTimeout(() => {
+      banner.style.display = 'none';
+      document.body.classList.remove('has-offline-banner');
+    }, state === 'syncing' ? 30000 : 3000);
+  }
+}
+
+function rerenderActiveDataView() {
+  if (document.getElementById('view-jobcards')?.classList.contains('active')) {
+    if (opSelect && opSelect.value) renderJobResults();
+  }
+  if (document.getElementById('view-bom')?.classList.contains('active')) {
+    if (bomInput && bomInput.value.trim()) renderBomResults();
+  }
+}
+
+async function refreshData() {
+  if (isSyncing || !navigator.onLine) return false;
+  isSyncing = true;
+  setSyncState('syncing');
+
+  try {
+    const results = await Promise.all([
+      loadJobDataFromCSV(),
+      ALLOWED_VIEWS.includes('bom') ? loadBomDataFromCSV() : Promise.resolve(true)
+    ]);
+
+    if (results.every(r => r === true)) {
+      setSyncState('synced');
+      rerenderActiveDataView();
+      return true;
+    } else {
+      setSyncState('partial');
+      rerenderActiveDataView();
+      return false;
+    }
+  } catch (e) {
+    console.error('[sync] refresh failed:', e);
+    setSyncState('error');
+    return false;
+  } finally {
+    isSyncing = false;
+  }
+}
+
+window.refreshData = refreshData;
+
+window.addEventListener('online', () => {
+  console.log('[sync] Back online — refreshing data');
+  refreshData();
+});
+
+window.addEventListener('offline', () => {
+  console.log('[sync] Gone offline');
+  setSyncState('offline');
+});
 
 window.handleLogout = function() { localStorage.removeItem('tc_user'); location.reload(); };
 
@@ -1205,21 +1731,221 @@ window.closeKnowledge = function(event) {
   document.getElementById('knowledgeModal').classList.remove('open');
 };
 
+/* --- QR MODAL LOGIC --- */
+window.openQrModal = function(event) {
+  if(event) event.stopPropagation();
+  document.getElementById('profileDropdown').classList.remove('show');
+  const currentUrl = window.location.href;
+  document.getElementById('qrCodeImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(currentUrl)}`;
+  document.getElementById('qrModal').classList.add('open');
+};
+window.closeQrModal = function(event) {
+  if(event && event.target.classList.contains('modal-content')) return;
+  document.getElementById('qrModal').classList.remove('open');
+};
+
+/* --- BANNER MANAGEMENT LOGIC --- */
+window.openBannerModal = function(event) {
+  if(event) event.stopPropagation();
+  document.getElementById('profileDropdown').classList.remove('show');
+  document.getElementById('bannerModal').classList.add('open');
+  renderAdminBanners();
+};
+window.closeBannerModal = function(event) {
+  if(event && event.target.classList.contains('modal-content')) return;
+  document.getElementById('bannerModal').classList.remove('open');
+};
+
+function loadBanners() {
+  BANNERS = JSON.parse(localStorage.getItem('tc_banners')) || [];
+  const container = document.getElementById('promoBanner');
+  if (!container) return;
+  
+  const activeBanners = BANNERS.filter(b => b.active);
+  if (activeBanners.length === 0) {
+    container.style.display = 'none';
+    clearInterval(BANNER_INTERVAL);
+    return;
+  }
+  
+  container.style.display = 'flex';
+  CURRENT_BANNER_IDX = 0;
+  showBanner(activeBanners);
+  
+  clearInterval(BANNER_INTERVAL);
+  if (activeBanners.length > 1) {
+    BANNER_INTERVAL = setInterval(() => {
+      CURRENT_BANNER_IDX = (CURRENT_BANNER_IDX + 1) % activeBanners.length;
+      showBanner(activeBanners);
+    }, 5000);
+  }
+}
+
+function showBanner(activeBanners) {
+  const container = document.getElementById('promoBanner');
+  const b = activeBanners[CURRENT_BANNER_IDX];
+  const hasTitle = Boolean(b.text && b.text.trim());
+
+  const titleHtml = hasTitle ? `<div class="promo-banner-content">${esc(b.text.trim())}</div>` : '';
+  const linkBadgeHtml = b.link ? `<div class="promo-banner-link-badge" title="Open Link">↗</div>` : '';
+  const dotsHtml = activeBanners.length > 1
+    ? `<div class="promo-banner-dots">${activeBanners.map((_, idx) => `<span class="promo-banner-dot ${idx === CURRENT_BANNER_IDX ? 'active' : ''}"></span>`).join('')}</div>`
+    : '';
+
+  if (b.img) {
+    container.style.background = `url('${b.img}') center/cover no-repeat`;
+    container.innerHTML = `
+      ${hasTitle ? '<div class="promo-banner-overlay"></div>' : ''}
+      ${linkBadgeHtml}
+      ${titleHtml}
+      ${dotsHtml}
+    `;
+  } else {
+    container.style.background = `linear-gradient(135deg, #0f172a 0%, #1e40af 60%, #2563eb 100%)`;
+    container.innerHTML = `
+      ${linkBadgeHtml}
+      ${titleHtml}
+      ${dotsHtml}
+    `;
+  }
+  container.setAttribute('data-link', b.link || '');
+}
+
+window.handleBannerClick = function(event) {
+  const container = document.getElementById('promoBanner');
+  const link = container.getAttribute('data-link');
+  if (link) {
+    window.open(link, '_blank');
+  }
+};
+
+function renderAdminBanners() {
+  const list = document.getElementById('adminBannerList');
+  if (!list) return;
+  if (BANNERS.length === 0) {
+    list.innerHTML = '<div style="font-size: 0.8rem; color: #64748b; text-align: center; padding: 12px;">No banners published yet.</div>';
+    return;
+  }
+  list.innerHTML = BANNERS.map((b, i) => `
+    <div class="admin-banner-item">
+      ${b.img ? `<img src="${b.img}" class="admin-banner-thumb">` : `<div class="admin-banner-thumb" style="display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#64748b; background:linear-gradient(135deg,#e2e8f0,#cbd5e1);">TEXT</div>`}
+      <div style="flex: 1; min-width: 0; padding: 0 12px;">
+        <div style="font-weight: 700; color: ${b.text ? '#0f172a' : '#64748b'}; font-style: ${b.text ? 'normal' : 'italic'}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${b.text ? esc(b.text) : 'Image-only banner'}</div>
+        <div style="font-size: 0.7rem; font-weight: 600; color: ${b.active ? '#059669' : '#94a3b8'}; margin-top: 2px;">${b.active ? '● Active' : '○ Hidden'}</div>
+      </div>
+      <div style="display: flex; gap: 6px;">
+        <button onclick="toggleBanner(${i})" style="background: ${b.active ? '#10b981' : '#cbd5e1'}; color: white; border: none; padding: 6px 10px; border-radius: 8px; font-size: 0.72rem; font-weight: 700; cursor: pointer;">${b.active ? 'ON' : 'OFF'}</button>
+        <button onclick="deleteBanner(${i})" style="background: #fee2e2; color: #dc2626; border: none; padding: 6px 10px; border-radius: 8px; font-size: 0.72rem; font-weight: 700; cursor: pointer;">Del</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+window.addBanner = function() {
+  const text = document.getElementById('setBannerText').value.trim();
+  const link = document.getElementById('setBannerLink').value.trim();
+  const fileInput = document.getElementById('setBannerFile');
+  const hasFile = fileInput.files && fileInput.files[0];
+
+  if (!text && !hasFile) {
+    alert("Please enter a banner title or upload an image.");
+    return;
+  }
+
+  if (hasFile) {
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = new Image();
+      img.onload = function() {
+        const canvas = document.createElement('canvas');
+        const MAX_WIDTH = 900;
+        const MAX_HEIGHT = 400;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.75);
+
+        BANNERS.push({ text, img: dataUrl, link, active: true });
+        saveAndRefreshBanners();
+        fileInput.value = '';
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  } else {
+    BANNERS.push({ text, img: '', link, active: true });
+    saveAndRefreshBanners();
+  }
+};
+
+function saveAndRefreshBanners() {
+  try {
+    localStorage.setItem('tc_banners', JSON.stringify(BANNERS));
+  } catch(e) {
+    alert("Storage limit exceeded. Please delete some banners or upload a smaller image.");
+    return;
+  }
+  document.getElementById('setBannerText').value = '';
+  document.getElementById('setBannerLink').value = '';
+  renderAdminBanners();
+  loadBanners();
+}
+
+window.deleteBanner = function(i) {
+  if (!confirm("Delete this banner?")) return;
+  BANNERS.splice(i, 1);
+  saveAndRefreshBanners();
+};
+
+window.toggleBanner = function(i) {
+  BANNERS[i].active = !BANNERS[i].active;
+  saveAndRefreshBanners();
+};
+
 /* --- SHARED CSV HELPERS --- */
 function normalizeHeader(h){ return String(h||'').toLowerCase().replace(/[\s_\-\/\.]+/g,''); }
 function findHeader(headers, ...candidates){ for(const c of candidates){ const found = headers.find(h => normalizeHeader(h) === normalizeHeader(c)); if(found) return found; } return null; }
-/* Added fallback for the black diamond encoding issue */
 function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/⬖/g, '±'); }
 function formatQty(n) { if(n === null || n === undefined || isNaN(n)) return '—'; return Number(n).toFixed(4).replace(/\.?0+$/, '') || '0'; }
 function formatScientific(num) { if (num === 0) return '0'; const e = Math.floor(Math.log10(Math.abs(num))); const m = num / Math.pow(10, e); return `${m.toFixed(2)} × 10<sup>${e}</sup>`; }
 
-/* --- JOB DATA --- */
+/* --- JOB DATA (OFFLINE-AWARE) --- */
 async function loadJobDataFromCSV() {
   try {
-    const response = await fetch('data.csv?v=' + new Date().getTime());
-    if (!response.ok) return;
-    Papa.parse(await response.text(), { header: true, skipEmptyLines: true, complete: function(results) { processJobCSVData(results.data); } });
-  } catch (e) { console.warn('data.csv not found'); }
+    const response = await fetch('data.csv', { cache: 'no-store' });
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    const text = await response.text();
+    return new Promise((resolve) => {
+      Papa.parse(text, {
+        header: true,
+        skipEmptyLines: true,
+        complete: (results) => {
+          processJobCSVData(results.data);
+          resolve(true);
+        }
+      });
+    });
+  } catch (e) {
+    console.warn('[offline] data.csv unavailable — using cached version if present');
+    return false;
+  }
 }
 
 function processJobCSVData(rows) {
@@ -1377,43 +2103,56 @@ document.getElementById('resetBtn').addEventListener('click', () => {
   document.getElementById('jobResultCount').textContent = '0 records';
 });
 
-/* --- BOM DATA --- */
+/* --- BOM DATA (OFFLINE-AWARE) --- */
 let CURRENT_BOM_LINES = [];
 let LAST_BOM_ITEM = null;
 
 async function loadBomDataFromCSV() {
   try {
-    const response = await fetch('bom.csv?v=' + new Date().getTime());
-    if (!response.ok) return;
-    Papa.parse(await response.text(), { header: false, skipEmptyLines: false, complete: function(results) {
-      const allRows = results.data; 
-      if(!allRows || allRows.length < 2) return;
-      
-      function rowHasHeader(row){
-        if(!row || !row.length) return false;
-        return row.some(cell => {
-          const n = normalizeHeader(cell);
-          return n === 'soitemno' || n === 'soitem';
-        });
-      }
-      
-      let headerRowIndex = 0;
-      if(!rowHasHeader(allRows[0]) && rowHasHeader(allRows[1])){
-        headerRowIndex = 1;
-      }
-      
-      const headerRow = allRows[headerRowIndex].map(h => String(h||'').trim());
-      const dataRows = allRows.slice(headerRowIndex + 1).filter(r => r.some(c => String(c||'').trim() !== ''));
-      
-      const rows = dataRows.map(r => {
-        const obj = {};
-        headerRow.forEach((h, i) => { obj[h] = r[i] !== undefined ? r[i] : ''; });
-        return obj;
-      }).filter(o => Object.values(o).some(v => String(v||'').trim() !== ''));
+    const response = await fetch('bom.csv', { cache: 'no-store' });
+    if (!response.ok) throw new Error('HTTP ' + response.status);
+    const text = await response.text();
+    return new Promise((resolve) => {
+      Papa.parse(text, {
+        header: false,
+        skipEmptyLines: false,
+        complete: function (results) {
+          const allRows = results.data;
+          if (!allRows || allRows.length < 2) return resolve(false);
 
-      processBomCSVData(rows);
-    }});
-  } catch (e) { console.warn('bom.csv not found'); }
+          function rowHasHeader(row) {
+            if (!row || !row.length) return false;
+            return row.some(cell => {
+              const n = normalizeHeader(cell);
+              return n === 'soitemno' || n === 'soitem';
+            });
+          }
+
+          let headerRowIndex = 0;
+          if (!rowHasHeader(allRows[0]) && rowHasHeader(allRows[1])) {
+            headerRowIndex = 1;
+          }
+
+          const headerRow = allRows[headerRowIndex].map(h => String(h || '').trim());
+          const dataRows = allRows
+            .slice(headerRowIndex + 1)
+            .filter(r => r.some(c => String(c || '').trim() !== ''));
+
+          const rows = dataRows.map(r => {
+            const obj = {};
+            headerRow.forEach((h, i) => { obj[h] = r[i] !== undefined ? r[i] : ''; });
+            return obj;
+          }).filter(o => Object.values(o).some(v => String(v || '').trim() !== ''));
+
+          processBomCSVData(rows);
+          resolve(true);
+        }
+      });
+    });
+  } catch (e) {
+    console.warn('[offline] bom.csv unavailable — using cached version if present');
+    return false;
+  }
 }
 
 function processBomCSVData(rows) {
@@ -1567,7 +2306,6 @@ function renderBomResults(){
     return;
   }
 
-  /* plan qty belongs to one item only — never carry it across items */
   if(LAST_BOM_ITEM !== soItem){ USER_PLAN_QTY = null; LAST_BOM_ITEM = soItem; }
 
   const effectivePlanQty = (USER_PLAN_QTY !== null && !isNaN(USER_PLAN_QTY)) ? USER_PLAN_QTY : item.defaultPlanQty;
@@ -1598,7 +2336,6 @@ function renderBomResults(){
       <div class="bom-table">
         <div class="bom-table-head"><div>Mat Code</div><div>Mat Disc</div><div>Qty</div></div>`;
     
-  /* build the DOM order list as we render — this is what the qty math must use */
   const orderedLines = [];
   const sortedGroups = Array.from(groupMap.keys()).sort();
   sortedGroups.forEach(g => {
@@ -1795,7 +2532,6 @@ window.triggerPrint = function(e, type) {
     }
     gpContainer.innerHTML = gpHtml;
   }
-  /* let the browser apply the print class before snapshotting */
   requestAnimationFrame(() => window.print());
 };
 
