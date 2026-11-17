@@ -1,7 +1,7 @@
 /* Thermocables Portal — Service Worker */
 
 // 👇 1. I CHANGED THE VERSION HERE
-const VERSION      = 'v1.0.1'; 
+const VERSION      = 'v1.0.2'; 
 const SHELL_CACHE  = `tc-shell-${VERSION}`;
 const DATA_CACHE   = `tc-data-${VERSION}`;
 
