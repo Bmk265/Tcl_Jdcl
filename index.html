@@ -1922,9 +1922,9 @@ window.toggleBanner = function(i) {
 /* --- SHARED CSV HELPERS --- */
 function normalizeHeader(h){ return String(h||'').toLowerCase().replace(/[\s_\-\/\.]+/g,''); }
 function findHeader(headers, ...candidates){ for(const c of candidates){ const found = headers.find(h => normalizeHeader(h) === normalizeHeader(c)); if(found) return found; } return null; }
-function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/⬖/g, '±'); }
+function esc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function formatQty(n) { if(n === null || n === undefined || isNaN(n)) return '—'; return Number(n).toFixed(4).replace(/\.?0+$/, '') || '0'; }
-function formatScientific(num) { if (num === 0) return '0'; const e = Math.floor(Math.log10(Math.abs(num))); const m = num / Math.pow(10, e); return `${m.toFixed(2)} × 10<sup>${e}</sup>`; }
+function formatScientific(num) { if (num === 0) return '0'; const e = Math.floor(Math.log10(Math.abs(num))); const m = num / Math.pow(10, e); return `${m.toFixed(2)}&times; 10<sup>${e}</sup>`; }
 
 /* --- JOB DATA (OFFLINE-AWARE) --- */
 async function loadJobDataFromCSV() {
