@@ -5694,7 +5694,7 @@ document.getElementById('drumResetBtn').addEventListener('click', () => {
 });
 
 /* --- QC CALCULATOR LOGIC --- */
-function calculateCRCombined() {
+window.calculateCRCombined = function() {
   const specCR = parseFloat(document.getElementById('specCR').value);
   const maxCR = parseFloat(document.getElementById('maxCR').value);
   const minCR = parseFloat(document.getElementById('minCR').value);
@@ -5703,7 +5703,7 @@ function calculateCRCombined() {
   const outHigh = document.getElementById('outHigh');
   const outLow = document.getElementById('outLow');
 
-  if (isNaN(specCR) || isNaN(maxCR) || isNaN(minCR) || specCR === 0) {
+  if (isNaN(specCR) || isNaN(maxCR) || isNaN(minCR) || specCR === 0 || maxCR === 0) {
     outUnb.textContent = '—';
     outHigh.textContent = '—';
     outLow.textContent = '—';
@@ -5728,7 +5728,7 @@ function calculateCRCombined() {
     const calCR = (obs / len) * (1 / (1 + 0.00393 * (temp - 20)));
     outCalCR.textContent = calCR.toFixed(4);
   }
-}
+};
 
 ['irReading', 'irLength', 'irCoreDia', 'irCondDia'].forEach(id => {
   document.getElementById(id).addEventListener('input', () => {
@@ -5872,7 +5872,7 @@ function calculateHotSet() {
   if (isNaN(cool) || isNaN(init) || init === 0) { document.getElementById('hPermOut').textContent = '—'; } else { document.getElementById('hPermOut').textContent = (((cool - init) / init) * 100).toFixed(2); }
 }
 
-function calculateArmCov() {
+window.calculateArmCov = function() {
   const cableDia = parseFloat(document.getElementById('covCableDia').value);
   const wireDia = parseFloat(document.getElementById('covWireDia').value);
   const lay = parseFloat(document.getElementById('covLay').value);
@@ -5880,7 +5880,7 @@ function calculateArmCov() {
 
   const outCov = document.getElementById('outCov');
 
-  if (isNaN(cableDia) || isNaN(wireDia) || isNaN(lay) || isNaN(wires) || cableDia === 0 || lay === 0) {
+  if (isNaN(cableDia) || isNaN(wireDia) || isNaN(lay) || isNaN(wires) || (cableDia + wireDia) <= 0 || lay === 0) {
     outCov.textContent = '—';
     return;
   }
@@ -5888,10 +5888,14 @@ function calculateArmCov() {
   const pi = Math.PI;
   const part1 = (wires * wireDia) / (pi * (cableDia + wireDia));
   const cosVal = lay / Math.sqrt(lay * lay + (pi * pi * (cableDia + wireDia) * (cableDia + wireDia)));
+  if (cosVal === 0) {
+    outCov.textContent = '—';
+    return;
+  }
   const cov = (part1 / cosVal) * 100;
 
   outCov.textContent = cov.toFixed(2);
-}
+};
 
 /* --- PRINT / PDF GATEWAY --- */
 window.triggerPrint = function(event, mode) {
