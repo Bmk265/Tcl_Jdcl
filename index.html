@@ -5293,7 +5293,7 @@ function renderBomResults(){
   groupMap.forEach((groupLines, groupName) => {
     html += `<div class="bom-group-header">${esc(groupName)}</div>`;
     groupLines.forEach((l, idx) => {
-      const calculatedQty = l.bomPerKm * effectivePlanQty;
+      const calculatedQty = l.bomPerKm * (effectivePlanQty / 1000);
       const rowId = `bom-qty-${groupName.replace(/\W/g, '')}-${idx}`;
       CURRENT_BOM_LINES.push({ id: rowId, bomPerKm: l.bomPerKm });
       html += `<div class="bom-row">
@@ -5317,7 +5317,7 @@ function renderBomResults(){
       USER_PLAN_QTY = isNaN(val) ? 0 : val;
       CURRENT_BOM_LINES.forEach(itemLine => {
         const el = document.getElementById(itemLine.id);
-        if(el) el.textContent = formatQty(itemLine.bomPerKm * USER_PLAN_QTY);
+        if(el) el.textContent = formatQty(itemLine.bomPerKm * (USER_PLAN_QTY / 1000));
       });
     });
   }
