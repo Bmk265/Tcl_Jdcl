@@ -5799,13 +5799,12 @@ function calcThick(){
 const brD = document.getElementById('brD'), brBigD = document.getElementById('brBigD'), brN = document.getElementById('brN'), brM = document.getElementById('brM'), brL = document.getElementById('brL');
 function calcBraid(){
   const d = parseFloat(brD.value), bigD = parseFloat(brBigD.value), N = parseFloat(brN.value), M = parseFloat(brM.value), L = parseFloat(brL.value);
-  if(isNaN(d) || isNaN(bigD) || isNaN(N) || isNaN(M) || isNaN(L) || L === 0){ document.getElementById('brTotalWiresOut').textContent = '—'; document.getElementById('brFOut').textContent = '—'; document.getElementById('brCovOut').textContent = '—'; return; }
+  if(isNaN(d) || isNaN(bigD) || isNaN(N) || isNaN(M) || isNaN(L) || bigD <= 0 || L <= 0){ document.getElementById('brTotalWiresOut').textContent = '—'; document.getElementById('brFOut').textContent = '—'; document.getElementById('brCovOut').textContent = '—'; return; }
   const totalWires = N * M;
   document.getElementById('brTotalWiresOut').textContent = totalWires;
-  const meanD = bigD + (2 * d);
-  const tanTheta = (2 * Math.PI * meanD) / (M * L);
-  const cosTheta = 1 / Math.sqrt(1 + (tanTheta * tanTheta));
-  const F = (N * d) / (2 * Math.PI * meanD * cosTheta);
+  const tanTheta = (Math.PI * bigD) / L;
+  const cosTheta = L / Math.hypot(L, Math.PI * bigD);
+  const F = ((M / 2) * N * d) / (Math.PI * bigD * cosTheta);
   document.getElementById('brFOut').textContent = F.toFixed(4);
   document.getElementById('brCovOut').textContent = ((2 * F - F * F) * 100).toFixed(2);
 }
