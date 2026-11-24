@@ -1942,6 +1942,44 @@ body {
   transform: scale(1.01);
 }
 
+.cr-mode-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  background: var(--bg-app);
+  padding: 5px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  margin-bottom: 16px;
+}
+.cr-mode-btn {
+  padding: 9px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s var(--ease-smooth);
+}
+.cr-mode-btn:hover {
+  color: var(--text-primary);
+}
+.cr-mode-btn.active {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+  box-shadow: 0 3px 10px rgba(37, 99, 235, 0.24);
+}
+.cr-subpanel {
+  display: none;
+}
+.cr-subpanel.active {
+  display: block;
+}
+
 .qc-card {
   background: var(--bg-surface);
   border-radius: var(--radius-lg);
@@ -3026,31 +3064,62 @@ body.has-offline-banner .app { padding-top: 48px; }
         </div>
       </div>
 
-      <!-- 1. CR CALC & UNBALANCE (Combined) -->
+      <!-- 1. CR CALC & UNBALANCE (IPQC & fQC Toggle) -->
       <div class="qc-card active" id="qc-card-cr">
         <div class="qc-card-body">
-          <div class="result-title-bar">CR CALC &amp; TESTING REGISTER</div>
-          <div class="input-group">
-            <label>Conductor Material <span class="unit-hint">(Temp Factor α)</span></label>
-            <select id="crMaterial" onchange="calculateCRCombined()">
-              <option value="0.004" selected>Copper — Testing Register (α = 0.004 /°C)</option>
-              <option value="0.00393">Copper — IEC 60228 Std (α = 0.00393 /°C)</option>
-              <option value="0.00403">Aluminium — IEC 60228 Std (α = 0.00403 /°C)</option>
-            </select>
+          <div class="cr-mode-toggle no-print" role="tablist" aria-label="CR Mode">
+            <button type="button" class="cr-mode-btn active" id="btnCrModeIpqc" onclick="switchCrMode('ipqc', event)">IPQC</button>
+            <button type="button" class="cr-mode-btn" id="btnCrModeFqc" onclick="switchCrMode('fqc', event)">fQC</button>
           </div>
-          <div class="input-group"><label>Specified CR <span class="unit-hint">(Ω/km)</span></label><input type="number" id="specCR" step="any" placeholder="e.g. 12.444" oninput="calculateCRCombined()"></div>
-          <div class="input-group"><label>Actual Length <span class="unit-hint">(Meters)</span></label><input type="number" id="lenCR" step="any" placeholder="e.g. 1084" oninput="calculateCRCombined()"></div>
-          <div class="input-group"><label>Min CR Obs <span class="unit-hint">(Ω)</span></label><input type="number" id="minCR" step="any" placeholder="e.g. 13.7" oninput="calculateCRCombined()"></div>
-          <div class="input-group"><label>Max CR Obs <span class="unit-hint">(Ω)</span></label><input type="number" id="maxCR" step="any" placeholder="e.g. 13.86" oninput="calculateCRCombined()"></div>
-          <div class="input-group"><label>Temperature <span class="unit-hint">(°C)</span></label><input type="number" id="tempCR" step="any" placeholder="e.g. 34" oninput="calculateCRCombined()"></div>
 
-          <div class="result-section">
-            <div class="result-title-bar">Results</div>
-            <div class="result-card primary"><span class="label">Calculated CR (Max)</span><div class="value-wrapper"><span class="value" id="outCalCR">—</span><span class="unit">Ω/km</span></div></div>
-            <div class="result-card"><span class="label">Calculated CR (Min)</span><div class="value-wrapper"><span class="value" id="outCalCRMin">—</span><span class="unit">Ω/km</span></div></div>
-            <div class="result-card" id="cardCrStatus"><span class="label">CR Status</span><div class="value-wrapper"><span class="value" id="outCrStatus">—</span></div></div>
-            <div class="result-card" id="cardCrHighLow"><span class="label">% of CR High/Low</span><div class="value-wrapper"><span class="value" id="outHighLow">—</span></div></div>
-            <div class="result-card purple"><span class="label">CR Unbalance</span><div class="value-wrapper"><span class="value" id="outUnbalance">—</span><span class="unit">%</span></div></div>
+          <!-- IPQC (Original CR Unbalance + Cal CR) -->
+          <div class="cr-subpanel active" id="cr-panel-ipqc">
+            <div class="result-title-bar">IPQC — CR UNBALANCE</div>
+            <div class="input-group"><label>Spec CR</label><input type="number" id="ipqcSpecCR" step="any" placeholder="" oninput="calculateCRIpqc()"></div>
+            <div class="input-group"><label>Max CR</label><input type="number" id="ipqcMaxCR" step="any" placeholder="" oninput="calculateCRIpqc()"></div>
+            <div class="input-group"><label>Min CR</label><input type="number" id="ipqcMinCR" step="any" placeholder="" oninput="calculateCRIpqc()"></div>
+
+            <div class="result-section">
+              <div class="result-card primary"><span class="label">CR Unbalance</span><div class="value-wrapper"><span class="value" id="ipqcOutUnbalance">—</span><span class="unit">%</span></div></div>
+              <div class="result-card warning"><span class="label">CR High</span><div class="value-wrapper"><span class="value" id="ipqcOutHigh">—</span><span class="unit">%</span></div></div>
+              <div class="result-card success"><span class="label">CR Low</span><div class="value-wrapper"><span class="value" id="ipqcOutLow">—</span><span class="unit">%</span></div></div>
+            </div>
+
+            <div class="result-title-bar" style="margin-top:16px;">IPQC — CAL CR</div>
+            <div class="input-group"><label>CR Obs</label><input type="number" id="ipqcObsCR" step="any" placeholder="" oninput="calculateCRIpqc()"></div>
+            <div class="input-group"><label>Length (m)</label><input type="number" id="ipqcLenCR" step="any" placeholder="" oninput="calculateCRIpqc()"></div>
+            <div class="input-group"><label>Temp (°C)</label><input type="number" id="ipqcTempCR" step="any" placeholder="" oninput="calculateCRIpqc()"></div>
+
+            <div class="result-section">
+              <div class="result-card primary"><span class="label">Cal CR</span><div class="value-wrapper"><span class="value" id="ipqcOutCalCR">—</span></div></div>
+            </div>
+          </div>
+
+          <!-- fQC (Testing Register CR Calc & Unbalance) -->
+          <div class="cr-subpanel" id="cr-panel-fqc">
+            <div class="result-title-bar">fQC — CR CALC &amp; TESTING REGISTER</div>
+            <div class="input-group">
+              <label>Conductor Material <span class="unit-hint">(Temp Factor α)</span></label>
+              <select id="crMaterial" onchange="calculateCRCombined()">
+                <option value="0.004" selected>Copper — Testing Register (α = 0.004 /°C)</option>
+                <option value="0.00393">Copper — IEC 60228 Std (α = 0.00393 /°C)</option>
+                <option value="0.00403">Aluminium — IEC 60228 Std (α = 0.00403 /°C)</option>
+              </select>
+            </div>
+            <div class="input-group"><label>Specified CR <span class="unit-hint">(Ω/km)</span></label><input type="number" id="specCR" step="any" placeholder="e.g. 12.444" oninput="calculateCRCombined()"></div>
+            <div class="input-group"><label>Actual Length <span class="unit-hint">(Meters)</span></label><input type="number" id="lenCR" step="any" placeholder="e.g. 1084" oninput="calculateCRCombined()"></div>
+            <div class="input-group"><label>Min CR Obs <span class="unit-hint">(Ω)</span></label><input type="number" id="minCR" step="any" placeholder="e.g. 13.7" oninput="calculateCRCombined()"></div>
+            <div class="input-group"><label>Max CR Obs <span class="unit-hint">(Ω)</span></label><input type="number" id="maxCR" step="any" placeholder="e.g. 13.86" oninput="calculateCRCombined()"></div>
+            <div class="input-group"><label>Temperature <span class="unit-hint">(°C)</span></label><input type="number" id="tempCR" step="any" placeholder="e.g. 34" oninput="calculateCRCombined()"></div>
+
+            <div class="result-section">
+              <div class="result-title-bar">Results</div>
+              <div class="result-card primary"><span class="label">Calculated CR (Max)</span><div class="value-wrapper"><span class="value" id="outCalCR">—</span><span class="unit">Ω/km</span></div></div>
+              <div class="result-card"><span class="label">Calculated CR (Min)</span><div class="value-wrapper"><span class="value" id="outCalCRMin">—</span><span class="unit">Ω/km</span></div></div>
+              <div class="result-card" id="cardCrStatus"><span class="label">CR Status</span><div class="value-wrapper"><span class="value" id="outCrStatus">—</span></div></div>
+              <div class="result-card" id="cardCrHighLow"><span class="label">% of CR High/Low</span><div class="value-wrapper"><span class="value" id="outHighLow">—</span></div></div>
+              <div class="result-card purple"><span class="label">CR Unbalance</span><div class="value-wrapper"><span class="value" id="outUnbalance">—</span><span class="unit">%</span></div></div>
+            </div>
           </div>
         </div>
       </div>
@@ -5654,7 +5723,56 @@ document.getElementById('drumResetBtn').addEventListener('click', () => {
 });
 
 
-/* --- QC CALCULATORS (1. CR CALC & UNBALANCE, 2. ARMOUR COVERAGE, ETC.) --- */
+/* --- QC CALCULATORS (1. CR CALC & UNBALANCE [IPQC / fQC], 2. ARMOUR COVERAGE, ETC.) --- */
+window.switchCrMode = function(mode, event) {
+  if (event) event.preventDefault();
+  const isIpqc = mode === 'ipqc';
+  const btnIpqc = document.getElementById('btnCrModeIpqc');
+  const btnFqc = document.getElementById('btnCrModeFqc');
+  const panelIpqc = document.getElementById('cr-panel-ipqc');
+  const panelFqc = document.getElementById('cr-panel-fqc');
+  if (btnIpqc) btnIpqc.classList.toggle('active', isIpqc);
+  if (btnFqc) btnFqc.classList.toggle('active', !isIpqc);
+  if (panelIpqc) panelIpqc.classList.toggle('active', isIpqc);
+  if (panelFqc) panelFqc.classList.toggle('active', !isIpqc);
+};
+
+window.calculateCRIpqc = function() {
+  const specCR = parseFloat(document.getElementById('ipqcSpecCR')?.value);
+  const maxCR = parseFloat(document.getElementById('ipqcMaxCR')?.value);
+  const minCR = parseFloat(document.getElementById('ipqcMinCR')?.value);
+
+  const outUnb = document.getElementById('ipqcOutUnbalance');
+  const outHigh = document.getElementById('ipqcOutHigh');
+  const outLow = document.getElementById('ipqcOutLow');
+
+  if (isNaN(specCR) || isNaN(maxCR) || isNaN(minCR) || specCR === 0 || maxCR === 0) {
+    outUnb.textContent = '—';
+    outHigh.textContent = '—';
+    outLow.textContent = '—';
+  } else {
+    const unbalance = ((maxCR - minCR) / maxCR) * 100;
+    const high = ((maxCR - specCR) / specCR) * 100;
+    const low = ((specCR - minCR) / specCR) * 100;
+
+    outUnb.textContent = unbalance.toFixed(2);
+    outHigh.textContent = high.toFixed(2);
+    outLow.textContent = low.toFixed(2);
+  }
+
+  const obs = parseFloat(document.getElementById('ipqcObsCR')?.value);
+  const len = parseFloat(document.getElementById('ipqcLenCR')?.value);
+  const temp = parseFloat(document.getElementById('ipqcTempCR')?.value);
+  const outCalCR = document.getElementById('ipqcOutCalCR');
+
+  if (isNaN(obs) || isNaN(len) || isNaN(temp) || len === 0) {
+    outCalCR.textContent = '—';
+  } else {
+    const calCR = (obs / len) * (1 / (1 + 0.00393 * (temp - 20)));
+    outCalCR.textContent = calCR.toFixed(4);
+  }
+};
+
 function calculateCRCombined() {
   const alpha = parseFloat(document.getElementById('crMaterial')?.value) || 0.004;
   const specCR = parseFloat(document.getElementById('specCR')?.value);
@@ -5968,12 +6086,21 @@ window.triggerPrint = function(event, mode){
     rowsHtml += `<tr><th>Job No / Item No</th><td>${esc(drumInput.value || '—')}</td></tr>`;
   } else if (mode === 'qc') {
     const activeTab = document.querySelector('.qc-tab-btn.active');
-    const testName = activeTab ? activeTab.textContent.trim().toUpperCase() : 'QC CALCULATION';
+    let testName = activeTab ? activeTab.textContent.trim().toUpperCase() : 'QC CALCULATION';
+    const activeCard = document.querySelector('.qc-card.active');
+    let printScope = activeCard;
+    if (activeCard && activeCard.id === 'qc-card-cr') {
+      const activeSub = activeCard.querySelector('.cr-subpanel.active');
+      if (activeSub) {
+        printScope = activeSub;
+        const modeLabel = activeSub.id === 'cr-panel-fqc' ? 'fQC' : 'IPQC';
+        testName = `${testName} (${modeLabel})`;
+      }
+    }
     document.getElementById('pDocTitle').textContent = 'QUALITY CONTROL REPORT';
     document.getElementById('pTestType').textContent = testName;
-    const activeCard = document.querySelector('.qc-card.active');
-    if (activeCard) {
-      activeCard.querySelectorAll('.input-group').forEach(grp => {
+    if (printScope) {
+      printScope.querySelectorAll('.input-group').forEach(grp => {
         const lblEl = grp.querySelector('label');
         const inputEl = grp.querySelector('input, select');
         if (lblEl && inputEl) {
